@@ -1,5 +1,5 @@
 const express = require("express");
-const PORT = 3001;
+const PORT = 1234;
 const app = express();
 
 const cors = require("cors");
@@ -10,10 +10,9 @@ const corsOptions = {
 };
 app.use(cors(corsOptions)); // Use this after the variable declaration
 
-
 app.get("/", (req, res) => {
   res.send("Hello from server");
-})
+});
 // app.get("/picks", async (req, res) => {
 //   const postgres = require("postgres");
 //   require("dotenv").config();
