@@ -1,5 +1,5 @@
 .navbar {
-	background-color: #a29bfe;
+	background-color: #18163a;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 	position: sticky;
 	top: 0;
@@ -18,7 +18,7 @@
 	font-size: 1.25rem;
 	font-weight: 600;
 	text-decoration: none;
-	color: black;
+	color: white;
 }
 
 .navbar-menu {
@@ -30,13 +30,13 @@
 }
 
 .navbar-menu li {
-	font-size: 1.25rem;
-	font-weight: 600;
+	font-size: 1.5rem;
+	font-weight: 700;
 }
 
 .navbar-menu a {
 	text-decoration: none;
-	color: #000;
+	color: white;
 	position: relative;
 }
 
@@ -45,7 +45,7 @@
 	position: absolute;
 	width: 0;
 	height: 2px;
-	background-color: #000;
+	background-color: white;
 	bottom: -2px;
 	left: 0;
 	transition: width 0.75s ease;

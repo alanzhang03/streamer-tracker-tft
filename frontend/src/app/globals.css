@@ -24,20 +24,19 @@ html {
 body {
 	margin: 0;
 	padding: 0;
-	background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-		url("/background.jpg");
-	background-size: cover;
-	background-position: center;
-	background-repeat: no-repeat;
-  
 	display: flex;
 	flex-direction: column;
+	color: white;
+	background-color: rgba(2, 4, 25, 255);
 }
 
 html,
 body {
 	height: 100%;
 	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
 }
 
 /**
@@ -369,7 +368,7 @@ template {
 .global-footer {
 	height: 5vh;
 	width: 100%;
-	background-color: #a29bfe;
+	background-color: #18163a;
 	color: white;
 	display: flex;
 	align-items: center;

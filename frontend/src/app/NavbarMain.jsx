@@ -13,7 +13,7 @@ const NavbarMain = () => {
 				</ul>
 				<ul className="navbar-menu">
 					<li>
-						<Link href="/">About</Link>
+						<Link href="/about">About</Link>
 					</li>
 					<li>
 						<Link href="/streamers">Streamers</Link>
