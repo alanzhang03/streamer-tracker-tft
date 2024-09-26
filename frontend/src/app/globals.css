@@ -368,7 +368,7 @@ template {
 .global-footer {
 	height: 5vh;
 	width: 100%;
-	background-color: #18163a;
+	background-color: rgba(2, 4, 25, 0.5);
 	color: white;
 	display: flex;
 	align-items: center;
