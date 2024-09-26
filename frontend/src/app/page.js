@@ -3,7 +3,14 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
+import { useAnimate, stagger } from "framer-motion";
+import { motion, useScroll } from "framer-motion";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
 	const streamers = [
@@ -33,9 +40,22 @@ export default function Home() {
 		},
 	];
 
+	useGSAP(() => {
+		gsap.to(".streamerCard", {
+			scrollTrigger: ".streamerCard",
+			delay: 0.25,
+			opacity: 1,
+			duration: 1,
+			stagger: {
+				each: 0.175,
+				from: "start",
+			},
+		});
+	}, []);
+
 	return (
 		<div>
-			{/* hero section */}
+			{/* Hero section */}
 			<section className={styles.hero}>
 				<h1>Welcome to TFT Streamer Tracker</h1>
 				<p>Track your favorite TFT streamers' latest matches and comps!</p>
@@ -44,12 +64,15 @@ export default function Home() {
 				</Link>
 			</section>
 
-			{/* featured streamers */}
+			{/* Featured streamers */}
 			<section className={styles.featuredStreamers}>
 				<h2>Streamers You Can Track</h2>
 				<div className={styles.streamerGrid}>
 					{streamers.map((streamer) => (
-						<div className={styles.streamerCard} key={streamer.id}>
+						<div
+							className={`${styles.streamerCard} streamerCard`}
+							key={streamer.id}
+						>
 							<Image
 								src={streamer.image}
 								alt={streamer.name}
@@ -69,7 +92,7 @@ export default function Home() {
 				</div>
 			</section>
 
-			{/* tft data */}
+			{/* Trending TFT Data */}
 			<section className={styles.trending}>
 				<h2>Trending TFT Comps & Augments</h2>
 				<div className={styles.trendingGrid}>
@@ -86,7 +109,7 @@ export default function Home() {
 				</div>
 			</section>
 
-			{/* recent matches */}
+			{/* Recent matches */}
 			<section className={styles.recentMatches}>
 				<h2>Recent Matches</h2>
 				<ul>

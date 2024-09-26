@@ -28,11 +28,11 @@ body {
 	flex-direction: column;
 	color: white;
 	background-color: rgba(2, 4, 25, 255);
+
 }
 
 html,
 body {
-	height: 100%;
 	margin: 0;
 	padding: 0;
 	display: flex;
