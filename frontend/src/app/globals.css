@@ -28,7 +28,6 @@ body {
 	flex-direction: column;
 	color: white;
 	background-color: rgba(2, 4, 25, 255);
-
 }
 
 html,
@@ -373,4 +372,32 @@ template {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+}
+
+::-webkit-scrollbar {
+	width: 12px; /* Width of the entire scrollbar */
+}
+
+::-webkit-scrollbar-track {
+	background: rgba(
+		43,
+		21,
+		76,
+		0.5
+	); /* Dark background for the scrollbar track */
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #a29bfe;
+	border-radius: 10px;
+	border: 10px solid rgba(2, 4, 25, 0.9);
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background-color: #7d74fb;
+}
+
+* {
+	scrollbar-width: thin;
+	scrollbar-color: #a29bfe rgba(43, 21, 76, 0.5);
 }

@@ -4,8 +4,6 @@ import Image from "next/image";
 import styles from "./page.module.css";
 import Link from "next/link";
 import React, { useEffect } from "react";
-import { useAnimate, stagger } from "framer-motion";
-import { motion, useScroll } from "framer-motion";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -100,7 +98,7 @@ export default function Home() {
 						<h4>Vanguard Warwick</h4>
 						<p>Win Rate: 58%</p>
 						<Image
-							src="/comp-image.jpg"
+							src="/k3soju.png"
 							alt="Vanguard Warwick"
 							width={100}
 							height={100}
