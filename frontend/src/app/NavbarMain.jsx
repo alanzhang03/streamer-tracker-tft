@@ -27,7 +27,7 @@ const NavbarMain = () => {
 					</li>
 
 					<li>
-						<Link href="/streamers/soju">K3Loser</Link>
+						<Link href="/streamers/K3soju">K3soju</Link>
 					</li>
 				</ul>
 			</div>
