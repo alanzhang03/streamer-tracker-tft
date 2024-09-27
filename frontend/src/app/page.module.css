@@ -1,165 +1,250 @@
-.page {
-  --gray-rgb: 0, 0, 0;
-  --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
-  --gray-alpha-100: rgba(var(--gray-rgb), 0.05);
-
-  --button-primary-hover: #383838;
-  --button-secondary-hover: #f2f2f2;
-
-  display: grid;
-  grid-template-rows: 20px 1fr 20px;
-  align-items: center;
-  justify-items: center;
-  min-height: 100svh;
-  padding: 80px;
-  gap: 64px;
-  font-family: var(--font-geist-sans);
+/* hero section */
+.hero {
+	height: 80vh;
+	background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+		url("/background.jpg");
+	background-size: cover;
+	background-position: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
 }
 
-@media (prefers-color-scheme: dark) {
-  .page {
-    --gray-rgb: 255, 255, 255;
-    --gray-alpha-200: rgba(var(--gray-rgb), 0.145);
-    --gray-alpha-100: rgba(var(--gray-rgb), 0.06);
-
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-  }
+.hero h1 {
+	font-size: 5rem;
+	margin: 0;
+	color: white;
+	text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+	color: #a5d8ff;
 }
 
-.main {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  grid-row-start: 2;
+.hero p {
+	font-size: 1.5rem;
+	margin: 10px 0;
+	color: white;
+	text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
 }
 
-.main ol {
-  font-family: var(--font-geist-mono);
-  padding-left: 0;
-  margin: 0;
-  font-size: 14px;
-  line-height: 24px;
-  letter-spacing: -0.01em;
-  list-style-position: inside;
+.ctaButton {
+	margin-top: 20px;
+	padding: 15px 30px;
+	background-color: #a29bfe;
+	color: white;
+	text-decoration: none;
+	border-radius: 5px;
+	font-size: 1.25rem;
+	transition: background-color 0.3s;
 }
 
-.main li:not(:last-of-type) {
-  margin-bottom: 8px;
+.ctaButton:hover {
+	background-color: #7d74fb;
 }
 
-.main code {
-  font-family: inherit;
-  background: var(--gray-alpha-100);
-  padding: 2px 4px;
-  border-radius: 4px;
-  font-weight: 600;
+/* featured streamers section */
+.featuredStreamers {
+	padding: 4rem 2rem;
+	text-align: center;
 }
 
-.ctas {
-  display: flex;
-  gap: 16px;
+.featuredStreamers h2 {
+	padding-top: 10vh;
+	font-size: 5rem;
+	margin-bottom: 2rem;
+	color: #a5d8ff;
 }
 
-.ctas a {
-  appearance: none;
-  border-radius: 128px;
-  height: 48px;
-  padding: 0 20px;
-  border: none;
-  border: 1px solid transparent;
-  transition: background 0.2s, color 0.2s, border-color 0.2s;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  line-height: 20px;
-  font-weight: 500;
+.streamerGrid {
+	display: flex;
+	justify-content: center;
+	gap: 3rem;
+	flex-wrap: wrap;
 }
 
-a.primary {
-  background: var(--foreground);
-  color: var(--background);
-  gap: 8px;
+.streamerCard {
+	opacity: 0;
+	background-color: rgba(255, 255, 255, 0.1);
+	padding: 2rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 1vh;
+	border-radius: 10px;
+	text-align: center;
+	width: 15vw;
+	height: auto;
+	border: #a29bfe solid 2px;
+	transition: 0.2s;
+	&:hover {
+		box-shadow: 0 13px 16px #8880fa;
+		border-color: #a29bfe;
+	}
 }
 
-a.secondary {
-  border-color: var(--gray-alpha-200);
-  min-width: 180px;
+.streamerName {
+	font-size: 2rem;
+	margin: 1rem 0 0.5rem;
+	color: #a5d8ff;
 }
 
-.footer {
-  grid-row-start: 3;
-  display: flex;
-  gap: 24px;
+.streamerRank {
+	font-size: 1.25rem;
+	margin: 0.5rem 0;
 }
 
-.footer a {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.viewProfile {
+	padding-top: 10vh;
+	padding: 1vh 1vw;
+	background-color: #a29bfe;
+	color: white;
+	text-decoration: none;
+	border-radius: 5px;
+	font-size: 1rem;
+	transition: background-color 0.3s;
 }
 
-.footer img {
-  flex-shrink: 0;
+.viewProfile:hover {
+	background-color: #7d74fb;
 }
 
-/* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-  a.primary:hover {
-    background: var(--button-primary-hover);
-    border-color: transparent;
-  }
-
-  a.secondary:hover {
-    background: var(--button-secondary-hover);
-    border-color: transparent;
-  }
-
-  .footer a:hover {
-    text-decoration: underline;
-    text-underline-offset: 4px;
-  }
+/* trending comps and augments */
+.trending {
+	padding: 4rem 2rem;
+	text-align: center;
 }
 
-@media (max-width: 600px) {
-  .page {
-    padding: 32px;
-    padding-bottom: 80px;
-  }
-
-  .main {
-    align-items: center;
-  }
-
-  .main ol {
-    text-align: center;
-  }
-
-  .ctas {
-    flex-direction: column;
-  }
-
-  .ctas a {
-    font-size: 14px;
-    height: 40px;
-    padding: 0 16px;
-  }
-
-  a.secondary {
-    min-width: auto;
-  }
-
-  .footer {
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-  }
+.trending h2 {
+	font-size: 2.5rem;
+	margin-bottom: 2rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  .logo {
-    filter: invert();
-  }
+.trendingGrid {
+	display: flex;
+	justify-content: center;
+	gap: 2rem;
+	flex-wrap: wrap;
+}
+
+.compCard {
+	background-color: rgba(255, 255, 255, 0.1);
+	padding: 1.5rem;
+	border-radius: 10px;
+	width: 150px;
+	text-align: center;
+}
+
+.compCard h4 {
+	font-size: 1.2rem;
+	margin-bottom: 0.5rem;
+}
+
+.compCard p {
+	font-size: 1rem;
+	margin-bottom: 1rem;
+}
+
+/* recent matches */
+.recentMatches {
+	padding: 4rem 2rem;
+}
+
+.recentMatches h2 {
+	font-size: 2.5rem;
+	margin-bottom: 2rem;
+}
+
+.recentMatches ul {
+	list-style-type: none;
+	padding: 0;
+}
+
+.recentMatches li {
+	margin: 0.5rem 0;
+	font-size: 1.25rem;
+}
+
+.recentMatches a {
+	color: #a29bfe;
+	text-decoration: none;
+	transition: color 0.3s;
+}
+
+.recentMatches a:hover {
+	color: #7d74fb;
+}
+
+/* about section */
+.aboutSection {
+	padding: 4rem 2rem;
+	text-align: center;
+}
+
+.aboutSection h2 {
+	font-size: 2.5rem;
+	margin-bottom: 2rem;
+}
+
+.aboutSection p {
+	font-size: 1.25rem;
+	max-width: 700px;
+	margin: 0 auto;
+	line-height: 1.6;
+}
+
+/* media query */
+
+@media (max-width: 1200px) {
+	.hero h1 {
+		font-size: 2.5rem;
+	}
+
+	.ctaButton {
+		font-size: 1rem;
+		padding: 10px 20px;
+	}
+
+	.streamerGrid {
+		gap: 1.5rem;
+	}
+
+	.streamerCard {
+		width: 150px;
+	}
+
+	.trendingGrid {
+		gap: 1.5rem;
+	}
+
+	.compCard {
+		width: 120px;
+	}
+}
+
+@media (max-width: 768px) {
+	.hero h1 {
+		font-size: 2rem;
+	}
+
+	.ctaButton {
+		font-size: 1rem;
+		padding: 10px 15px;
+	}
+
+	.streamerGrid,
+	.trendingGrid {
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.streamerCard {
+		width: 100%;
+		max-width: 300px;
+	}
+
+	.compCard {
+		width: 100%;
+		max-width: 200px;
+	}
 }
