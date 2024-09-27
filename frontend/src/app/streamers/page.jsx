@@ -1,9 +1,8 @@
-import React from 'react'
+import React from "react";
+import "./Streamers.scss";
 
 const page = () => {
-  return (
-    <div>Streamers Page</div>
-  )
-}
+	return <div className="testing-streamers">Streamers Page</div>;
+};
 
-export default page
+export default page;

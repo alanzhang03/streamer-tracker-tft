@@ -112,7 +112,7 @@ export default function Home() {
 				<h2>Recent Matches</h2>
 				<ul>
 					<li>
-						<Link href="/matches/1">
+						<Link href="/">
 							Dishsoap won with Challenger Jinx - 1st place
 						</Link>
 					</li>
