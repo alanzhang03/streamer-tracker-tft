@@ -20,12 +20,12 @@ const StreamerPage = ({ streamer }) => {
 			</div>
 
 			<div className="data-sections">
-				<MatchHistory matchHistory={streamer.matchHistory} />
 				<Augments augments={streamer.augments} />
 				<Comps comps={streamer.comps} />
 				<Items items={streamer.items} />
 				<Placements placements={streamer.placements} />
 			</div>
+			<MatchHistory matchHistory={streamer.matchHistory} />
 		</div>
 	);
 };

@@ -14,8 +14,7 @@ const page = () => {
 	};
 	return (
 		<>
-			<h1>Setsuko Page</h1>
-			<StreamerPage streamer={setsukoData} />;
+			<StreamerPage streamer={setsukoData} />
 		</>
 	);
 };

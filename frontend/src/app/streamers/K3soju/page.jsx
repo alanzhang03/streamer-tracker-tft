@@ -15,8 +15,7 @@ const page = () => {
 	};
 	return (
 		<>
-			<div>Soju</div>
-			<StreamerPage streamer={k3sojuData} />;
+			<StreamerPage streamer={k3sojuData}/>
 		</>
 	);
 };

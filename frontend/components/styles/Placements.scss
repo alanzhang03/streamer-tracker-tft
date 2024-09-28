@@ -1,0 +1,32 @@
+.placements-section {
+	padding: 2rem;
+	background-color: rgba(255, 255, 255, 0.05);
+	border-radius: 10px;
+	margin-bottom: 2rem;
+
+	h3 {
+		font-size: 1.5rem;
+		color: #fff;
+		margin-bottom: 1rem;
+	}
+
+	.placements-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+		gap: 1rem;
+
+		.placement {
+			background-color: rgba(255, 255, 255, 0.1);
+			padding: 1rem;
+			text-align: center;
+			border-radius: 5px;
+			color: #fff;
+			font-size: 1.1rem;
+			transition: background-color 0.3s;
+
+			&:hover {
+				background-color: rgba(255, 255, 255, 0.2);
+			}
+		}
+	}
+}

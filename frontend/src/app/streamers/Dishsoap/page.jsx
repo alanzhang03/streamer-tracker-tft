@@ -5,7 +5,7 @@ const page = () => {
 	const dishsoapData = {
 		name: "Dishsoap",
 		image: "/dishsoap.png",
-		bio: "One of the top TFT streamers, consistently ranking Challenger.",
+		bio: "One of the top TFT streamers, Worlds 2024 Winner.",
 		augments: ["Augment 1", "Augment 2", "Augment 3"],
 		comps: ["Comp 1", "Comp 2", "Comp 3"],
 		items: ["Item 1", "Item 2", "Item 3"],
@@ -14,8 +14,7 @@ const page = () => {
 	};
 	return (
 		<>
-			<h1>DishSoap Page</h1>
-			<StreamerPage streamer={dishsoapData} />;
+			<StreamerPage streamer={dishsoapData} />
 		</>
 	);
 };
