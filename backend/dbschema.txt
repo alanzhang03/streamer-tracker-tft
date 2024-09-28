@@ -1,0 +1,37 @@
+DB
+  UsernameTagLine:
+    SummonerID
+    Puuid
+    Matches
+      Our Player
+        LP Gain/Loss
+        Champions
+          items
+        Traits
+        items (in general)
+        Augments
+        Placement
+        Level
+        Little Legend
+      Other Players
+        Name
+        LP
+        Champions
+          items
+        Traits
+        items (in general)
+        Augments
+        Placement
+        Level
+        Little Legend
+    LP: int
+    Wins: int
+    Losses: int
+    Total Comps
+    Total Augments
+
+
+
+      
+    Comps
+
