@@ -1,0 +1,31 @@
+.match-history {
+	padding: 2rem;
+	background-color: rgba(255, 255, 255, 0.1);
+	border-radius: 10px;
+	margin-top: 2rem;
+
+	h3 {
+		font-size: 2rem;
+		margin-bottom: 1rem;
+		color: #fff;
+	}
+
+	ul {
+		list-style: none;
+		padding: 0;
+
+		.match-item {
+			background-color: rgba(255, 255, 255, 0.05);
+			padding: 1rem;
+			margin-bottom: 1rem;
+			border-radius: 5px;
+			color: #fff;
+			font-size: 1.2rem;
+			transition: background-color 0.3s;
+
+			&:hover {
+				background-color: rgba(255, 255, 255, 0.2);
+			}
+		}
+	}
+}
