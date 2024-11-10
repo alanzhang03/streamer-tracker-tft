@@ -69,12 +69,12 @@
 	position: absolute;
 	background-color: rgba(2, 4, 25, 0.9);
 	min-width: 10rem;
-	top: 100%; 
+	top: 100%;
 	left: 0;
 	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 	z-index: 999;
 	border-radius: 5px;
-	padding: 0; 
+	padding: 0;
 }
 
 .dropdown:hover .dropdown-content,
@@ -83,7 +83,7 @@
 }
 
 .dropdown-content li {
-	padding: 0.75rem 1rem; 
+	padding: 0.75rem 1rem;
 	text-align: left;
 	margin: 0;
 }
@@ -108,7 +108,7 @@
 		height: 7vh;
 	}
 	.navbar-menu li {
-		font-size: 1rem;
+		font-size: 1.5rem;
 	}
 }
 

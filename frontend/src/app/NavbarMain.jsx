@@ -27,15 +27,13 @@ const NavbarMain = () => {
 					<li>
 						<Link href="/">Home</Link>
 					</li>
-					<li>
-						<Link href="/about">About</Link>
-					</li>
+
 					<li
 						className="dropdown"
 						onMouseEnter={handleMouseEnter}
 						onMouseLeave={handleMouseLeave}
 					>
-						<Link href="/streamers">Streamers</Link>
+						<Link href="#streamers">Streamers</Link>
 						{isDropdownOpen && (
 							<ul className="dropdown-content">
 								<li>
@@ -49,6 +47,9 @@ const NavbarMain = () => {
 								</li>
 							</ul>
 						)}
+					</li>
+					<li>
+						<Link href="/about">About</Link>
 					</li>
 				</ul>
 			</div>
