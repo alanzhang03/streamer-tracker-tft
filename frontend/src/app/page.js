@@ -57,13 +57,13 @@ export default function Home() {
 			<section className={styles.hero}>
 				<h1>Welcome to TFT Streamer Tracker</h1>
 				<p>Track your favorite TFT streamers' latest matches and comps!</p>
-				<Link href="/streamers" className={styles.ctaButton}>
+				<Link href="#streamers" className={styles.ctaButton}>
 					Explore Streamers
 				</Link>
 			</section>
 
 			{/* Featured streamers */}
-			<section className={styles.featuredStreamers}>
+			<section id="streamers" className={styles.featuredStreamers}>
 				<h2>Streamers You Can Track</h2>
 				<div className={styles.streamerGrid}>
 					{streamers.map((streamer) => (
@@ -112,9 +112,7 @@ export default function Home() {
 				<h2>Recent Matches</h2>
 				<ul>
 					<li>
-						<Link href="/">
-							Dishsoap won with Challenger Jinx - 1st place
-						</Link>
+						<Link href="/">Dishsoap won with Challenger Jinx - 1st place</Link>
 					</li>
 				</ul>
 			</section>
