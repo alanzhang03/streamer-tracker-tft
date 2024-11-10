@@ -56,6 +56,16 @@ export default function Home() {
 			opacity: 0,
 			duration: 0.75,
 		});
+		gsap.to(".streamerCard", {
+			scrollTrigger: ".streamerCard",
+			delay: 0.25,
+			opacity: 1,
+			duration: 1,
+			stagger: {
+				each: 0.175,
+				from: "start",
+			},
+		});
 	}, []);
 
 	return (

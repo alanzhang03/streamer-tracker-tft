@@ -1,5 +1,3 @@
-
-
 /* hero section */
 .hero {
 	height: 90vh;
@@ -38,10 +36,7 @@
 	border-radius: 5px;
 	font-size: 1.25rem;
 	transition: background-color 0.3s;
-	
 }
-
-
 
 .ctaButton:hover {
 	background-color: #7d74fb;
@@ -54,9 +49,9 @@
 }
 
 .featuredStreamers h2 {
-	padding-top: 10vh;
+	padding-top: 2vh;
 	font-size: 5rem;
-	margin-bottom: 2rem;
+	margin-bottom: 3vh;
 	color: #a5d8ff;
 }
 
@@ -81,6 +76,7 @@
 	width: 15vw;
 	height: auto;
 	border: #a29bfe solid 2px;
+	padding-top: none;
 	transition: 0.2s;
 	&:hover {
 		box-shadow: 0 13px 16px #8880fa;
