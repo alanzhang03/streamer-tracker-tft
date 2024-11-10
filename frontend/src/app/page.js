@@ -39,15 +39,22 @@ export default function Home() {
 	];
 
 	useGSAP(() => {
-		gsap.to(".streamerCard", {
-			scrollTrigger: ".streamerCard",
-			delay: 0.25,
-			opacity: 1,
+		gsap.from("#hero-title", {
+			delay: 0.5,
+			y: -150,
+			opacity: 0,
 			duration: 1,
-			stagger: {
-				each: 0.175,
-				from: "start",
-			},
+		});
+		gsap.from("#hero-text", {
+			delay: 1,
+			y: 50,
+			opacity: 0,
+			duration: 1,
+		});
+		gsap.from("#hero-explore-streamers-button", {
+			delay: 1.75,
+			opacity: 0,
+			duration: 0.75,
 		});
 	}, []);
 
@@ -55,9 +62,15 @@ export default function Home() {
 		<div>
 			{/* Hero section */}
 			<section className={styles.hero}>
-				<h1>Welcome to TFT Streamer Tracker</h1>
-				<p>Track your favorite TFT streamers' latest matches and comps!</p>
-				<Link href="#streamers" className={styles.ctaButton}>
+				<h1 id="hero-title">Welcome to TFT Streamer Tracker</h1>
+				<p id="hero-text">
+					Track your favorite TFT streamers' latest matches and comps!
+				</p>
+				<Link
+					id="hero-explore-streamers-button"
+					href="#streamers"
+					className={styles.ctaButton}
+				>
 					Explore Streamers
 				</Link>
 			</section>
