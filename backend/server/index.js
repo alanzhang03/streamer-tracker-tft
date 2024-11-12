@@ -1,41 +1,48 @@
-const express = require("express");
-const PORT = 3001;
+// index.js
+
+const express = require('express');
+const { Pool } = require('pg');
+require('dotenv').config();
+
+// Initialize Express app
 const app = express();
+const port = process.env.PORT || 3001;
 
-const cors = require("cors");
-const corsOptions = {
-  origin: "*",
-  credentials: true, //access-control-allow-credentials:true
-  optionSuccessStatus: 200,
-};
-app.use(cors(corsOptions)); // Use this after the variable declaration
+// Set up PostgreSQL connection pool
+const pool = new Pool({
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+  ssl: {
+    rejectUnauthorized: false // Required for Neon DB SSL connections
+  }
+});
 
+// Test DB connection
+pool.connect((err, client, release) => {
+  if (err) {
+    return console.error('Error acquiring client', err.stack);
+  }
+  console.log('Connected to Neon Postgres DB');
+  release();
+});
 
-app.get("/", (req, res) => {
-  res.send("Hello from server");
-})
-// app.get("/picks", async (req, res) => {
-//   const postgres = require("postgres");
-//   require("dotenv").config();
+// Sample endpoint
+app.get('/', async (req, res) => {
+  try {
+    const headers = req.headers;
+    
+    const result = await pool.query('SELECT NOW()');
+    res.json({ message: 'Connected to the database!', time: result.rows[0] });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Database query failed' });
+  }
+});
 
-//   let { PGHOST, PGDATABASE, PGUSER, PGPASSWORD, ENDPOINT_ID } = process.env;
-
-//   const sql = postgres({
-//     host: PGHOST,
-//     database: PGDATABASE,
-//     username: PGUSER,
-//     password: PGPASSWORD,
-//     port: 5432,
-//     ssl: "require",
-//     connection: {
-//       options: `project=${ENDPOINT_ID}`,
-//     },
-//   });
-
-//   var r = await sql`SELECT * FROM picks`;
-//   res.send(r);
-// });
-
-app.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
+// Start server
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
 });
