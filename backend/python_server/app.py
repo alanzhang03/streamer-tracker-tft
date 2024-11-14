@@ -44,8 +44,11 @@ def getStreamerData(username, page):
     # Close all connections in the pool
     connection_pool.closeall()
 
-    
-    return reduce(lambda x,y :x+y , res[page*5:(page+1)*5])
+    start = page*5
+    end = (page+1)*5
+    if page > len(res) // page_size:
+        return "error: invalid page number"
+    return reduce(lambda x,y :x+y , res[start:end])
 
 
 # get the match history and return a list of matches in json format
@@ -57,7 +60,17 @@ def get_data():
     except:
         return jsonify("problem with header one or both of username-tagline or page-number")
 
-    return getStreamerData(user, pagenum)
+    return jsonify(getStreamerData(user, pagenum))
+
+# Route to handle POST requests
+@app.route('/api/data', methods=['POST'])
+def add_data():
+    data = request.get_json()  # Get JSON data from the request
+    if data:
+        data_store.append(data)  # Add new data to the data store
+        return jsonify({'message': 'Data added successfully!'}), 201
+    else:
+        return jsonify({'error': 'Invalid data format'}), 400
 
 # Home route to verify the server is running
 @app.route('/')
