@@ -9,7 +9,7 @@ import time
 
 app = Flask(__name__)
 
-api_key = 'RGAPI-5db6b275-4ebd-4b03-9b74-aa0b0d307e20'
+api_key = 'RGAPI-15b9e599-1645-4550-bf8e-2b2362f5ea26'
 
 # takes in a username and returns the most recent matches from page x, pages starting at 0
 
@@ -40,8 +40,7 @@ def getStreamerData(username, page):
     # Create a cursor object
     cur = conn.cursor(cursor_factory=DictCursor)
 
-    cur.execute(
-        "SELECT match_data FROM matches WHERE '%s' = ANY(players) ORDER BY game_datetime DESC" % (username))
+    cur.execute("SELECT match_data FROM matches WHERE '%s' = ANY(players) ORDER BY game_datetime DESC" % (username))
     res = cur.fetchall()
     cur.close()
     connection_pool.putconn(conn)
@@ -86,14 +85,20 @@ def updateData(username):
 
     # get recent match data
     split_username = username.split(" ")
-    current_puuid = requests.get('https://americas.api.riotgames.com/riot/account/v1/accounts/by-riot-id/%s/%s?api_key=%s', (split_username[0], split_username[1][1:], api_key))
-    matches = requests.get('https://americas.api.riotgames.com/tft/match/v1/matches/by-puuid/' +
-                           current_puuid + '/ids?start=0&count=20&api_key=' + api_key).json()
+    cur.execute("SELECT puuid FROM players WHERE usertag=%s", (username, ))
+    current_puuid = ""
+    if cur.rowcount > 0:
+        current_puuid = cur.fetchone()[0]
+    else:
+        current_puuid = requests.get('https://americas.api.riotgames.com/riot/account/v1/accounts/by-riot-id/%s/%s?api_key=%s' % (split_username[0], split_username[1][1:], api_key)).json()['puuid']
+        cur.execute("INSERT into players (puuid, usertag) values (%s, %s)", (current_puuid, username))
+
+    matches = requests.get('https://americas.api.riotgames.com/tft/match/v1/matches/by-puuid/' + current_puuid + '/ids?start=0&count=20&api_key=' + api_key).json()
 
     # add each match to the db
     for match in matches:
         # first check not in the db
-
+        
         cur.execute('SELECT 1 FROM matches WHERE match_id=%s', (match, ))
         if cur.fetchall():
             continue
@@ -160,13 +165,13 @@ def updateData(username):
 @app.route('/api/match-history', methods=['GET'])
 def get_data():
     try:
-        updateData(user)
         user = request.headers['username-tagline']
         pagenum = request.headers['page-number']
+        updateData(user)
+        res = getStreamerData(user, pagenum)
+        return jsonify(res)
     except:
         return jsonify("problem with header one or both of username-tagline or page-number")
-
-    return jsonify(getStreamerData(user, pagenum))
 
 # Route to handle POST requests
 
