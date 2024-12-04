@@ -26,8 +26,8 @@ conn.autocommit = True
 # Create a cursor object
 cur = conn.cursor(cursor_factory=DictCursor)
 
-# cur.execute("DROP TABLE IF exists matches")
-# cur.execute("CREATE TABLE matches (match_id TEXT UNIQUE, patch TEXT, game_datetime TEXT, match_data JSONB, players TEXT[])")
+cur.execute("DROP TABLE IF exists matches")
+cur.execute("CREATE TABLE matches (match_id TEXT UNIQUE, patch TEXT, game_datetime TEXT, match_data JSONB, players TEXT[])")
 cur.execute("DROP TABLE IF exists players")
 cur.execute("CREATE TABLE players (puuid TEXT UNIQUE, usertag TEXT UNIQUE)")
 
