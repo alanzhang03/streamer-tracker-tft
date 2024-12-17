@@ -15,7 +15,7 @@ const page = () => {
 	};
 	return (
 		<>
-			<StreamerPage streamer={dishsoapData} />
+			<StreamerPage usernameTagline="Dishsoap #NA2" />
 		</>
 	);
 };

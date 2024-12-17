@@ -2,7 +2,6 @@
 import React from "react";
 import StreamerPage from "../../../../components/StreamerPage";
 
-
 const page = () => {
 	const k3sojuData = {
 		name: "K3soju",
@@ -16,7 +15,7 @@ const page = () => {
 	};
 	return (
 		<>
-			<StreamerPage streamer={k3sojuData}/>
+			<StreamerPage usernameTagline="VIT k3soju #000" />
 		</>
 	);
 };

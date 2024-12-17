@@ -15,7 +15,7 @@ const page = () => {
 	};
 	return (
 		<>
-			<StreamerPage streamer={setsukoData} />
+			<StreamerPage usernameTagline="VIT setsuko #NA2"/>
 		</>
 	);
 };
