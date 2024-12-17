@@ -1,3 +1,4 @@
+start server: python app.py
 API endpoints:
   /api/match-history
     Headers:

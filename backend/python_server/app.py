@@ -10,7 +10,8 @@ import time
 app = Flask(__name__)
 
 # define constants
-api_key = 'RGAPI-5840b085-d507-45ba-b0af-227caf1b04f8'
+api_key = 'RGAPI-7d2ccdcc-8cd0-4f8c-af54-f2ac5ec51305'
+
 level_carries = set(["TFT13_Silco", "TFT13_Vi", "TFT13_Caitlyn", "TFT13_Ekko", "TFT13_Malzahar", "TFT13_Twitch", "TFT13_LeBlanc",
                     "TFT13_Heimerdinger", "TFT13_Jayce", "TFT13_Lieutenant", "TFT13_Jinx", "TFT13_Corki", "TFT13_Ambessa", "TFT13_Mordekaiser", "TFT13_Zoe"])
 reroll_carries = set(["TFT13_Camille", "TFT13_RenataGlasc", "TFT13_Akali", "TFT13_Ezreal", "TFT13_Draven", "TFT13_Cassiopeia", "TFT13_Ziggs", "TFT13_Gremlin", "TFT13_Shooter",   "TFT13_Blue", "TFT13_Zeri", "TFT13_Red", "TFT13_Nami", "TFT13_Vex", "TFT13_Nocturne", "TFT13_Darius", "TFT13_Irelia", "TFT13_FlyGuy", "TFT13_NunuWillump",
@@ -147,6 +148,7 @@ def updateData(username):
         cur.execute("INSERT into players (puuid, usertag) values (%s, %s)", (current_puuid, username))
 
     matches = requests.get('https://americas.api.riotgames.com/tft/match/v1/matches/by-puuid/' + current_puuid + '/ids?start=0&count=20&api_key=' + api_key).json()
+    # print(matches)
 
     # add each match to the db
     for match in matches:
@@ -176,6 +178,7 @@ def updateData(username):
         game_information = match_data['info']['participants']
         players = []
         # print(game_information[0])
+        c = 0
         for board in game_information:
             curr_dict = {}
 
@@ -202,15 +205,15 @@ def updateData(username):
                 r = requests.get('https://americas.api.riotgames.com/riot/account/v1/accounts/by-puuid/' +
                                  curr_dict['puuid'] + '?api_key=' + api_key).json()
             curr_dict['username_tagline'] = r['gameName'] + ' #' + r["tagLine"]
-
-            match_dict[r['gameName'] + ' #' + r["tagLine"]] = curr_dict.copy()
+            curr_player = "Player " + str(c)
+            match_dict[curr_player] = curr_dict.copy()
             players.append(r['gameName'] + ' #' + r["tagLine"])
-
+            c += 1
 
 
             
         # add it into the db
-
+        print(match)
         cur.execute('INSERT into matches (match_id, patch, game_datetime, match_data, players) values (%s, %s, %s, %s, %s)',
                     (match, patch, game_datetime, Json(match_dict), players))
         print('inserted', match)
