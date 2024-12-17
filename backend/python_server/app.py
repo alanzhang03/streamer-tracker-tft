@@ -9,10 +9,62 @@ import time
 
 app = Flask(__name__)
 
-api_key = 'RGAPI-15b9e599-1645-4550-bf8e-2b2362f5ea26'
+# define constants
+api_key = 'RGAPI-5840b085-d507-45ba-b0af-227caf1b04f8'
+level_carries = set(["TFT13_Silco", "TFT13_Vi", "TFT13_Caitlyn", "TFT13_Ekko", "TFT13_Malzahar", "TFT13_Twitch", "TFT13_LeBlanc",
+                    "TFT13_Heimerdinger", "TFT13_Jayce", "TFT13_Lieutenant", "TFT13_Jinx", "TFT13_Corki", "TFT13_Ambessa", "TFT13_Mordekaiser", "TFT13_Zoe"])
+reroll_carries = set(["TFT13_Camille", "TFT13_RenataGlasc", "TFT13_Akali", "TFT13_Ezreal", "TFT13_Draven", "TFT13_Cassiopeia", "TFT13_Ziggs", "TFT13_Gremlin", "TFT13_Shooter",   "TFT13_Blue", "TFT13_Zeri", "TFT13_Red", "TFT13_Nami", "TFT13_Vex", "TFT13_Nocturne", "TFT13_Darius", "TFT13_Irelia", "TFT13_FlyGuy", "TFT13_NunuWillump",
+                     "TFT13_Prime", "TFT13_Beardy", "TFT13_Chainsaw", "TFT13_Vladimir", "TFT13_Rell", "TFT13_Sett", "TFT13_Amumu", "TFT13_Blitzcrank", "TFT13_Singed", "TFT13_Zyra", "TFT13_Gangplank", "TFT13_Leona", "TFT13_KogMaw", "TFT13_TwistedFate", "TFT13_Lux", "TFT13_Morgana", "TFT13_Tristana", "tft13_swain", "TFT13_Urgot", "TFT13_Fish"])
+synergy_dict = {"TFT13_Academy1": "3 Academy", "TFT13_Academy2": "4 Academy",   "TFT13_Academy3": "5 Academy", "TFT13_Academy4": "6 Academy", "TFT13_Ambassador1": "1 Emissary", "TFT13_Ambassador2": "4 Emissary", "TFT13_Ambusher1": "2 Ambusher", "TFT13_Ambusher2": "3 Ambusher", "TFT13_Ambusher3": "4 Ambusher", "TFT13_Ambusher4": "5 Ambusher",
+                "TFT13_Bruiser1": "2 Bruiser", "TFT13_Bruiser2": "4 Bruiser", "TFT13_Bruiser3": "6 Bruiser", "TFT13_Cabal1": "3 Black Rose", "TFT13_Cabal2": "4 Black Rose", "TFT13_Cabal3": "5 Black Rose", "TFT13_Cabal4": "7 Black Rose", "TFT13_Challenger1": "2 Quickstriker", "TFT13_Challenger2": "3 Quickstriker", "TFT13_Challenger3": "4 Quickstriker", 
+                "TFT13_Crime1": "3 Chem-Baron", "TFT13_Crime2": "4 Chem-Baron", "TFT13_Crime3": "5 Chem-Baron", "TFT13_Crime4": "6 Chem-Baron", "TFT13_Crime5": "7 Chem-Baron", "TFT13_Experiment1": "3 Experiment", "TFT13_Experiment2": "5 Experiment", "TFT13_Experiment3": "7 Experiment", "TFT13_Family1": "3 Family", "TFT13_Family2": "4 Family", 
+                "TFT13_Family3": "5 Family", "TFT13_FormSwapper1": "2 Form Swapper", "TFT13_FormSwapper2": "4 Form Swapper", "TFT13_FormSwapper3": "6 Form Swapper", "TFT13_Hextech1": "2 Automata", "TFT13_Hextech2": "4 Automata", "TFT13_Hextech3": "6 Automata", "TFT13_Hoverboard1": "2 Firelight", "TFT13_Hoverboard2": "3 Firelight", 
+                "TFT13_Hoverboard3": "4 Firelight", "TFT13_Invoker1": "2 Visionary", "TFT13_Invoker2": "4 Visionary", "TFT13_Invoker3": "6 Visionary", "TFT13_Invoker4": "8 Visionary", "TFT13_Martialist1": "2 Artillerist", "TFT13_Martialist2": "4 Artillerist", "TFT13_Martialist3": "6 Artillerist", "TFT13_Pugilist1": "2 Pit Fighter", 
+                "TFT13_Pugilist2": "4 Pit Fighter", "TFT13_Pugilist3": "6 Pit Fighter", "TFT13_Pugilist4": "8 Pit Fighter", "TFT13_Rebel1": "3 Rebel", "TFT13_Rebel2": "5 Rebel", "TFT13_Rebel3": "7 Rebel", "TFT13_Rebel4": "10 Rebel", "TFT13_Scrap1": "2 Scrap", "TFT13_Scrap2": "4 Scrap", "TFT13_Scrap3": "6 Scrap", "TFT13_Scrap4": "9 Scrap", 
+                "TFT13_Sniper1": "2 Sniper", "TFT13_Sniper2": "4 Sniper", "TFT13_Sniper3": "6 Sniper", "TFT13_Squad1": "2 Enforcer", "TFT13_Squad2": "4 Enforcer", "TFT13_Squad2": "4 Enforcer", "TFT13_Squad3": "6 Enforcer", "TFT13_Squad4": "8 Enforcer", "TFT13_Squad5": "10 Enforcer", "TFT13_Titan1": "2 Sentinel", "TFT13_Titan2": "4 Sentinel", "TFT13_Titan3": "6 Sentinel",
+                "TFT13_Titan4": "8 Sentinel", "TFT13_Warband1": "2 Conqueror", "TFT13_Warband2": "4 Conqueror", "TFT13_Warband3": "6 Conqueror", "TFT13_Warband4": "9 Conqueror", "TFT13_Watcher1": "2 Watcher", "TFT13_Watcher2": "4 Watcher", "TFT13_Watcher3": "6 Watcher", "TFT13_Sorcerer1": "2 Sorcerer", "TFT13_Sorcerer2": "4 Sorcerer", "TFT13_Sorcerer3": "6 Sorcerer", 
+                "TFT13_Sorcerer4": "8 Sorcerer", "TFT13_Infused1": "2 Dominator", "TFT13_Infused2": "4 Dominator", "TFT13_Infused3": "6 Dominator", }
+unit_dict = {"TFT13_Silco": "Silco", "TFT13_Caitlyn": "Caitlyn", "TFT13_Ekko": "Ekko", "TFT13_Malzahar": "Malzahar", "TFT13_Twitch": "Twitch", "TFT13_Cassiopeia": "Cassiopeia","TFT13_LeBlanc": "LeBlanc", "TFT13_Heimerdinger": "Heimerdinger", "TFT13_Jayce": "Jayce", "TFT13_Lieutenant": "Sevika",
+             "TFT13_Vi": "Vi", "TFT13_Jinx": "Jinx", "TFT13_Nami": "Nami", "TFT13_Corki": "Corki", "TFT13_Ambessa": "Ambessa", "TFT13_Mordekaiser": "Mordekaiser", "TFT13_Zoe": "Zoe", "TFT13_Camille": "Camille", "TFT13_RenataGlasc": "Renata", "TFT13_Akali": "Akali", "TFT13_Ezreal": "Ezreal",
+             "TFT13_Draven": "Draven", "TFT13_Ziggs": "Ziggs", "TFT13_Gremlin": "Smeech", "TFT13_Shooter": "Maddie", "TFT13_Blue": "Powder", "TFT13_Zeri": "Zeri", "TFT13_Red": "Violet", "TFT13_Nami": "Nami", "TFT13_Vex": "Vex", "TFT13_Nocturne": "Nocturne", "TFT13_Darius": "Darius", "TFT13_Irelia": "Irelia",
+             "TFT13_FlyGuy": "Scar", "TFT13_NunuWillump": "Nunu", "TFT13_Prime": "Vander", "TFT13_Beardy": "Loris", "TFT13_Chainsaw": "Renni", "TFT13_Vladimir": "Vladimir", "TFT13_Rell": "Rell", "TFT13_Sett": "Sett", "TFT13_Amumu": "Amumu", "TFT13_Blitzcrank": "Blitzcrank", "TFT13_Singed": "Singed",
+             "TFT13_Zyra": "Zyra", "TFT13_Gangplank": "Gangplank", "TFT13_Leona": "Leona", "TFT13_KogMaw": "KogMaw", "TFT13_TwistedFate": "Twisted Fate", "TFT13_Lux": "Lux", "TFT13_Morgana": "Morgana", "TFT13_Tristana": "Tristana", "tft13_swain": "Swain", "TFT13_Urgot": "Urgot", "TFT13_Trundle": "Trundle",
+             "TFT13_Fish": "Steb"
+             }
+
+
+def findComp(units, synergies, level_carries, reroll_carries, synergy_dict, unit_dict):
+    ## if there is a silver/gold synergy, add it to name, otherwise flex
+    ## if there is 4 cost carry with 3 items, add it to comp name
+    ## if lots of 2 star 5 cost add "+ legendaries"
+    ## returns a list of comps for easy filtering
+    ## if 3 star unit with 3 items, add reroll
+    comp = []
+
+    for synergy in synergies:
+        if synergy["tier_current"] >= 2:
+            if synergy["name"] + str(synergy["tier_current"]) in synergy_dict:
+                comp.append(synergy_dict[synergy["name"] + str(synergy["tier_current"])])
+            else:
+                comp.append(synergy["name"] + str(synergy["tier_current"]))
+            # comp.append(synergy["name"] + str(synergy["tier_current"]))
+    reroll = False
+    for unit in units:
+        if unit["character_id"] in reroll_carries and unit["tier"] == 3 and len(unit["itemNames"]) == 3:
+            reroll = True
+    for unit in units:
+        if reroll and unit["tier"] >= 3 and len(unit["itemNames"]) == 3:
+            comp.append(unit_dict[unit["character_id"]])
+            # comp.append(unit["character_id"])
+        elif not reroll and unit["character_id"] in level_carries and len(unit["itemNames"]) == 3:
+            comp.append(unit_dict[unit["character_id"]])
+            # comp.append(unit["character_id"])
+
+    if reroll:
+        comp.append("Reroll")
+    return comp
 
 # takes in a username and returns the most recent matches from page x, pages starting at 0
-
 
 def getStreamerData(username, page):
     page = int(page)
@@ -84,7 +136,8 @@ def updateData(username):
     cur = conn.cursor(cursor_factory=DictCursor)
 
     # get recent match data
-    split_username = username.split(" ")
+    split_username = username.rpartition(" ")
+    split_username = list(filter(lambda a: a != " ", split_username))
     cur.execute("SELECT puuid FROM players WHERE usertag=%s", (username, ))
     current_puuid = ""
     if cur.rowcount > 0:
@@ -97,6 +150,7 @@ def updateData(username):
 
     # add each match to the db
     for match in matches:
+        print("adding match", match)
         # first check not in the db
         
         cur.execute('SELECT 1 FROM matches WHERE match_id=%s', (match, ))
@@ -124,13 +178,19 @@ def updateData(username):
         # print(game_information[0])
         for board in game_information:
             curr_dict = {}
-            curr_dict['augments'] = board['augments']
+
+            # no more augments saj
+            # curr_dict['augments'] = board['augments']
+            
             curr_dict['level'] = board['level']
             curr_dict['placement'] = board['placement']
             curr_dict['traits'] = board['traits']
             curr_dict['units'] = board['units']
             curr_dict['puuid'] = board['puuid']
             curr_dict['gold_left'] = board['gold_left']
+
+            ## get the comp they are playing
+            curr_dict["comp"] = findComp(curr_dict['units'], curr_dict['traits'], level_carries, reroll_carries, synergy_dict, unit_dict)
 
             r = requests.get('https://americas.api.riotgames.com/riot/account/v1/accounts/by-puuid/' +
                              curr_dict['puuid'] + '?api_key=' + api_key)
@@ -146,6 +206,9 @@ def updateData(username):
             match_dict[r['gameName'] + ' #' + r["tagLine"]] = curr_dict.copy()
             players.append(r['gameName'] + ' #' + r["tagLine"])
 
+
+
+            
         # add it into the db
 
         cur.execute('INSERT into matches (match_id, patch, game_datetime, match_data, players) values (%s, %s, %s, %s, %s)',
@@ -164,18 +227,18 @@ def updateData(username):
 # get the match history and return a list of matches in json format
 @app.route('/api/match-history', methods=['GET'])
 def get_data():
-    try:
+    # try:
         user = request.headers['username-tagline']
         pagenum = request.headers['page-number']
+        print('updating user data')
         updateData(user)
         res = getStreamerData(user, pagenum)
         return jsonify(res)
-    except:
-        return jsonify("problem with header one or both of username-tagline or page-number")
+    # except Exception as e:
+    #     print(e)
+    #     return jsonify("problem with header one or both of username-tagline or page-number")
 
 # Route to handle POST requests
-
-
 @app.route('/api/data', methods=['POST'])
 def add_data():
     data = request.get_json()  # Get JSON data from the request
