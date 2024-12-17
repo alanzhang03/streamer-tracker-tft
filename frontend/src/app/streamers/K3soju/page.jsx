@@ -15,7 +15,7 @@ const page = () => {
 	};
 	return (
 		<>
-			<StreamerPage usernameTagline="VIT k3soju #000" />
+			<StreamerPage usernameTagline="VIT k3soju   #000" />
 		</>
 	);
 };
