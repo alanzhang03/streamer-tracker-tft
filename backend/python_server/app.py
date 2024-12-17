@@ -7,7 +7,11 @@ from psycopg2.extras import Json, DictCursor
 import requests
 import time
 
+from flask_cors import CORS, cross_origin
 app = Flask(__name__)
+cors = CORS(app) # allow CORS for all domains on all routes.
+app.config['CORS_HEADERS'] = 'Content-Type'
+
 
 # define constants
 api_key = 'RGAPI-7d2ccdcc-8cd0-4f8c-af54-f2ac5ec51305'
@@ -140,6 +144,7 @@ def updateData(username):
     split_username = username.rpartition(" ")
     split_username = list(filter(lambda a: a != " ", split_username))
     cur.execute("SELECT puuid FROM players WHERE usertag=%s", (username, ))
+    print(username)
     current_puuid = ""
     if cur.rowcount > 0:
         current_puuid = cur.fetchone()[0]
