@@ -30,12 +30,12 @@ export default function Home() {
 			rank: "Challenger",
 			image: "/k3soju.png",
 		},
-		{
-			id: "anotherstreamer",
-			name: "AnotherStreamer",
-			rank: "Diamond",
-			image: "",
-		},
+		// {
+		// 	id: "anotherstreamer",
+		// 	name: "AnotherStreamer",
+		// 	rank: "Diamond",
+		// 	image: "",
+		// },
 	];
 
 	useGSAP(() => {
