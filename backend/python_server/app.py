@@ -14,7 +14,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 # define constants
-api_key = 'RGAPI-7d2ccdcc-8cd0-4f8c-af54-f2ac5ec51305'
+api_key = 'RGAPI-4d1b0b18-8e28-4650-a738-60a0cbfa95a9'
 
 level_carries = set(["TFT13_Silco", "TFT13_Vi", "TFT13_Caitlyn", "TFT13_Ekko", "TFT13_Malzahar", "TFT13_Twitch", "TFT13_LeBlanc",
                     "TFT13_Heimerdinger", "TFT13_Jayce", "TFT13_Lieutenant", "TFT13_Jinx", "TFT13_Corki", "TFT13_Ambessa", "TFT13_Mordekaiser", "TFT13_Zoe"])
@@ -153,7 +153,7 @@ def updateData(username):
         cur.execute("INSERT into players (puuid, usertag) values (%s, %s)", (current_puuid, username))
 
     matches = requests.get('https://americas.api.riotgames.com/tft/match/v1/matches/by-puuid/' + current_puuid + '/ids?start=0&count=20&api_key=' + api_key).json()
-    # print(matches)
+    print(matches)
 
     # add each match to the db
     for match in matches:
@@ -209,6 +209,7 @@ def updateData(username):
                 time.sleep(120)
                 r = requests.get('https://americas.api.riotgames.com/riot/account/v1/accounts/by-puuid/' +
                                  curr_dict['puuid'] + '?api_key=' + api_key).json()
+                # print(r)
             curr_dict['username_tagline'] = r['gameName'] + ' #' + r["tagLine"]
             curr_player = "Player " + str(c)
             match_dict[curr_player] = curr_dict.copy()
