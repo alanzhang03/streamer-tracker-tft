@@ -2,8 +2,9 @@
 import React from "react";
 import Image from "next/image";
 import "./styles/MatchHistory.scss";
+import Comps from "./Comps";
 
-const MatchHistory = ({ data, names_dict, synergy_dict, images }) => {
+const MatchHistory = ({ data, synergy_dict, images }) => {
 	return (
 		<div className="match-history">
 			{data.map((match, index) => {
@@ -26,9 +27,8 @@ const MatchHistory = ({ data, names_dict, synergy_dict, images }) => {
 											const traitName =
 												synergy_dict[
 													trait.name.concat("", trait.tier_current)
-												] || trait.name; 
+												] || trait.name;
 
-											
 											const traitKey = Object.keys(images).find((key) =>
 												key.includes(`Trait_Icon_13_${trait.name}`)
 											);
@@ -53,31 +53,18 @@ const MatchHistory = ({ data, names_dict, synergy_dict, images }) => {
 								</div>
 							</div>
 						</div>
-
-						<div className="champions-row">
-							{player.units.map((champion, i) => {
-								const characterName = names_dict[champion["character_id"]];
-								const imageKey = Object.keys(images).find((key) =>
-									key.startsWith(champion["character_id"])
-								);
-								const characterImage = images[imageKey]?.default;
-
-								return (
-									<div key={i} className="champion">
-										{characterImage && (
-											<Image
-												src={characterImage}
-												alt={characterName}
-												width={40}
-												height={40}
-												className="champion-icon"
-											/>
-										)}
-										<div className="star-tier">{"★".repeat(champion.tier)}</div>
-									</div>
-								);
-							})}
-						</div>
+						<Comps
+							comps={player.units.map((champion) => ({
+								characterId: champion["character_id"],
+								characterImage:
+									images[
+										Object.keys(images).find((key) =>
+											key.startsWith(champion["character_id"])
+										)
+									]?.default,
+								tier: champion.tier,
+							}))}
+						/>
 					</div>
 				);
 			})}
