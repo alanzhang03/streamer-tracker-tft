@@ -1,0 +1,95 @@
+.match-history {
+	display: flex;
+	flex-direction: column;
+	margin-left: 15%;
+	margin-right: 15%;
+	gap: 2vh;
+
+	.match-card {
+		background-color: #1c1f26;
+		border-radius: 10px;
+		padding: 15px;
+		color: #f8f8f8;
+		box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+		display: flex;
+		flex-direction: column;
+        justify-content: center;
+
+
+		.match-header {
+			display: flex;
+			justify-content: space-between;
+			margin-bottom: 15px;
+
+			.header-info {
+				h2 {
+					margin: 0;
+					font-size: 1.4rem;
+					color: #ffcc00;
+				}
+
+				p {
+					margin: 3px 0;
+					font-size: 0.9rem;
+					color: #ccc;
+				}
+			}
+
+			.header-traits {
+				display: flex;
+				align-items: center;
+
+				.traits-icons {
+					display: flex;
+					gap: 10px;
+
+					.trait {
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+
+						.trait-icon {
+							width: 35px;
+							height: 35px;
+							border-radius: 50%;
+							border: 2px solid #333;
+						}
+
+						span {
+							margin-top: 5px;
+							font-size: 0.8rem;
+							color: #ffcc00;
+						}
+					}
+				}
+			}
+		}
+
+		.champions-row {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			overflow-x: auto;
+			padding: 10px 0;
+
+			.champion {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+
+				.champion-icon {
+					width: 50px;
+					height: 50px;
+					border-radius: 8px;
+					border: 2px solid #444;
+				}
+
+				.star-tier {
+					margin-top: 5px;
+					font-size: 0.9rem;
+					color: #ffcc00;
+				}
+			}
+		}
+	}
+}
