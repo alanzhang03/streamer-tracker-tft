@@ -14,7 +14,20 @@ const MatchHistory = ({ data, synergy_dict, images }) => {
 					<div key={index} className="match-card">
 						<div className="match-header">
 							<div className="header-info">
-								<h2>Placement: {player.placement}</h2>
+								<h2
+									style={{
+										color:
+											player.placement === 1
+												? "#ffcc00"
+												: player.placement === 2
+												? "#c0c0c0"
+												: player.placement === 3
+												? "#cd7f32"
+												: "#000000",
+									}}
+								>
+									Placement: {player.placement}
+								</h2>
 								<p>+{player.lp_gain || 0} LP</p>
 								<p>Gold Left: {player.gold_left}</p>
 								<p>Level: {player.level}</p>
