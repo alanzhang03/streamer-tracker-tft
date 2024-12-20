@@ -9,12 +9,12 @@ import time
 
 from flask_cors import CORS, cross_origin
 app = Flask(__name__)
-cors = CORS(app) # allow CORS for all domains on all routes.
+cors = CORS(app) 
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 # define constants
-api_key = 'RGAPI-49bc4c8b-3ef1-44a1-8672-239a58e0b68b'
+api_key = 'RGAPI-ba20648b-1998-4e61-bb9d-1d58cadee4fc'
 
 level_carries = set(["TFT13_Silco", "TFT13_Vi", "TFT13_Caitlyn", "TFT13_Ekko", "TFT13_Malzahar", "TFT13_Twitch", "TFT13_LeBlanc",
                     "TFT13_Heimerdinger", "TFT13_Jayce", "TFT13_Lieutenant", "TFT13_Jinx", "TFT13_Corki", "TFT13_Ambessa", "TFT13_Mordekaiser", "TFT13_Zoe"])
