@@ -36,7 +36,42 @@ unit_dict = {"TFT13_Silco": "Silco", "TFT13_Caitlyn": "Caitlyn", "TFT13_Ekko": "
              "TFT13_Zyra": "Zyra", "TFT13_Gangplank": "Gangplank", "TFT13_Leona": "Leona", "TFT13_KogMaw": "KogMaw", "TFT13_TwistedFate": "Twisted Fate", "TFT13_Lux": "Lux", "TFT13_Morgana": "Morgana", "TFT13_Tristana": "Tristana", "tft13_swain": "Swain", "TFT13_Urgot": "Urgot", "TFT13_Trundle": "Trundle",
              "TFT13_Fish": "Steb"
              }
+def getStats(username):
+    # return a dict of all the stats
+    res = {}
+    # first get their puuid from username
+    load_dotenv()
 
+    # Get the connection string from the environment variable
+    connection_string = os.getenv('DATABASE_URL')
+
+    # Create a connection pool
+    connection_pool = pool.SimpleConnectionPool(
+        1,  # Minimum number of connections in the pool
+        10,  # Maximum number of connections in the pool
+        connection_string
+    )
+
+    # Check if the pool was created successfully
+    if connection_pool:
+        print("Connection pool created successfully")
+
+    # Get a connection from the pool
+    conn = connection_pool.getconn()
+    conn.autocommit = True
+
+    # Create a cursor object
+    cur = conn.cursor(cursor_factory=DictCursor)
+
+    cur.execute("SELECT num_games, sum_placements, wins, top_four FROM stats WHERE usertag = %s", (username, ))
+    num_games, sum_placements, wins, top_four = cur.fetchone()
+    res['games'] = num_games
+    res['average_placement'] = round(sum_placements / num_games, 2)
+    res['wins'] = wins
+    res['top_four'] = top_four
+    res['top_four_percentage'] = round(top_four / num_games, 2)
+
+    return res
 
 def findComp(units, synergies, level_carries, reroll_carries, synergy_dict, unit_dict):
     ## if there is a silver/gold synergy, add it to name, otherwise flex
@@ -64,7 +99,8 @@ def findComp(units, synergies, level_carries, reroll_carries, synergy_dict, unit
         elif not reroll and unit["character_id"] in level_carries and len(unit["itemNames"]) == 3:
             comp.append(unit_dict[unit["character_id"]])
             # comp.append(unit["character_id"])
-
+    
+    comp.sort(reverse=True)
     if reroll:
         comp.append("Reroll")
     return comp
@@ -167,11 +203,12 @@ def updateData(username):
         match_dict = {}
         match_data = requests.get(
             'https://americas.api.riotgames.com/tft/match/v1/matches/' + match + '?api_key=' + api_key)
-
+        
+        # get the match data
         if match_data.ok:
             match_data = match_data.json()
         else:
-            print("sleeping 120s")
+            print("sleeping 120s (match request)")
             time.sleep(120)
             match_data = requests.get(
                 'https://americas.api.riotgames.com/tft/match/v1/matches/' + match + '?api_key=' + api_key).json()
@@ -200,27 +237,51 @@ def updateData(username):
             ## get the comp they are playing
             curr_dict["comp"] = findComp(curr_dict['units'], curr_dict['traits'], level_carries, reroll_carries, synergy_dict, unit_dict)
 
-            r = requests.get('https://americas.api.riotgames.com/riot/account/v1/accounts/by-puuid/' +
-                             curr_dict['puuid'] + '?api_key=' + api_key)
-            if r.ok:
-                r = r.json()
+            # get their username and add it to dict
+            cur.execute("SELECT usertag FROM players WHERE puuid=%s", (curr_dict['puuid'], ))
+            username = ""
+            if cur.rowcount > 0:
+                username = cur.fetchone()[0]
             else:
-                print("sleeping 120s")
-                time.sleep(120)
                 r = requests.get('https://americas.api.riotgames.com/riot/account/v1/accounts/by-puuid/' +
+                                 curr_dict['puuid'] + '?api_key=' + api_key)
+                if r.ok:
+                    r = r.json()
+                else:
+                    print("sleeping 120s")
+                    time.sleep(120)
+                    r = requests.get('https://americas.api.riotgames.com/riot/account/v1/accounts/by-puuid/' +
                                  curr_dict['puuid'] + '?api_key=' + api_key).json()
-                # print(r)
-            curr_dict['username_tagline'] = r['gameName'] + ' #' + r["tagLine"]
+                username = r['gameName'] + ' #' + r["tagLine"]
+                cur.execute("INSERT into players (puuid, usertag) values (%s, %s) ON CONFLICT (puuid) DO NOTHING", (curr_dict['puuid'], username))
+
+            curr_dict['username_tagline'] = username
+
+
             curr_player = "Player " + str(c)
             match_dict[curr_player] = curr_dict.copy()
-            players.append(r['gameName'] + ' #' + r["tagLine"])
+            players.append(username)
             c += 1
 
+
+            # add stats for each player
+            cur.execute("SELECT num_games, sum_placements, wins, top_four FROM stats WHERE usertag = %s", (username, ))
+            # if first game in db, initiate values
+            num_games, sum_placements, wins, top_four = 0, 0, 0, 0
+            if cur.rowcount > 0:
+                num_games, sum_placements, wins, top_four = cur.fetchone()
+
+            num_games += 1
+            sum_placements += curr_dict['placement']
+            if curr_dict['placement'] == 1:
+                wins += 1
+            if curr_dict['placement'] <= 4:
+                top_four += 1
 
             
         # add it into the db
         print(match)
-        cur.execute('INSERT into matches (match_id, patch, game_datetime, match_data, players) values (%s, %s, %s, %s, %s)',
+        cur.execute('INSERT into matches (match_id, patch, game_datetime, match_data, players) values (%s, %s, %s, %s, %s);',
                     (match, patch, game_datetime, Json(match_dict), players))
         print('inserted', match)
 
@@ -235,7 +296,7 @@ def updateData(username):
 
 # get the match history and return a list of matches in json format
 @app.route('/api/match-history', methods=['GET'])
-def get_data():
+def get_match_history():
     # try:
         user = request.headers['username-tagline']
         pagenum = request.headers['page-number']
@@ -246,6 +307,13 @@ def get_data():
     # except Exception as e:
     #     print(e)
     #     return jsonify("problem with header one or both of username-tagline or page-number")
+    
+# get the stats and return it in json format
+@app.route('/api/match-history', methods=['GET'])
+def get_stats():
+    user = request.headers['username-tagline']
+    res = getStats(user)
+    return jsonify(res)
 
 # Route to handle POST requests
 @app.route('/api/data', methods=['POST'])

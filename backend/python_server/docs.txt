@@ -6,8 +6,9 @@ API endpoints:
       page-number: returns the matches from page number. Index starting at 0. For example, page-number=0 returns the 5 most recent matches, page-number=1 returns the 6th-10th most recent matches.
     Returns:
       returns an array of match jsons.
-  /api/player
+
+  /api/stats
     Headers:
       username-tagline: takes in a username followed by a space followed by the tagline. For example: "Knav #NA1"
     Returns:
-      returns a json containing various stats
+      return a json containing all the relevant stats
