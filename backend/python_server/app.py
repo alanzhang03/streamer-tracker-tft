@@ -14,7 +14,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 # define constants
-api_key = 'RGAPI-ba20648b-1998-4e61-bb9d-1d58cadee4fc'
+api_key = 'RGAPI-a7f5f1d3-ded8-484e-90b5-f9afc2e65bdf'
 
 level_carries = set(["TFT13_Silco", "TFT13_Vi", "TFT13_Caitlyn", "TFT13_Ekko", "TFT13_Malzahar", "TFT13_Twitch", "TFT13_LeBlanc",
                     "TFT13_Heimerdinger", "TFT13_Jayce", "TFT13_Lieutenant", "TFT13_Jinx", "TFT13_Corki", "TFT13_Ambessa", "TFT13_Mordekaiser", "TFT13_Zoe"])
