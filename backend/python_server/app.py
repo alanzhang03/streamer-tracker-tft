@@ -156,7 +156,7 @@ def updateData(username):
     load_dotenv()
 
     # Get the connection string from the environment variable
-    connection_string = os.getenv('DATABASE_URL')
+    connection_string = os.environ.get('DATABASE_URL')
 
     # Create a connection pool
     connection_pool = pool.SimpleConnectionPool(
@@ -334,4 +334,4 @@ def home():
 
 
 if __name__ == '__main__':
-    app.run(port=3002, debug=True)
+    app.run(debug=True)
