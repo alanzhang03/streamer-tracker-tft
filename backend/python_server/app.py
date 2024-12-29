@@ -14,7 +14,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 # define constants
-api_key = 'RGAPI-ba20648b-1998-4e61-bb9d-1d58cadee4fc'
+api_key = 'RGAPI-f82e1f7e-c046-45f0-82c5-5506cc01b483'
 
 level_carries = set(["TFT13_Silco", "TFT13_Vi", "TFT13_Caitlyn", "TFT13_Ekko", "TFT13_Malzahar", "TFT13_Twitch", "TFT13_LeBlanc",
                     "TFT13_Heimerdinger", "TFT13_Jayce", "TFT13_Lieutenant", "TFT13_Jinx", "TFT13_Corki", "TFT13_Ambessa", "TFT13_Mordekaiser", "TFT13_Zoe"])
@@ -43,7 +43,7 @@ def getStats(username):
     load_dotenv()
 
     # Get the connection string from the environment variable
-    connection_string = os.getenv('DATABASE_URL')
+    connection_string = os.environ.get('DATABASE_URL')
 
     # Create a connection pool
     connection_pool = pool.SimpleConnectionPool(
