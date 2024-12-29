@@ -111,7 +111,7 @@ const StreamerPage = ({ usernameTagline }) => {
 		TFT13_Infused3: "6 Dominator",
 	};
 
-	const API_ENDPOINT = "http://localhost:3002/api/match-history";
+	const API_ENDPOINT = "https://streamertracker-tft-262334a34d5b.herokuapp.com//api/match-history";
 	const headers = {
 		"Content-Type": "application/json",
 		"page-number": "0",
