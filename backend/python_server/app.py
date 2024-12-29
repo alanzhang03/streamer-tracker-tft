@@ -277,6 +277,17 @@ def updateData(username):
                 wins += 1
             if curr_dict['placement'] <= 4:
                 top_four += 1
+            
+            cur.execute("""
+                INSERT INTO stats (usertag, num_games, sum_placements, wins, top_four)
+                VALUES (%s, %s, %s, %s, %s)
+                ON CONFLICT (usertag)
+                DO UPDATE SET
+                    num_games = %s,
+                    sum_placements = %s,
+                    wins = %s,
+                    top_four = %s;
+            """, (username, num_games, sum_placements, wins, top_four, num_games, sum_placements, wins, top_four))
 
             
         # add it into the db
