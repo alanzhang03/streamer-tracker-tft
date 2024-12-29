@@ -141,7 +141,19 @@ const StreamerPage = ({ usernameTagline }) => {
 	//some dummy data
 	return (
 		<div className="streamer-page">
-			<h1>{usernameTagline}'s Match History</h1>
+			<section className="streamer-intro-section">
+				<h1 className="streamer-section-header">Intro Section for Streamer</h1>
+			</section>
+			<section className="streamer-statistics">
+				<h1 className="streamer-section-header">
+					Recent 20 Games Ranked Statistics
+				</h1>
+			</section>
+
+			<h1 className="streamer-section-header">
+				{usernameTagline}'s Match History
+			</h1>
+
 			{loading && <p>Loading...</p>}
 			{error && <p style={{ color: "red" }}>Error: {error}</p>}
 			{data && (

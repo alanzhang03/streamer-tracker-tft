@@ -1,9 +1,12 @@
 .comps-section {
-}
-
-.comps-grid {
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	gap: 1vw;
+	.comps-grid {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		gap: 1vw;
+		.star-tier {
+			display: flex;
+			justify-content: center;
+		}
+	}
 }
