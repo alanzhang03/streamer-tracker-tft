@@ -138,7 +138,7 @@ const StreamerPage = ({ usernameTagline }) => {
 		fetchData();
 	}, [usernameTagline]);
 
-	//some dummy data
+
 	return (
 		<div className="streamer-page">
 			<section className="streamer-intro-section">
