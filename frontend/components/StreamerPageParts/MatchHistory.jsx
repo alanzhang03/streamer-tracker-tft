@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import "./styles/MatchHistory.scss";
 import Comps from "./Comps";
-import Augments from "./Augments"; 
+import Augments from "./Augments";
 
 const MatchHistory = ({ data, images }) => {
   return (
