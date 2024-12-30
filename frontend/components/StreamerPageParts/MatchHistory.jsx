@@ -1,10 +1,10 @@
 import React from "react";
-import Image from "next/image";
 import "./styles/MatchHistory.scss";
 import Comps from "./Comps";
 import Augments from "./Augments";
 
-const MatchHistory = ({ data, images }) => {
+const MatchHistory = ({ data, images, augmentImages }) => {
+
   return (
     <div className="match-history">
       {data.map((match, index) => {
@@ -33,7 +33,7 @@ const MatchHistory = ({ data, images }) => {
                 </div>
               </div>
 
-              <Augments playerTraits={player.traits} />
+              <Augments playerTraits={player.traits} images={augmentImages} />
             </div>
             <hr width="100%" size="2" />
             <Comps
@@ -62,15 +62,15 @@ function determineColor(placement) {
     case 1:
       return "gold";
     case 2:
-      return "Pink";
+      return "pink";
     case 3:
-      return "Aqua";
+      return "aqua";
     case 4:
       return "#90EE90";
     case 5:
       return "#4F6367";
     default:
-      return "Grey";
+      return "grey";
   }
 }
 

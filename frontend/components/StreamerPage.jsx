@@ -15,6 +15,19 @@ const images = importAllImages(
   require.context("./assets/champions", false, /\.(png|jpe?g|svg)$/)
 );
 
+const importAllAugmentImages = (requireContext) => {
+  const images = {};
+  requireContext.keys().forEach((key) => {
+    const filename = key.replace("./", "").replace(/\.(png|jpe?g|svg)$/, "");
+    images[filename] = requireContext(key).default;
+  });
+  return images;
+};
+
+const augmentImages = importAllAugmentImages(
+  require.context("./assets/traits", false, /\.(png|jpe?g|svg)$/)
+);
+
 const StreamerPage = ({ usernameTagline }) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -65,7 +78,13 @@ const StreamerPage = ({ usernameTagline }) => {
 
       {loading && <p>Loading...</p>}
       {error && <p style={{ color: "red" }}>Error: {error}</p>}
-      {data && <MatchHistory data={data} images={images} />}
+      {data && (
+        <MatchHistory
+          data={data}
+          images={images}
+          augmentImages={augmentImages}
+        />
+      )}
     </div>
   );
 };
