@@ -21,8 +21,10 @@ const MatchHistory = ({ data, images }) => {
                 <p>Gold Left: {player.gold_left}</p>
                 <p>Level: {player.level}</p>
               </div>
+
               <Augments playerTraits={player.traits} />
             </div>
+            <hr width="100%" size="2" />
             <Comps
               comps={player.units.map((champion) => ({
                 characterId: champion["character_id"],
@@ -47,12 +49,16 @@ export default MatchHistory;
 function determineColor(placement) {
   switch (placement) {
     case 1:
-      return "#ffcc00";
+      return "gold";
     case 2:
-      return "#c0c0c0";
+      return "Pink";
     case 3:
-      return "#cd7f32";
+      return "Aqua";
+    case 4:
+      return "#90EE90";
+    case 5:
+      return "#4F6367";
     default:
-      return "#000000";
+      return "Grey";
   }
 }

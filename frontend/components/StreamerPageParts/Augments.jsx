@@ -93,11 +93,10 @@ const synergy_dict = {
 const Augments = ({ playerTraits }) => {
   return (
     <div className="augments-section">
-      <h3>Augments</h3>
       <div className="augments-grid">
         {playerTraits && playerTraits.length > 0 ? (
           playerTraits
-            .filter((trait) => trait.tier_current >= 1)
+            .filter((trait) => trait.tier_current > 1)
             .map((trait, index) => {
               const displayText =
                 synergy_dict[`${trait.name}${trait.tier_current}`] ||

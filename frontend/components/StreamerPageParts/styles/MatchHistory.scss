@@ -22,6 +22,9 @@
       margin-bottom: 15px;
 
       .header-info {
+        display: flex;
+        flex-direction: row;
+        gap: 1vw;
         h2 {
           margin: 0;
           font-size: 1.4rem;
