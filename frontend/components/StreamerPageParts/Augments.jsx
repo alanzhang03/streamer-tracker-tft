@@ -88,6 +88,9 @@ const synergy_dict = {
   TFT13_Infused1: "2 Dominator",
   TFT13_Infused2: "4 Dominator",
   TFT13_Infused3: "6 Dominator",
+  TFT13_JunkerKing1: "1 Junker King",
+  TFT13_HighRoller1: "1 High Roller",
+  TFT13_MissMageTrait1: "1 MissMage",
 };
 
 const Augments = ({ playerTraits }) => {
@@ -96,7 +99,7 @@ const Augments = ({ playerTraits }) => {
       <div className="augments-grid">
         {playerTraits && playerTraits.length > 0 ? (
           playerTraits
-            .filter((trait) => trait.tier_current > 1)
+            .filter((trait) => trait.tier_current >= 1)
             .map((trait, index) => {
               const displayText =
                 synergy_dict[`${trait.name}${trait.tier_current}`] ||
