@@ -14,12 +14,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 # define constants
-<<<<<<< HEAD
-api_key = 'RGAPI-f82e1f7e-c046-45f0-82c5-5506cc01b483'
-=======
-api_key = 'RGAPI-a7f5f1d3-ded8-484e-90b5-f9afc2e65bdf'
->>>>>>> f019bee648e4cf5d3013924a8405b3de88f02ae9
-
+api_key = os.getenv('API_KEY')
 level_carries = set(["TFT13_Silco", "TFT13_Vi", "TFT13_Caitlyn", "TFT13_Ekko", "TFT13_Malzahar", "TFT13_Twitch", "TFT13_LeBlanc",
                     "TFT13_Heimerdinger", "TFT13_Jayce", "TFT13_Lieutenant", "TFT13_Jinx", "TFT13_Corki", "TFT13_Ambessa", "TFT13_Mordekaiser", "TFT13_Zoe"])
 reroll_carries = set(["TFT13_Camille", "TFT13_RenataGlasc", "TFT13_Akali", "TFT13_Ezreal", "TFT13_Draven", "TFT13_Cassiopeia", "TFT13_Ziggs", "TFT13_Gremlin", "TFT13_Shooter",   "TFT13_Blue", "TFT13_Zeri", "TFT13_Red", "TFT13_Nami", "TFT13_Vex", "TFT13_Nocturne", "TFT13_Darius", "TFT13_Irelia", "TFT13_FlyGuy", "TFT13_NunuWillump",
