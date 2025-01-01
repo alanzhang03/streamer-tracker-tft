@@ -1,205 +1,251 @@
 /* hero section */
 .hero {
-	height: 90vh;
-	background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-		url("/background.jpg");
-	background-size: cover;
-	background-position: center;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	text-align: center;
+  height: 90vh;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url("/background.jpg");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .hero h1 {
-	font-size: 5rem;
-	margin: 0;
-	color: white;
-	text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-	color: #a5d8ff;
+  font-size: 5rem;
+  margin: 0;
+  color: white;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  color: #a5d8ff;
 }
 
 .hero p {
-	font-size: 1.5rem;
-	margin: 10px 0;
-	color: white;
-	text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  font-size: 1.5rem;
+  margin: 10px 0;
+  color: white;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
 }
 
 .ctaButton {
-	margin-top: 20px;
-	padding: 15px 30px;
-	background-color: #a29bfe;
-	color: white;
-	text-decoration: none;
-	border-radius: 5px;
-	font-size: 1.25rem;
-	transition: background-color 0.3s;
+  margin-top: 20px;
+  padding: 15px 30px;
+  background-color: #a29bfe;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 1.25rem;
+  transition: background-color 0.3s;
 }
 
 .ctaButton:hover {
-	background-color: #7d74fb;
+  background-color: #7d74fb;
 }
 
 /* featured streamers section */
 .featuredStreamers {
-	padding: 4rem 2rem;
-	text-align: center;
+  padding: 4rem 2rem;
+  text-align: center;
 }
 
 .featuredStreamers h2 {
-	padding-top: 2vh;
-	font-size: 5rem;
-	margin-bottom: 3vh;
-	color: #a5d8ff;
+  padding-top: 2vh;
+  font-size: 5rem;
+  margin-bottom: 3vh;
+  color: #a5d8ff;
 }
 
 .streamerGrid {
-	display: flex;
-	justify-content: center;
-	gap: 3rem;
-	flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
 }
 
 .streamerCard {
-	opacity: 0;
-	background-color: rgba(255, 255, 255, 0.1);
-	padding: 2rem;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	gap: 1vh;
-	border-radius: 10px;
-	text-align: center;
-	width: 15vw;
-	height: auto;
-	border: #a29bfe solid 2px;
-	padding-top: none;
-	transition: 0.2s;
-	&:hover {
-		box-shadow: 0 13px 16px #8880fa;
-		border-color: #a29bfe;
-	}
+  opacity: 0;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 2rem !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1vh;
+  border-radius: 10px;
+  text-align: center;
+  width: 15vw;
+  height: auto;
+  border: #a29bfe solid 2px;
+  padding-top: none;
+  transition: 0.2s;
+  &:hover {
+    box-shadow: 0 13px 16px #8880fa;
+    border-color: #a29bfe;
+  }
 }
 
 .streamerName {
-	font-size: 2rem;
-	margin: 1rem 0 0.5rem;
-	color: #a5d8ff;
+  font-size: 2rem;
+  margin: 1rem 0 0.5rem;
+  color: #a5d8ff;
 }
 
 .streamerRank {
-	font-size: 1.25rem;
-	margin: 0.5rem 0;
+  font-size: 1.25rem;
+  margin: 0.5rem 0;
 }
 
 .viewProfile {
-	padding-top: 10vh;
-	padding: 1vh 1vw;
-	background-color: #a29bfe;
-	color: white;
-	text-decoration: none;
-	border-radius: 5px;
-	font-size: 1rem;
-	transition: background-color 0.3s;
+  padding-top: 10vh;
+  padding: 1vh 1vw;
+  background-color: #a29bfe;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: background-color 0.3s;
 }
 
 .viewProfile:hover {
-	background-color: #7d74fb;
+  background-color: #7d74fb;
 }
 
 /* trending comps and augments */
 .trending {
-	padding: 4rem 2rem;
-	text-align: center;
+  padding: 4rem 2rem;
+  text-align: center;
 }
 
 .trending h2 {
-	font-size: 2.5rem;
-	margin-bottom: 2rem;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
 }
 
 .trendingGrid {
-	display: flex;
-	justify-content: center;
-	gap: 2rem;
-	flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
 }
 
 .compCard {
-	background-color: rgba(255, 255, 255, 0.1);
-	padding: 1.5rem;
-	border-radius: 10px;
-	width: 150px;
-	text-align: center;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 1.5rem;
+  border-radius: 10px;
+  width: 150px;
+  text-align: center;
 }
 
 .compCard h4 {
-	font-size: 1.2rem;
-	margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
 }
 
 .compCard p {
-	font-size: 1rem;
-	margin-bottom: 1rem;
+  font-size: 1rem;
+  margin-bottom: 1rem;
 }
 
 /* recent matches */
 .recentMatches {
-	padding: 4rem 2rem;
+  padding: 4rem 2rem;
 }
 
 .recentMatches h2 {
-	font-size: 2.5rem;
-	margin-bottom: 2rem;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
 }
 
 .recentMatches ul {
-	list-style-type: none;
-	padding: 0;
+  list-style-type: none;
+  padding: 0;
 }
 
 .recentMatches li {
-	margin: 0.5rem 0;
-	font-size: 1.25rem;
+  margin: 0.5rem 0;
+  font-size: 1.25rem;
 }
 
 .recentMatches a {
-	color: #a29bfe;
-	text-decoration: none;
-	transition: color 0.3s;
+  color: #a29bfe;
+  text-decoration: none;
+  transition: color 0.3s;
 }
 
 .recentMatches a:hover {
-	color: #7d74fb;
+  color: #7d74fb;
 }
 
 /* about section */
 .aboutSection {
-	padding: 4rem 2rem;
-	text-align: center;
+  padding: 4rem 2rem;
+  text-align: center;
 }
 
 .aboutSection h2 {
-	font-size: 2.5rem;
-	margin-bottom: 2rem;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
 }
 
 .aboutSection p {
-	font-size: 1.25rem;
-	max-width: 700px;
-	margin: 0 auto;
-	line-height: 1.6;
+  font-size: 1.25rem;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
 }
 
 /* media query */
 
 @media (max-width: 1200px) {
+  /* .hero h1 {
+		font-size: 2.5rem;
+	}
 
+	.ctaButton {
+		font-size: 1rem;
+		padding: 10px 20px;
+	}
+
+	.streamerGrid {
+		gap: 1.5rem;
+	}
+
+	.streamerCard {
+		width: 150px;
+	}
+
+	.trendingGrid {
+		gap: 1.5rem;
+	}
+
+	.compCard {
+		width: 120px;
+	} */
 }
 
 @media (max-width: 768px) {
+  /* .hero h1 {
+		font-size: 2rem;
+	}
 
+	.ctaButton {
+		font-size: 1rem;
+		padding: 10px 15px;
+	}
+
+	.streamerGrid,
+	.trendingGrid {
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.streamerCard {
+		width: 100%;
+		max-width: 300px;
+	}
+
+	.compCard {
+		width: 100%;
+		max-width: 200px;
+	} */
 }
