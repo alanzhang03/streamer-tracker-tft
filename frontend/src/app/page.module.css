@@ -197,55 +197,9 @@
 /* media query */
 
 @media (max-width: 1200px) {
-	.hero h1 {
-		font-size: 2.5rem;
-	}
 
-	.ctaButton {
-		font-size: 1rem;
-		padding: 10px 20px;
-	}
-
-	.streamerGrid {
-		gap: 1.5rem;
-	}
-
-	.streamerCard {
-		width: 150px;
-	}
-
-	.trendingGrid {
-		gap: 1.5rem;
-	}
-
-	.compCard {
-		width: 120px;
-	}
 }
 
 @media (max-width: 768px) {
-	.hero h1 {
-		font-size: 2rem;
-	}
 
-	.ctaButton {
-		font-size: 1rem;
-		padding: 10px 15px;
-	}
-
-	.streamerGrid,
-	.trendingGrid {
-		flex-direction: column;
-		align-items: center;
-	}
-
-	.streamerCard {
-		width: 100%;
-		max-width: 300px;
-	}
-
-	.compCard {
-		width: 100%;
-		max-width: 200px;
-	}
 }
