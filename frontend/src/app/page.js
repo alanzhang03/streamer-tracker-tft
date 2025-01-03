@@ -76,6 +76,7 @@ export default function Home() {
 				<p id="hero-text">
 					Track your favorite TFT streamers' latest matches and comps!
 				</p>
+				<p>(Still in Production)</p>
 				<Link
 					id="hero-explore-streamers-button"
 					href="#streamers"
@@ -136,6 +137,7 @@ export default function Home() {
 				<ul>
 					<li>
 						<Link href="/">Dishsoap won with Challenger Jinx - 1st place</Link>
+						
 					</li>
 				</ul>
 			</section>
