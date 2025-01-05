@@ -117,7 +117,7 @@ export default function Home() {
       {/* Trending TFT Data */}
       <section className={styles.trending}>
         <h2>Trending TFT Comps & Augments</h2>
-        <p>(example data)</p>
+        <p>(example data here)</p>
         <div className={styles.trendingGrid}>
           <div className={styles.compCard}>
             <h4>Vanguard Warwick</h4>
