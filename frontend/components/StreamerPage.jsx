@@ -11,8 +11,12 @@ const importAllImages = (requireContext) => {
   return images;
 };
 
-const images = importAllImages(
+const champ_images = importAllImages(
   require.context("./assets/champions", false, /\.(png|jpe?g|svg)$/)
+);
+
+const item_images = importAllImages(
+  require.context("./assets/items", false, /\.(png|jpe?g|svg)$/)
 );
 
 const importAllAugmentImages = (requireContext) => {
@@ -34,7 +38,8 @@ const StreamerPage = ({ usernameTagline }) => {
   const [error, setError] = useState(null);
 
   const API_ENDPOINT =
-    "https://streamertracker-tft-262334a34d5b.herokuapp.com//api/match-history";
+    // "https://streamertracker-tft-262334a34d5b.herokuapp.com//api/match-history";
+    "http://127.0.0.1:5000///api/match-history";
   const headers = {
     "Content-Type": "application/json",
     "page-number": "0",
@@ -81,8 +86,10 @@ const StreamerPage = ({ usernameTagline }) => {
       {data && (
         <MatchHistory
           data={data}
-          images={images}
+          champ_images={champ_images}
+          item_images={item_images}
           augmentImages={augmentImages}
+          usernameTagline={usernameTagline}
         />
       )}
     </div>

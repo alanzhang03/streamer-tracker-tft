@@ -3,13 +3,13 @@ import "./styles/MatchHistory.scss";
 import Comps from "./Comps";
 import Augments from "./Augments";
 
-const MatchHistory = ({ data, images, augmentImages }) => {
-
+const MatchHistory = ({ data, champ_images, item_images, augmentImages, usernameTagline }) => {
   return (
     <div className="match-history">
       {data.map((match, index) => {
-        const player = match["Player 0"];
-        const timestamp = match.game_datetime;
+        const player = Object.values(match).find(p => p.username_tagline === usernameTagline);
+        // const player = match["Player 0"];
+        const timestamp = player.game_datetime;
 
         return (
           <div key={index} className="match-card">
@@ -37,16 +37,25 @@ const MatchHistory = ({ data, images, augmentImages }) => {
             </div>
             <hr width="100%" size="2" />
             <Comps
-              comps={player.units.map((champion) => ({
-                characterId: champion["character_id"],
-                characterImage:
-                  images[
-                    Object.keys(images).find((key) =>
-                      key.startsWith(champion["character_id"])
-                    )
-                  ]?.default,
-                tier: champion.tier,
-              }))}
+              comps={player.units.map((champion) => {
+                const itemNames = champion["itemNames"] || [];
+                const items = itemNames
+                  .map((name) => name + ".png")
+                  .filter((filename) => item_images[filename])
+                  .map((filename) => item_images[filename]?.default || item_images[filename])
+
+                return {
+                  characterId: champion["character_id"],
+                  characterImage:
+                    champ_images[
+                      Object.keys(champ_images).find((key) =>
+                        key.startsWith(champion["character_id"])
+                      )
+                    ]?.default || null,
+                  tier: champion.tier,
+                  items,
+                };
+              })}
             />
           </div>
         );
@@ -89,6 +98,9 @@ function getTimeAgo(timestamp) {
         : `${differenceInMinutes} minutes ago`;
     }
     return `${differenceInHours} hours ago`;
+  }
+  if (differenceInDays == 1) {
+    return `${differenceInDays} day ago`;
   }
   return `${differenceInDays} days ago`;
 }

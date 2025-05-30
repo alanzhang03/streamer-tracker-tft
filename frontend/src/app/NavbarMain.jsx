@@ -20,7 +20,7 @@ const NavbarMain = () => {
       <div className="navbar-container">
         <ul>
           <Link className="nav-label-left" href="/">
-            LOGO Streamer Tracker TFT
+            Streamer Tracker TFT
           </Link>
         </ul>
         <ul className="navbar-menu">

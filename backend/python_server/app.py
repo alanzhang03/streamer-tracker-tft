@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from psycopg2.extras import Json, DictCursor
 import requests
 import time
+import random
 
 from flask_cors import CORS, cross_origin
 app = Flask(__name__)
@@ -14,27 +15,46 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 # define constants
-api_key = os.getenv('API_KEY')
-level_carries = set(["TFT13_Silco", "TFT13_Vi", "TFT13_Caitlyn", "TFT13_Ekko", "TFT13_Malzahar", "TFT13_Twitch", "TFT13_LeBlanc",
-                    "TFT13_Heimerdinger", "TFT13_Jayce", "TFT13_Lieutenant", "TFT13_Jinx", "TFT13_Corki", "TFT13_Ambessa", "TFT13_Mordekaiser", "TFT13_Zoe"])
-reroll_carries = set(["TFT13_Camille", "TFT13_RenataGlasc", "TFT13_Akali", "TFT13_Ezreal", "TFT13_Draven", "TFT13_Cassiopeia", "TFT13_Ziggs", "TFT13_Gremlin", "TFT13_Shooter",   "TFT13_Blue", "TFT13_Zeri", "TFT13_Red", "TFT13_Nami", "TFT13_Vex", "TFT13_Nocturne", "TFT13_Darius", "TFT13_Irelia", "TFT13_FlyGuy", "TFT13_NunuWillump",
-                     "TFT13_Prime", "TFT13_Beardy", "TFT13_Chainsaw", "TFT13_Vladimir", "TFT13_Rell", "TFT13_Sett", "TFT13_Amumu", "TFT13_Blitzcrank", "TFT13_Singed", "TFT13_Zyra", "TFT13_Gangplank", "TFT13_Leona", "TFT13_KogMaw", "TFT13_TwistedFate", "TFT13_Lux", "TFT13_Morgana", "TFT13_Tristana", "tft13_swain", "TFT13_Urgot", "TFT13_Fish"])
-synergy_dict = {"TFT13_Academy1": "3 Academy", "TFT13_Academy2": "4 Academy",   "TFT13_Academy3": "5 Academy", "TFT13_Academy4": "6 Academy", "TFT13_Ambassador1": "1 Emissary", "TFT13_Ambassador2": "4 Emissary", "TFT13_Ambusher1": "2 Ambusher", "TFT13_Ambusher2": "3 Ambusher", "TFT13_Ambusher3": "4 Ambusher", "TFT13_Ambusher4": "5 Ambusher",
-                "TFT13_Bruiser1": "2 Bruiser", "TFT13_Bruiser2": "4 Bruiser", "TFT13_Bruiser3": "6 Bruiser", "TFT13_Cabal1": "3 Black Rose", "TFT13_Cabal2": "4 Black Rose", "TFT13_Cabal3": "5 Black Rose", "TFT13_Cabal4": "7 Black Rose", "TFT13_Challenger1": "2 Quickstriker", "TFT13_Challenger2": "3 Quickstriker", "TFT13_Challenger3": "4 Quickstriker", 
-                "TFT13_Crime1": "3 Chem-Baron", "TFT13_Crime2": "4 Chem-Baron", "TFT13_Crime3": "5 Chem-Baron", "TFT13_Crime4": "6 Chem-Baron", "TFT13_Crime5": "7 Chem-Baron", "TFT13_Experiment1": "3 Experiment", "TFT13_Experiment2": "5 Experiment", "TFT13_Experiment3": "7 Experiment", "TFT13_Family1": "3 Family", "TFT13_Family2": "4 Family", 
-                "TFT13_Family3": "5 Family", "TFT13_FormSwapper1": "2 Form Swapper", "TFT13_FormSwapper2": "4 Form Swapper", "TFT13_FormSwapper3": "6 Form Swapper", "TFT13_Hextech1": "2 Automata", "TFT13_Hextech2": "4 Automata", "TFT13_Hextech3": "6 Automata", "TFT13_Hoverboard1": "2 Firelight", "TFT13_Hoverboard2": "3 Firelight", 
-                "TFT13_Hoverboard3": "4 Firelight", "TFT13_Invoker1": "2 Visionary", "TFT13_Invoker2": "4 Visionary", "TFT13_Invoker3": "6 Visionary", "TFT13_Invoker4": "8 Visionary", "TFT13_Martialist1": "2 Artillerist", "TFT13_Martialist2": "4 Artillerist", "TFT13_Martialist3": "6 Artillerist", "TFT13_Pugilist1": "2 Pit Fighter", 
-                "TFT13_Pugilist2": "4 Pit Fighter", "TFT13_Pugilist3": "6 Pit Fighter", "TFT13_Pugilist4": "8 Pit Fighter", "TFT13_Rebel1": "3 Rebel", "TFT13_Rebel2": "5 Rebel", "TFT13_Rebel3": "7 Rebel", "TFT13_Rebel4": "10 Rebel", "TFT13_Scrap1": "2 Scrap", "TFT13_Scrap2": "4 Scrap", "TFT13_Scrap3": "6 Scrap", "TFT13_Scrap4": "9 Scrap", 
-                "TFT13_Sniper1": "2 Sniper", "TFT13_Sniper2": "4 Sniper", "TFT13_Sniper3": "6 Sniper", "TFT13_Squad1": "2 Enforcer", "TFT13_Squad2": "4 Enforcer", "TFT13_Squad2": "4 Enforcer", "TFT13_Squad3": "6 Enforcer", "TFT13_Squad4": "8 Enforcer", "TFT13_Squad5": "10 Enforcer", "TFT13_Titan1": "2 Sentinel", "TFT13_Titan2": "4 Sentinel", "TFT13_Titan3": "6 Sentinel",
-                "TFT13_Titan4": "8 Sentinel", "TFT13_Warband1": "2 Conqueror", "TFT13_Warband2": "4 Conqueror", "TFT13_Warband3": "6 Conqueror", "TFT13_Warband4": "9 Conqueror", "TFT13_Watcher1": "2 Watcher", "TFT13_Watcher2": "4 Watcher", "TFT13_Watcher3": "6 Watcher", "TFT13_Sorcerer1": "2 Sorcerer", "TFT13_Sorcerer2": "4 Sorcerer", "TFT13_Sorcerer3": "6 Sorcerer", 
-                "TFT13_Sorcerer4": "8 Sorcerer", "TFT13_Infused1": "2 Dominator", "TFT13_Infused2": "4 Dominator", "TFT13_Infused3": "6 Dominator", }
-unit_dict = {"TFT13_Silco": "Silco", "TFT13_Caitlyn": "Caitlyn", "TFT13_Ekko": "Ekko", "TFT13_Malzahar": "Malzahar", "TFT13_Twitch": "Twitch", "TFT13_Cassiopeia": "Cassiopeia","TFT13_LeBlanc": "LeBlanc", "TFT13_Heimerdinger": "Heimerdinger", "TFT13_Jayce": "Jayce", "TFT13_Lieutenant": "Sevika",
-             "TFT13_Vi": "Vi", "TFT13_Jinx": "Jinx", "TFT13_Nami": "Nami", "TFT13_Corki": "Corki", "TFT13_Ambessa": "Ambessa", "TFT13_Mordekaiser": "Mordekaiser", "TFT13_Zoe": "Zoe", "TFT13_Camille": "Camille", "TFT13_RenataGlasc": "Renata", "TFT13_Akali": "Akali", "TFT13_Ezreal": "Ezreal",
-             "TFT13_Draven": "Draven", "TFT13_Ziggs": "Ziggs", "TFT13_Gremlin": "Smeech", "TFT13_Shooter": "Maddie", "TFT13_Blue": "Powder", "TFT13_Zeri": "Zeri", "TFT13_Red": "Violet", "TFT13_Nami": "Nami", "TFT13_Vex": "Vex", "TFT13_Nocturne": "Nocturne", "TFT13_Darius": "Darius", "TFT13_Irelia": "Irelia",
-             "TFT13_FlyGuy": "Scar", "TFT13_NunuWillump": "Nunu", "TFT13_Prime": "Vander", "TFT13_Beardy": "Loris", "TFT13_Chainsaw": "Renni", "TFT13_Vladimir": "Vladimir", "TFT13_Rell": "Rell", "TFT13_Sett": "Sett", "TFT13_Amumu": "Amumu", "TFT13_Blitzcrank": "Blitzcrank", "TFT13_Singed": "Singed",
-             "TFT13_Zyra": "Zyra", "TFT13_Gangplank": "Gangplank", "TFT13_Leona": "Leona", "TFT13_KogMaw": "KogMaw", "TFT13_TwistedFate": "Twisted Fate", "TFT13_Lux": "Lux", "TFT13_Morgana": "Morgana", "TFT13_Tristana": "Tristana", "tft13_swain": "Swain", "TFT13_Urgot": "Urgot", "TFT13_Trundle": "Trundle",
-             "TFT13_Fish": "Steb"
-             }
+# api_key = os.getenv('API_KEY')
+api_key = "RGAPI-c5e0e48d-c45a-4077-8105-7e231a2ec5a5"
+
+level_carries = set(["TFT14_Brand", "TFT14_MissFortune", "TFT14_Vex", "TFT14_Zed", "TFT14_Zeri", "TFT14_Xayah", "TFT14_Ziggs", "TFT14_Aphelios", "TFT14_Renekton", "TFT14_Samira", "TFT14_Urgot",
+                     "TFT14_Aurora", "TFT14_Viego", "TFT14_Annie", "TFT14_Garen"])
+reroll_carries = set(["TFT14_Darius", "TFT14_DrMundo", "TFT14_Elise", "TFT14_Fiddlesticks", "TFT14_Galio", "TFT14_LeBlanc", "TFT14_Morgana", "TFT14_Rengar", "TFT14_Senna", "TFT14_Shaco",
+                      "TFT14_TwistedFate", "TFT14_Varus", "TFT14_Veigar","TFT14_Yuumi", "TFT14_Zyra", "TFT14_Braum","TFT14_NidaleeCougar","TFT14_Shyvana","TFT14_Kindred","TFT14_Kindred",
+                      "TFT14_Illaoi","TFT14_Seraphine","TFT14_Jhin","TFT14_Naafiri","TFT14_Gragas","TFT14_KogMaw","TFT14_Skarner","TFT14_Jax","TFT14_Poppy","TFT14_Sylas","TFT14_Vayne","TFT14_Vi",
+                      "TFT14_Alistar","TFT14_Graves","TFT14_Rhaast","TFT14_Draven","TFT14_Jinx","TFT14_Ekko"])
+
+synergy_dict = {'TFT14_Immortal1': '2 Golden Ox', 'TFT14_Immortal2': '4 Golden Ox', 'TFT14_Immortal3': '6 Golden Ox', 'TFT14_Cutter1': '2 Executioner', 'TFT14_Cutter2': '3 Executioner', 
+                'TFT14_Cutter3': '4 Executioner', 'TFT14_Cutter4': '5 Executioner', 'TFT14_Strong1': '2 Slayer', 'TFT14_Strong2': '4 Slayer', 'TFT14_Strong3': '6 Slayer', 
+                'TFT14_Marksman1': '2 Marksman', 'TFT14_Marksman2': '4 Marksman', 'TFT14_Techie1': '2 Techie', 'TFT14_Techie2': '4 Techie', 'TFT14_Techie3': '6 Techie',
+                'TFT14_Techie4': '8 Techie', 'TFT14_Controller1': '2 Strategist', 'TFT14_Controller2': '3 Strategist', 'TFT14_Controller3': '4 Strategist', 'TFT14_Controller4': '5 Strategist', 
+                'TFT14_Armorclad1': '2 Bastion', 'TFT14_Armorclad2': '4 Bastion', 'TFT14_Armorclad3': '6 Bastion', 'TFT14_Armorclad4': '8 Bastion', 'TFT14_Supercharge1': '2 A.M.P.', 
+                'TFT14_Supercharge2': '3 A.M.P.', 'TFT14_Supercharge3': '4 A.M.P.', 'TFT14_Supercharge4': '5 A.M.P.', 'TFT14_HotRod1': '3 Nitro', 'TFT14_HotRod2': '4 Nitro', 
+                'TFT14_Cyberboss1': '2 Cyberboss', 'TFT14_Cyberboss1': '2 Cyberboss', 'TFT14_Cyberboss1': '2 Cyberboss', 'TFT14_Cyberboss2': '3 Cyberboss', 'TFT14_Cyberboss3': '4 Cyberboss', 
+                'TFT14_Divinicorp1': '1 Divinicorp', 'TFT14_Divinicorp2': '2 Divinicorp', 'TFT14_Divinicorp3': '3 Divinicorp', 'TFT14_Divinicorp4': '4 Divinicorp', 'TFT14_Divinicorp5': '5 Divinicorp', 
+                'TFT14_Divinicorp6': '6 Divinicorp', 'TFT14_Divinicorp7': '7 Divinicorp', 'TFT14_EdgeRunner1': '3 Exotech', 'TFT14_EdgeRunner2': '5 Exotech', 'TFT14_EdgeRunner3': '7 Exotech', 
+                'TFT14_EdgeRunner4': '10 Exotech', 'TFT14_Bruiser1': '2 Bruiser', 'TFT14_Bruiser2': '4 Bruiser', 'TFT14_Bruiser3': '6 Bruiser', 'TFT14_Thirsty1': '2 Dynamo', 'TFT14_Thirsty2': '3 Dynamo', 
+                'TFT14_Thirsty3': '4 Dynamo', 'TFT14_Mob1': '3 Syndicate', 'TFT14_Mob2': '5 Syndicate', 'TFT14_Mob3': '7 Syndicate', 'TFT14_Netgod': 'God of the Net', 'TFT14_Swift1': '2 Rapidfire', 
+                'TFT14_Swift2': '4 Rapidfire', 'TFT14_Swift3': '6 Rapidfire', 'TFT14_StreetDemon1': '3 Street Demon', 'TFT14_StreetDemon2': '5 Street Demon', 'TFT14_StreetDemon3': '7 Street Demon', 
+                'TFT14_StreetDemon4': '10 Street Demon', 'TFT14_AnimaSquad1': '3 Anima Squad', 'TFT14_AnimaSquad2': '5 Anima Squad', 'TFT14_AnimaSquad3': '7 Anima Squad', 'TFT14_AnimaSquad4': '10 Anima Squad', 
+                'TFT14_Suits1': '3 Cypher', 'TFT14_Suits2': '4 Cypher', 'TFT14_Suits3': '5 Cypher', 'TFT14_BallisTek1': '2 BoomBot', 'TFT14_BallisTek2': '4 BoomBot', 'TFT14_BallisTek2': '6 BoomBot', 
+                'TFT14_Vanguard1': '2 Vanguard', 'TFT14_Vanguard2': '4 Vanguard', 'TFT14_Vanguard3': '6 Vanguard', 'TFT14_ViegoUniqueTrait': 'Soul Killer', 'TFT14_Overlord': 'Overlord', 'TFT14_Virus': 'Virus'}
+
+unit_dict = {'TFT14_Brand': 'Brand', 'TFT14_Darius': 'Darius', 'TFT14_DrMundo': 'Dr. Mundo', 'TFT14_Elise': 'Elise', 'TFT14_Fiddlesticks': 'Fiddlesticks',
+            'TFT14_Galio': 'Galio', 'TFT14_Garen': 'Garen', 'TFT14_LeBlanc': 'LeBlanc', 'TFT14_MissFortune': 'Miss Fortune', 'TFT14_Morgana': 'Morgana',
+            'TFT14_Neeko': 'Neeko', 'TFT14_Renekton': 'Renekton', 'TFT14_Rengar': 'Rengar', 'TFT14_Samira': 'Samira', 'TFT14_Senna': 'Senna', 'TFT14_Shaco': 'Shaco',
+            'TFT14_TwistedFate': 'Twisted Fate', 'TFT14_Varus': 'Varus', 'TFT14_Veigar': 'Veigar', 'TFT14_Vex': 'Vex', 'TFT14_Zed': 'Zed', 'TFT14_Zeri': 'Zeri',
+            'TFT14_Zyra': 'Zyra', 'TFT14_Braum': 'Braum', 'TFT14_NidaleeCougar': 'Nidalee', 'TFT14_Shyvana': 'Shyvana', 'TFT14_Kindred': 'Kindred',
+            'TFT14_Yuumi': 'Yuumi', 'TFT14_Illaoi': 'Illaoi', 'TFT14_Seraphine': 'Seraphine', 'TFT14_Xayah': 'Xayah', 'TFT14_Jhin': 'Jhin',
+            'TFT14_Naafiri': 'Naafiri', 'TFT14_Gragas': 'Gragas', 'TFT14_KogMaw': "Kog'Maw", 'TFT14_Skarner': 'Skarner', 'TFT14_Jax': 'Jax',
+            'TFT14_Kobuko': 'Kobuko', 'TFT14_Sejuani': 'Sejuani', 'TFT14_Poppy': 'Poppy', 'TFT14_Ziggs': 'Ziggs', 'TFT14_Chogath': "Cho'Gath",
+            'TFT14_Urgot': 'Urgot', 'TFT14_Sylas': 'Sylas', 'TFT14_Aurora': 'Aurora', 'TFT14_Vayne': 'Vayne', 'TFT14_Leona': 'Leona',
+            'TFT14_Vi': 'Vi', 'TFT14_Mordekaiser': 'Mordekaiser', 'TFT14_Alistar': 'Alistar', 'TFT14_Viego': 'Viego', 'TFT14_Jarvan': 'Jarvan IV',
+            'TFT14_Graves': 'Graves', 'TFT14_Annie': 'Annie', 'TFT14_Rhaast': 'Rhaast', 'TFT14_SummonLevel2': 'R-080T', 'TFT14_SummonLevel4': 'T-43X',
+            'TFT14_Draven': 'Draven', 'TFT14_Zac': 'Zac', 'TFT14_Jinx': 'Jinx', 'TFT14_Ekko': 'Ekko', 'TFT14_NPC_Drone': 'Mechadrone',
+            'TFT14_NPC_AzirSoldier': 'Mechasoldier', 'TFT14_NPC_Super': 'Mechaminion', 'TFT14_NPC_AurelionSol': 'Mechaurelion', 'TFT14_Aphelios': 'Aphelios'}
+
 def getStats(username):
     # return a dict of all the stats
     res = {}
@@ -87,6 +107,9 @@ def findComp(units, synergies, level_carries, reroll_carries, synergy_dict, unit
             else:
                 comp.append(synergy["name"] + str(synergy["tier_current"]))
             # comp.append(synergy["name"] + str(synergy["tier_current"]))
+
+    comp.sort(reverse=True)
+    
     reroll = False
     for unit in units:
         if unit["character_id"] in reroll_carries and unit["tier"] == 3 and len(unit["itemNames"]) == 3:
@@ -99,7 +122,6 @@ def findComp(units, synergies, level_carries, reroll_carries, synergy_dict, unit
             comp.append(unit_dict[unit["character_id"]])
             # comp.append(unit["character_id"])
     
-    comp.sort(reverse=True)
     if reroll:
         comp.append("Reroll")
     return comp
@@ -232,6 +254,12 @@ def updateData(username):
             curr_dict['units'] = board['units']
             curr_dict['puuid'] = board['puuid']
             curr_dict['gold_left'] = board['gold_left']
+            curr_dict['game_datetime'] = game_datetime
+            # temporary
+            if curr_dict['placement'] > <= 4:
+                curr_dict['lp_gain'] = (5 - curr_dict['placement']) * 10 + random.randint(-5, 5)
+            else:
+                curr_dict['lp_gain'] = (4 - curr_dict['placement']) * 10 + random.randint(-5, 5)
 
             ## get the comp they are playing
             curr_dict["comp"] = findComp(curr_dict['units'], curr_dict['traits'], level_carries, reroll_carries, synergy_dict, unit_dict)
