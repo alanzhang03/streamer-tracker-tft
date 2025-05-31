@@ -16,7 +16,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 # define constants
 # api_key = os.getenv('API_KEY')
-api_key = "RGAPI-c5e0e48d-c45a-4077-8105-7e231a2ec5a5"
+api_key = "RGAPI-2eb4ed02-6578-4d14-8ad9-ef1a948683f0"
 
 level_carries = set(["TFT14_Brand", "TFT14_MissFortune", "TFT14_Vex", "TFT14_Zed", "TFT14_Zeri", "TFT14_Xayah", "TFT14_Ziggs", "TFT14_Aphelios", "TFT14_Renekton", "TFT14_Samira", "TFT14_Urgot",
                      "TFT14_Aurora", "TFT14_Viego", "TFT14_Annie", "TFT14_Garen"])
@@ -56,8 +56,6 @@ unit_dict = {'TFT14_Brand': 'Brand', 'TFT14_Darius': 'Darius', 'TFT14_DrMundo': 
             'TFT14_NPC_AzirSoldier': 'Mechasoldier', 'TFT14_NPC_Super': 'Mechaminion', 'TFT14_NPC_AurelionSol': 'Mechaurelion', 'TFT14_Aphelios': 'Aphelios'}
 
 def getStats(username):
-    # return a dict of all the stats
-    res = {}
     # first get their puuid from username
     load_dotenv()
 
@@ -82,15 +80,26 @@ def getStats(username):
     # Create a cursor object
     cur = conn.cursor(cursor_factory=DictCursor)
 
-    cur.execute("SELECT num_games, sum_placements, wins, top_four FROM stats WHERE usertag = %s", (username, ))
-    num_games, sum_placements, wins, top_four = cur.fetchone()
-    res['games'] = num_games
-    res['average_placement'] = round(sum_placements / num_games, 2)
-    res['wins'] = wins
-    res['top_four'] = top_four
-    res['top_four_percentage'] = round(top_four / num_games, 2)
+    cur.execute("SELECT puuid FROM players WHERE usertag = %s", (username, ))
+    puuid = cur.fetchone()
+    
+    response = requests.get(f"https://na1.api.riotgames.com/tft/league/v1/by-puuid/{puuid}?api_key={api_key}").json()
+    res = {}
+    res["lp"] = response[0]["leaguePoints"]
+    res["tier"] = response[0]["tier"]
+    res["rank"] = response[0]["rank"]
 
+    cur.execute("SELECT num_games, sum_placements, wins, top_four FROM stats WHERE usertag = %s", (username, ))
+
+    res["num_games"], res["sum_placements"], res["wins"], res["top_four"] = cur.fetchone()
+
+    cur.close()
+    connection_pool.putconn(conn)
+
+    # Close all connections in the pool
+    connection_pool.closeall()
     return res
+
 
 def findComp(units, synergies, level_carries, reroll_carries, synergy_dict, unit_dict):
     ## if there is a silver/gold synergy, add it to name, otherwise flex
@@ -256,7 +265,7 @@ def updateData(username):
             curr_dict['gold_left'] = board['gold_left']
             curr_dict['game_datetime'] = game_datetime
             # temporary
-            if curr_dict['placement'] > <= 4:
+            if curr_dict['placement'] <= 4:
                 curr_dict['lp_gain'] = (5 - curr_dict['placement']) * 10 + random.randint(-5, 5)
             else:
                 curr_dict['lp_gain'] = (4 - curr_dict['placement']) * 10 + random.randint(-5, 5)
@@ -347,7 +356,7 @@ def get_match_history():
     #     return jsonify("problem with header one or both of username-tagline or page-number")
     
 # get the stats and return it in json format
-@app.route('/api/match-history', methods=['GET'])
+@app.route('/api/stats', methods=['GET'])
 def get_stats():
     user = request.headers['username-tagline']
     res = getStats(user)

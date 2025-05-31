@@ -2,3 +2,16 @@
 .streamer-section-header {
 	text-align: center;
 }
+
+.streamer-page {
+	display: flex;
+	flex-direction: row;
+}
+
+.streamer-main-section {
+	padding-left: 0px;
+	flex: 1;
+}
+.streamer-stats {
+	// position: fixed;
+}
