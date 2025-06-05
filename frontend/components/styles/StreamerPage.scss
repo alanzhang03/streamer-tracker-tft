@@ -1,9 +1,11 @@
 //dummy scss
 .streamer-section-header {
-	text-align: center;
+	text-align: left;
+	padding-left: 10px;
 }
 
 .streamer-page {
+	margin-top: 50px;
 	display: flex;
 	flex-direction: row;
 }
@@ -11,7 +13,17 @@
 .streamer-main-section {
 	padding-left: 0px;
 	flex: 1;
+	margin-left: 2%;
+  margin-right: 8%;
 }
 .streamer-stats {
 	// position: fixed;
+	margin-top: 50px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	
+	h2 {
+		margin-bottom: 0;
+	}
 }

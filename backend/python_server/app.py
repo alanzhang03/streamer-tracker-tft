@@ -16,7 +16,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 # define constants
 # api_key = os.getenv('API_KEY')
-api_key = "RGAPI-2eb4ed02-6578-4d14-8ad9-ef1a948683f0"
+api_key = "RGAPI-3d095c61-4699-4f7d-9e7a-f1484b96e05f"
 
 level_carries = set(["TFT14_Brand", "TFT14_MissFortune", "TFT14_Vex", "TFT14_Zed", "TFT14_Zeri", "TFT14_Xayah", "TFT14_Ziggs", "TFT14_Aphelios", "TFT14_Renekton", "TFT14_Samira", "TFT14_Urgot",
                      "TFT14_Aurora", "TFT14_Viego", "TFT14_Annie", "TFT14_Garen"])
@@ -171,16 +171,33 @@ def getStreamerData(username, page):
     # Close all connections in the pool
     connection_pool.closeall()
 
-    start = page*5
-    end = (page+1)*5
-    if page > len(res) // page_size:
-        return "error: invalid page number"
-    return reduce(lambda x, y: x+y, res[start:end])
+    # start = page*10
+    # end = (page+1)*10
+    # if page > len(res) // page_size:
+    #     return "error: invalid page number"
+    # return reduce(lambda x, y: x+y, res[start:end])
+
+    return reduce(lambda x, y: x+y, res)
 
 # update the database for a given user (username #tagline)
 
 
 def updateData(username):
+    # load in the three streamers for to track lp
+    streamers = ["VIT k3soju #000", "VIT setsuko #NA2", "100T Dishsoap #NA2"]
+    lps = {}
+    for streamer in streamers:
+        split_username = streamer.rpartition(" ")
+        split_username = list(filter(lambda a: a != " ", split_username))
+
+        # load in tactools dict
+        nospaces = split_username[0].replace(" ", "").lower()
+        tactools = requests.get(f"https://ap.tft.tools/player/stats2/na1/{nospaces}/{split_username[1][1:]}/140/50")
+        lps[streamer] = tactools.json()
+
+
+
+
     # Connect to the DB
     # Load .env file
     load_dotenv()
@@ -209,6 +226,13 @@ def updateData(username):
     # get recent match data
     split_username = username.rpartition(" ")
     split_username = list(filter(lambda a: a != " ", split_username))
+
+    # load in tactools dict
+    # nospaces = split_username[0].replace(" ", "").lower()
+    # tactools = requests.get(f"https://ap.tft.tools/player/stats2/na1/{nospaces}/{split_username[1][1:]}/140/50").json()
+    
+
+
     cur.execute("SELECT puuid FROM players WHERE usertag=%s", (username, ))
     print(username)
     current_puuid = ""
@@ -223,7 +247,6 @@ def updateData(username):
 
     # add each match to the db
     for match in matches:
-        print("adding match", match)
         # first check not in the db
         
         cur.execute('SELECT 1 FROM matches WHERE match_id=%s', (match, ))
@@ -244,8 +267,13 @@ def updateData(username):
                 'https://americas.api.riotgames.com/tft/match/v1/matches/' + match + '?api_key=' + api_key).json()
 
         # get metadata
+        if match_data["info"]["queue_id"] != 1100:
+            continue
+        print("adding match", match)
+
         patch = match_data['info']['game_version'][-6:-1]
         game_datetime = match_data['info']['game_datetime']
+        
 
         game_information = match_data['info']['participants']
         players = []
@@ -264,11 +292,8 @@ def updateData(username):
             curr_dict['puuid'] = board['puuid']
             curr_dict['gold_left'] = board['gold_left']
             curr_dict['game_datetime'] = game_datetime
-            # temporary
-            if curr_dict['placement'] <= 4:
-                curr_dict['lp_gain'] = (5 - curr_dict['placement']) * 10 + random.randint(-5, 5)
-            else:
-                curr_dict['lp_gain'] = (4 - curr_dict['placement']) * 10 + random.randint(-5, 5)
+                
+
 
             ## get the comp they are playing
             curr_dict["comp"] = findComp(curr_dict['units'], curr_dict['traits'], level_carries, reroll_carries, synergy_dict, unit_dict)
@@ -292,6 +317,11 @@ def updateData(username):
                 cur.execute("INSERT into players (puuid, usertag) values (%s, %s) ON CONFLICT (puuid) DO NOTHING", (curr_dict['puuid'], username))
 
             curr_dict['username_tagline'] = username
+
+            if username in lps:
+                for m in lps[username]["matches"]:
+                    if m["id"] == match:
+                        curr_dict['lp_gain'] = m["rankAfter"][1] - m["rankBefore"][1]
 
 
             curr_player = "Player " + str(c)
@@ -325,6 +355,11 @@ def updateData(username):
                     top_four = %s;
             """, (username, num_games, sum_placements, wins, top_four, num_games, sum_placements, wins, top_four))
 
+            cur.execute("""
+                INSERT INTO comps (usertag, match_id, comp)
+                VALUES (%s, %s, %s)
+            """, (username, match, curr_dict["comp"]))
+
             
         # add it into the db
         print(match)
@@ -339,6 +374,53 @@ def updateData(username):
 
     # Close all connections in the pool
     connection_pool.closeall()
+
+def getFavoriteComp(usertag):
+    # first get their puuid from username
+    load_dotenv()
+
+    # Get the connection string from the environment variable
+    connection_string = os.environ.get('DATABASE_URL')
+
+    # Create a connection pool
+    connection_pool = pool.SimpleConnectionPool(
+        1,  # Minimum number of connections in the pool
+        10,  # Maximum number of connections in the pool
+        connection_string
+    )
+
+    # Check if the pool was created successfully
+    if connection_pool:
+        print("Connection pool created successfully")
+
+    # Get a connection from the pool
+    conn = connection_pool.getconn()
+    conn.autocommit = True
+
+    # Create a cursor object
+    cur = conn.cursor(cursor_factory=DictCursor)
+
+    cur.execute("""SELECT unnest(comp) AS item, COUNT(*) AS count
+                        FROM comps
+                        WHERE usertag=%s
+                        GROUP BY item
+                        ORDER BY count DESC
+                        LIMIT 11""", (usertag, ))
+    
+    rows = cur.fetchall()
+    trait_counts = {item: count for item, count in rows}
+
+
+
+
+    cur.close()
+    connection_pool.putconn(conn)
+
+    # Close all connections in the pool
+    connection_pool.closeall()
+
+    return trait_counts
+
 
 
 # get the match history and return a list of matches in json format
@@ -362,15 +444,22 @@ def get_stats():
     res = getStats(user)
     return jsonify(res)
 
+@app.route('/api/favorite-comps', methods=['GET'])
+def get_favorite_comp():
+    user = request.headers['username-tagline']
+    res = getFavoriteComp(user)
+    del res["Reroll"]
+    return jsonify(list(res.keys()))
+
 # Route to handle POST requests
-@app.route('/api/data', methods=['POST'])
-def add_data():
-    data = request.get_json()  # Get JSON data from the request
-    if data:
-        data_store.append(data)  # Add new data to the data store
-        return jsonify({'message': 'Data added successfully!'}), 201
-    else:
-        return jsonify({'error': 'Invalid data format'}), 400
+# @app.route('/api/data', methods=['POST'])
+# def add_data():
+#     data = request.get_json()  # Get JSON data from the request
+#     if data:
+#         data_store.append(data)  # Add new data to the data store
+#         return jsonify({'message': 'Data added successfully!'}), 201
+#     else:
+#         return jsonify({'error': 'Invalid data format'}), 400
 
 # Home route to verify the server is running
 

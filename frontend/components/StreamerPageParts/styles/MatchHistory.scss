@@ -1,8 +1,6 @@
 .match-history {
   display: flex;
   flex-direction: column;
-  margin-left: 15%;
-  margin-right: 15%;
   gap: 2vh;
 
   .match-card {
@@ -16,10 +14,17 @@
     justify-content: center;
     height: auto;
 
+    .comp-title {
+      h2 {
+        margin: 0;
+        font-size: 1.4rem;
+      }
+      padding-bottom: 10px;
+    }
+
     .match-header {
       display: flex;
       justify-content: space-between;
-
       .header-info-row-1 {
         display: flex;
         flex-direction: row;

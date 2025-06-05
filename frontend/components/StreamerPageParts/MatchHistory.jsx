@@ -3,18 +3,30 @@ import "./styles/MatchHistory.scss";
 import Comps from "./Comps";
 import Augments from "./Augments";
 
-const MatchHistory = ({ data, champ_images, item_images, augmentImages, usernameTagline }) => {
+const MatchHistory = ({
+  data,
+  champ_images,
+  item_images,
+  augmentImages,
+  usernameTagline,
+}) => {
   return (
     <div className="match-history">
       {data.map((match, index) => {
-        const player = Object.values(match).find(p => p.username_tagline === usernameTagline);
+        const player = Object.values(match).find(
+          (p) => p.username_tagline === usernameTagline
+        );
         // const player = match["Player 0"];
         const timestamp = player.game_datetime;
 
         return (
           <div key={index} className="match-card">
+            <div className="comp-title">
+              <h2>{player.comp.join(" ")}</h2>
+            </div>
             <div className="match-header">
               <div className="header-info">
+                
                 <div className="header-info-row-1">
                   <h2 style={{ color: determineColor(player.placement) }}>
                     Placement: {player.placement}
@@ -42,7 +54,10 @@ const MatchHistory = ({ data, champ_images, item_images, augmentImages, username
                 const items = itemNames
                   .map((name) => name + ".png")
                   .filter((filename) => item_images[filename])
-                  .map((filename) => item_images[filename]?.default || item_images[filename])
+                  .map(
+                    (filename) =>
+                      item_images[filename]?.default || item_images[filename]
+                  );
 
                 return {
                   characterId: champion["character_id"],

@@ -5,7 +5,7 @@ import StreamerPage from "../../../../components/StreamerPage";
 const page = () => {
 	return (
 		<>
-			<StreamerPage usernameTagline="Dishsoap #NA2" />
+			<StreamerPage usernameTagline="100T Dishsoap #NA2" />
 		</>
 	);
 };

@@ -1,0 +1,14 @@
+.comp-element {
+  display:flex;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 8px;
+  display: inline-block;
+  background-color: #272222;
+}
+
+.comp-element.selected {
+  background-color: #114e76;
+  border: 2px solid #2196f3;
+}
