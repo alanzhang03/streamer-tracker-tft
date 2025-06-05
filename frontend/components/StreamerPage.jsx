@@ -62,8 +62,8 @@ const handleCompClick = (compName) => {
 };
 
   const API_ENDPOINT =
-    // "https://streamertracker-tft-262334a34d5b.herokuapp.com//api/match-history";
-    "http://127.0.0.1:5000///api/match-history";
+    "https://streamertracker-tft-262334a34d5b.herokuapp.com//api/match-history";
+    // "http://127.0.0.1:5000///api/match-history";
   const headers = {
     "Content-Type": "application/json",
     "page-number": "0",
@@ -71,16 +71,16 @@ const handleCompClick = (compName) => {
   };
 
   const STATS_API_ENDPOINT =
-    // "https://streamertracker-tft-262334a34d5b.herokuapp.com//api/match-history";
-    "http://127.0.0.1:5000///api/stats";
+    "https://streamertracker-tft-262334a34d5b.herokuapp.com//api/stats";
+    // "http://127.0.0.1:5000///api/stats";
   const stats_headers = {
     "Content-Type": "application/json",
     "username-tagline": usernameTagline,
   };
 
   const FAV_COMPS_API_ENDPOINT =
-    // "https://streamertracker-tft-262334a34d5b.herokuapp.com//api/match-history";
-    "http://127.0.0.1:5000///api/favorite-comps";
+    "https://streamertracker-tft-262334a34d5b.herokuapp.com//api/favorite-comps";
+    // "http://127.0.0.1:5000///api/favorite-comps";
   const fav_comps_headers = {
     "Content-Type": "application/json",
     "username-tagline": usernameTagline,
@@ -134,8 +134,6 @@ const handleCompClick = (compName) => {
     if (selectedComps.size === 0) {
       setFilteredData(data);
     } else {
-      console.log(selectedComps);
-      console.log(data);
       const filtered = data.filter((match) => {
         const player = Object.values(match).find(
           (p) => p.username_tagline === usernameTagline
