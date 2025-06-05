@@ -40,7 +40,7 @@ const augmentImages = importAllAugmentImages(
   require.context("./assets/traits", false, /\.(png|jpe?g|svg)$/)
 );
 
-const StreamerPage = ({ usernameTagline }) => {
+const StreamerPage = ({ usernameTagline, username, displayName }) => {
   const [data, setData] = useState(null);
   const [stats, setStats] = useState(null);
   const [favComps, setFavComps] = useState(null);
@@ -49,21 +49,21 @@ const StreamerPage = ({ usernameTagline }) => {
   const [selectedComps, setSelectedComps] = useState(new Set());
   const [filteredData, setFilteredData] = useState(null);
 
-const handleCompClick = (compName) => {
-  setSelectedComps((prev) => {
-    const newSet = new Set(prev);
-    if (newSet.has(compName)) {
-      newSet.delete(compName);
-    } else {
-      newSet.add(compName);
-    }
-    return newSet;
-  });
-};
+  const handleCompClick = (compName) => {
+    setSelectedComps((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(compName)) {
+        newSet.delete(compName);
+      } else {
+        newSet.add(compName);
+      }
+      return newSet;
+    });
+  };
 
   const API_ENDPOINT =
     "https://streamertracker-tft-262334a34d5b.herokuapp.com//api/match-history";
-    // "http://127.0.0.1:5000///api/match-history";
+  // "http://127.0.0.1:5000///api/match-history";
   const headers = {
     "Content-Type": "application/json",
     "page-number": "0",
@@ -72,7 +72,7 @@ const handleCompClick = (compName) => {
 
   const STATS_API_ENDPOINT =
     "https://streamertracker-tft-262334a34d5b.herokuapp.com//api/stats";
-    // "http://127.0.0.1:5000///api/stats";
+  // "http://127.0.0.1:5000///api/stats";
   const stats_headers = {
     "Content-Type": "application/json",
     "username-tagline": usernameTagline,
@@ -80,7 +80,7 @@ const handleCompClick = (compName) => {
 
   const FAV_COMPS_API_ENDPOINT =
     "https://streamertracker-tft-262334a34d5b.herokuapp.com//api/favorite-comps";
-    // "http://127.0.0.1:5000///api/favorite-comps";
+  // "http://127.0.0.1:5000///api/favorite-comps";
   const fav_comps_headers = {
     "Content-Type": "application/json",
     "username-tagline": usernameTagline,
@@ -127,10 +127,9 @@ const handleCompClick = (compName) => {
     fetchData();
   }, [usernameTagline]);
 
-
   useEffect(() => {
     if (!data) return;
-  
+
     if (selectedComps.size === 0) {
       setFilteredData(data);
     } else {
@@ -138,11 +137,11 @@ const handleCompClick = (compName) => {
         const player = Object.values(match).find(
           (p) => p.username_tagline === usernameTagline
         );
-      
+
         if (!player) return false;
-      
+
         if (selectedComps.size === 0) return true;
-      
+
         return (
           Array.isArray(player.comp) &&
           player.comp.some((trait) => selectedComps.has(trait))
@@ -156,9 +155,18 @@ const handleCompClick = (compName) => {
     <div className="streamer-page">
       <div className="streamer-stats">
         <h2>
-          {stats && stats.tier.charAt(0).toUpperCase() + stats.tier.slice(1).toLowerCase()}
+          {stats &&
+            stats.tier.charAt(0).toUpperCase() +
+              stats.tier.slice(1).toLowerCase()}
         </h2>
-        {stats && <Image src={rank_images[stats.tier + ".png"]} alt={stats.tier} width={200} height={200} />}
+        {stats && (
+          <Image
+            src={rank_images[stats.tier + ".png"]}
+            alt={stats.tier}
+            width={200}
+            height={200}
+          />
+        )}
         {stats && <Stats stats={stats} />}
       </div>
       <div className="streamer-main-section">
@@ -172,8 +180,20 @@ const handleCompClick = (compName) => {
             Recent 20 Games Ranked Statistics
           </h1> */}
           <h1 className="streamer-section-header">
-            {usernameTagline}'s Top Comps
+            <div className="streamer-header-intro-image-container">
+              {" "}
+              {displayName}
+              {username && (
+                <Image
+                  src={`/${username}.png`}
+                  alt={username}
+                  width={300}
+                  height={300}
+                />
+              )}
+            </div>
           </h1>
+          <h1 className="streamer-section-header">{displayName}'s Top Comps</h1>
           <div className="fav-comps-table">
             {favComps && (
               <FavoriteComps
@@ -186,22 +206,21 @@ const handleCompClick = (compName) => {
         </section>
 
         <h1 className="streamer-section-header">
-          {usernameTagline}'s Match History
+          {displayName}'s Match History
         </h1>
 
         {loading && <p>Loading...</p>}
         {error && <p style={{ color: "red" }}>Error: {error}</p>}
-        {
-            filteredData && (
-              <MatchHistory
-                className="match-history"
-                data={filteredData}
-                champ_images={champ_images}
-                item_images={item_images}
-                augmentImages={augmentImages}
-                usernameTagline={usernameTagline}
-              />)
-        }
+        {filteredData && (
+          <MatchHistory
+            className="match-history"
+            data={filteredData}
+            champ_images={champ_images}
+            item_images={item_images}
+            augmentImages={augmentImages}
+            usernameTagline={usernameTagline}
+          />
+        )}
       </div>
     </div>
   );
