@@ -448,7 +448,8 @@ def get_stats():
 def get_favorite_comp():
     user = request.headers['username-tagline']
     res = getFavoriteComp(user)
-    del res["Reroll"]
+    if "Reroll" in res.keys():
+        del res["Reroll"]
     return jsonify(list(res.keys()))
 
 # Route to handle POST requests
