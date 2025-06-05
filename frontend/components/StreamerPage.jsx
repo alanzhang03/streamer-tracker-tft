@@ -154,6 +154,18 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
   return (
     <div className="streamer-page">
       <div className="streamer-stats">
+        <div className="streamer-header-intro-image-container">
+          {" "}
+          <h2 style={{marginBottom:"-40px"}}>{displayName}</h2>
+          {username && (
+            <Image
+              src={`/${username}.png`}
+              alt={username}
+              width={200}
+              height={200}
+            />
+          )}
+        </div>
         <h2>
           {stats &&
             stats.tier.charAt(0).toUpperCase() +
@@ -179,20 +191,6 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
           {/* <h1 className="streamer-section-header">
             Recent 20 Games Ranked Statistics
           </h1> */}
-          <h1 className="streamer-section-header">
-            <div className="streamer-header-intro-image-container">
-              {" "}
-              {displayName}
-              {username && (
-                <Image
-                  src={`/${username}.png`}
-                  alt={username}
-                  width={300}
-                  height={300}
-                />
-              )}
-            </div>
-          </h1>
           <h1 className="streamer-section-header">{displayName}'s Top Comps</h1>
           <div className="fav-comps-table">
             {favComps && (
