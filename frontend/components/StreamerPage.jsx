@@ -144,7 +144,7 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
 
         return (
           Array.isArray(player.comp) &&
-          player.comp.some((trait) => selectedComps.has(trait))
+          [...selectedComps].every((trait) => player.comp.includes(trait))
         );
       });
       setFilteredData(filtered);
