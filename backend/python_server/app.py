@@ -5,10 +5,9 @@ from psycopg2 import pool
 from dotenv import load_dotenv
 from psycopg2.extras import Json, DictCursor
 import requests
-import time
-import random
+from tasks import update_data_task
 
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 app = Flask(__name__)
 cors = CORS(app) 
 app.config['CORS_HEADERS'] = 'Content-Type'
@@ -426,17 +425,14 @@ def getFavoriteComp(usertag):
 # get the match history and return a list of matches in json format
 @app.route('/api/match-history', methods=['GET'])
 def get_match_history():
-    # try:
-        user = request.headers['username-tagline']
-        pagenum = request.headers['page-number']
-        print('updating user data')
-        updateData(user)
-        res = getStreamerData(user, pagenum)
-        return jsonify(res)
-    # except Exception as e:
-    #     print(e)
-    #     return jsonify("problem with header one or both of username-tagline or page-number")
-    
+    user = request.headers['username-tagline']
+    pagenum = request.headers['page-number']
+    print('updating user data')
+    # updateData(user)
+    update_data_task.delay(user)
+    res = getStreamerData(user, pagenum)
+    return jsonify(res)
+
 # get the stats and return it in json format
 @app.route('/api/stats', methods=['GET'])
 def get_stats():
@@ -452,22 +448,9 @@ def get_favorite_comp():
         del res["Reroll"]
     return jsonify(list(res.keys()))
 
-# Route to handle POST requests
-# @app.route('/api/data', methods=['POST'])
-# def add_data():
-#     data = request.get_json()  # Get JSON data from the request
-#     if data:
-#         data_store.append(data)  # Add new data to the data store
-#         return jsonify({'message': 'Data added successfully!'}), 201
-#     else:
-#         return jsonify({'error': 'Invalid data format'}), 400
-
-# Home route to verify the server is running
-
-
 @app.route('/')
 def home():
-    return "Welcome to the Flask REST API!"
+    return "hello"
 
 
 if __name__ == '__main__':
