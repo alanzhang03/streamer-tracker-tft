@@ -53,7 +53,6 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
   const [itemCounts, setItemCounts] = useState({});
   const [selectedItems, setSelectedItems] = useState(new Set());
 
-
   const updateRecentStatistics = () => {
     let recentMatches;
     if (filteredData) {
@@ -87,13 +86,15 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
     setRecentStatistics(recentStatsObject);
   };
 
-  const handleCompClick = (compName) => {
+  const handleCompClick = (comp) => {
+    // Convert comp (an array) to a string
+    const compKey = comp.join(",");
     setSelectedComps((prev) => {
       const newSet = new Set(prev);
-      if (newSet.has(compName)) {
-        newSet.delete(compName);
+      if (newSet.has(compKey)) {
+        newSet.delete(compKey);
       } else {
-        newSet.add(compName);
+        newSet.add(compKey);
       }
       return newSet;
     });
@@ -110,7 +111,6 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
       return newSet;
     });
   };
-  
 
   const fetchData = async () => {
     try {
@@ -132,16 +132,6 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
       }
       const stas_res = await stats_response.json();
       setStats(stas_res);
-
-      const fav_comps_response = await fetch(FAV_COMPS_API_ENDPOINT, {
-        method: "GET",
-        headers: fav_comps_headers,
-      });
-      if (!fav_comps_response.ok) {
-        throw new Error(`Error: ${fav_comps_response.status}`);
-      }
-      const fav_comps_res = await fav_comps_response.json();
-      setFavComps(fav_comps_res);
 
       const last_updated_response = await fetch(LAST_UPDATE_API_ENDPOINT, {
         method: "GET",
@@ -236,13 +226,6 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
     "username-tagline": usernameTagline,
   };
 
-  const FAV_COMPS_API_ENDPOINT =
-    "https://streamertracker-tft-262334a34d5b.herokuapp.com/api/favorite-comps";
-  // "http://127.0.0.1:5000/api/favorite-comps";
-  const fav_comps_headers = {
-    "Content-Type": "application/json",
-    "username-tagline": usernameTagline,
-  };
   const UPDATE_API_ENDPOINT =
     "https://streamertracker-tft-262334a34d5b.herokuapp.com/api/update-data";
   // "http://127.0.0.1:5000/api/update-data";
@@ -264,20 +247,23 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
 
   useEffect(() => {
     if (!data) return;
-  
+
     const filtered = data.filter((match) => {
       const player = Object.values(match).find(
         (p) => p.username_tagline === usernameTagline
       );
       if (!player) return false;
-  
+
       // --- Comp match ---
       const compMatch =
         selectedComps.size === 0 ||
-        [...selectedComps][0].every((trait) =>
-          player.comp?.some((c) => c.includes(trait))
-        );
-  
+        [...selectedComps].every((compStr) => {
+          const compTraits = compStr.split(",");
+          return compTraits.every((trait) =>
+            player.comp?.some((c) => c.includes(trait))
+          );
+        });
+
       // --- Item match (ALL selected items must be found in unit itemNames) ---
       const itemMatch =
         selectedItems.size === 0 ||
@@ -289,10 +275,10 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
             allItemsInMatch.includes(item)
           );
         })();
-  
+
       return compMatch && itemMatch;
     });
-  
+
     setFilteredData(filtered);
   }, [selectedComps, selectedItems, data, usernameTagline]);
 
@@ -306,6 +292,8 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
     if (!filteredData || !usernameTagline) return;
 
     const counts = {};
+    const compCounts = {};
+    const keyToArray = {}; // maps string keys back to arrays
 
     filteredData.forEach((match) => {
       const player = Object.values(match).find(
@@ -314,16 +302,26 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
 
       if (!player || !Array.isArray(player.units)) return;
 
+      // Count items
       player.units.forEach((unit) => {
         if (!unit.itemNames) return;
         unit.itemNames.forEach((item) => {
           counts[item] = (counts[item] || 0) + 1;
         });
       });
+
+      // Clean comp
+      const cleaned = player.comp.map((c) => c.replace(/^[\s\d]+/, ""));
+      const key = cleaned.join(","); // string key
+
+      compCounts[key] = (compCounts[key] || 0) + 1;
+      keyToArray[key] = cleaned; // preserve original array
     });
 
     setItemCounts(counts);
-    console.log(counts);
+
+    // Set top 5 comps as arrays
+    setFavComps(getTopItems(compCounts, 5).map(([key]) => keyToArray[key]));
   }, [filteredData, usernameTagline]);
 
   return (
@@ -402,7 +400,12 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
               <p>Items</p>
               <div className="items-table">
                 {getTopItems(itemCounts).map(([itemName, count], index) => (
-                  <div key={index} className={`top-item ${selectedItems.has(itemName) ? "selected" : ""}`}>
+                  <div
+                    key={index}
+                    className={`top-item ${
+                      selectedItems.has(itemName) ? "selected" : ""
+                    }`}
+                  >
                     <Image
                       src={
                         item_images[`${itemName}.png`]?.default ||
@@ -463,7 +466,7 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
         {filteredData && (
           <MatchHistory
             className="match-history"
-            data={filteredData}
+            data={filteredData.slice(0, 50)}
             champ_images={champ_images}
             item_images={item_images}
             augmentImages={augmentImages}

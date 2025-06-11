@@ -348,10 +348,11 @@ def updateData(username):
                     top_four = %s;
             """, (username, num_games, sum_placements, wins, top_four, num_games, sum_placements, wins, top_four))
 
-            cur.execute("""
-                INSERT INTO comps (usertag, match_id, comp)
-                VALUES (%s, %s, %s)
-            """, (username, match, [re.sub(r'^\s*\d+\s*', '', s) for s in curr_dict["comp"]]))
+            ## comp table
+            # cur.execute("""
+            #     INSERT INTO comps (usertag, match_id, comp)
+            #     VALUES (%s, %s, %s)
+            # """, (username, match, [re.sub(r'^\s*\d+\s*', '', s) for s in curr_dict["comp"]]))
 
             
         # add it into the db
@@ -368,50 +369,50 @@ def updateData(username):
     # Close all connections in the pool
     connection_pool.closeall()
 
-def getFavoriteComp(usertag):
-    # first get their puuid from username
-    load_dotenv()
+# def getFavoriteComp(usertag):
+#     # first get their puuid from username
+#     load_dotenv()
 
-    # Get the connection string from the environment variable
-    connection_string = os.environ.get('DATABASE_URL')
+#     # Get the connection string from the environment variable
+#     connection_string = os.environ.get('DATABASE_URL')
 
-    # Create a connection pool
-    connection_pool = pool.SimpleConnectionPool(
-        1,  # Minimum number of connections in the pool
-        10,  # Maximum number of connections in the pool
-        connection_string
-    )
+#     # Create a connection pool
+#     connection_pool = pool.SimpleConnectionPool(
+#         1,  # Minimum number of connections in the pool
+#         10,  # Maximum number of connections in the pool
+#         connection_string
+#     )
 
-    # Check if the pool was created successfully
-    if connection_pool:
-        print("Connection pool created successfully")
+#     # Check if the pool was created successfully
+#     if connection_pool:
+#         print("Connection pool created successfully")
 
-    # Get a connection from the pool
-    conn = connection_pool.getconn()
-    conn.autocommit = True
+#     # Get a connection from the pool
+#     conn = connection_pool.getconn()
+#     conn.autocommit = True
 
-    # Create a cursor object
-    cur = conn.cursor(cursor_factory=DictCursor)
+#     # Create a cursor object
+#     cur = conn.cursor(cursor_factory=DictCursor)
 
-    cur.execute("""
-                    SELECT comp AS item, COUNT(*) AS count
-                    FROM comps
-                    WHERE usertag = %s
-                    GROUP BY comp
-                    ORDER BY count DESC
-                    LIMIT 5
-                    """, (usertag,))
+#     cur.execute("""
+#                     SELECT comp AS item, COUNT(*) AS count
+#                     FROM comps
+#                     WHERE usertag = %s
+#                     GROUP BY comp
+#                     ORDER BY count DESC
+#                     LIMIT 5
+#                     """, (usertag,))
     
-    rows = cur.fetchall()
+#     rows = cur.fetchall()
     
-    res = [x for x, _ in rows]
-    cur.close()
-    connection_pool.putconn(conn)
+#     res = [x for x, _ in rows]
+#     cur.close()
+#     connection_pool.putconn(conn)
 
-    # Close all connections in the pool
-    connection_pool.closeall()
+#     # Close all connections in the pool
+#     connection_pool.closeall()
 
-    return res
+#     return res
 
 def getlastUpdated(usertag):
     # first get their puuid from username
@@ -483,11 +484,11 @@ def get_stats():
     res = getStats(user)
     return jsonify(res)
 
-@app.route('/api/favorite-comps', methods=['GET'])
-def get_favorite_comp():
-    user = request.headers['username-tagline']
-    res = getFavoriteComp(user)
-    return jsonify(res)
+# @app.route('/api/favorite-comps', methods=['GET'])
+# def get_favorite_comp():
+#     user = request.headers['username-tagline']
+#     res = getFavoriteComp(user)
+#     return jsonify(res)
 
 
 @app.route('/api/update-data', methods=['POST'])
