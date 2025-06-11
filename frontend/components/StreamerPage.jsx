@@ -262,7 +262,7 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
       );
       if (!player) return false;
 
-      // --- Comp match ---
+      // Comp match
       const compMatch =
         selectedComps.size === 0 ||
         [...selectedComps].every((compStr) => {
@@ -272,7 +272,7 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
           );
         });
 
-      // --- Item match (ALL selected items must be found in unit itemNames) ---
+      // Item match (ALL selected items must be found in unit itemNames) ---
       const itemMatch =
         selectedItems.size === 0 ||
         (() => {
