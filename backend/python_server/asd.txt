@@ -1,0 +1,31 @@
+DROP TABLE IF EXISTS players;
+CREATE TABLE players (
+    usertag TEXT,
+    puuid TEXT PRIMARY KEY,
+    last_updated BIGINT
+);
+
+DROP TABLE IF EXISTS comps;
+CREATE TABLE comps (
+    usertag TEXT,
+    match_id TEXT,
+    comp TEXT[]
+);
+
+DROP TABLE IF EXISTS stats;
+CREATE TABLE stats (
+    usertag TEXT UNIQUE,
+    num_games INT,
+    sum_placements INT,
+    wins INT, 
+    top_four INT
+);
+
+DROP TABLE IF exists matches;
+CREATE TABLE matches (
+    match_id TEXT PRIMARY KEY,
+    patch TEXT,
+    game_datetime TEXT,
+    match_data JSONB,
+    players TEXT[]
+);

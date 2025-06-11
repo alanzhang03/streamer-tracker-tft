@@ -9,6 +9,8 @@ const MatchHistory = ({
   item_images,
   augmentImages,
   usernameTagline,
+  getTimeAgo,
+  determineColor
 }) => {
   return (
     <div className="match-history">
@@ -16,7 +18,6 @@ const MatchHistory = ({
         const player = Object.values(match).find(
           (p) => p.username_tagline === usernameTagline
         );
-        // const player = match["Player 0"];
         const timestamp = player.game_datetime;
 
         return (
@@ -39,6 +40,7 @@ const MatchHistory = ({
                   </p>
                   <p>Gold Left: {player.gold_left}</p>
                   <p>Level: {player.level}</p>
+                  <p>Patch: {match.patch}</p>
                 </div>
                 <div className="header-info-row-2">
                   <p className="get-time-stamp">{getTimeAgo(timestamp)}</p>
@@ -80,42 +82,3 @@ const MatchHistory = ({
 };
 
 export default MatchHistory;
-
-function determineColor(placement) {
-  switch (placement) {
-    case 1:
-      return "gold";
-    case 2:
-      return "pink";
-    case 3:
-      return "aqua";
-    case 4:
-      return "#90EE90";
-    case 5:
-      return "#4F6367";
-    default:
-      return "grey";
-  }
-}
-
-function getTimeAgo(timestamp) {
-  const matchDate = new Date(timestamp);
-  const now = new Date();
-  const differenceInTime = now - matchDate;
-  const differenceInDays = Math.floor(differenceInTime / (1000 * 3600 * 24));
-
-  if (differenceInDays < 1) {
-    const differenceInHours = Math.floor(differenceInTime / (1000 * 3600));
-    if (differenceInHours < 1) {
-      const differenceInMinutes = Math.floor(differenceInTime / (1000 * 60));
-      return differenceInMinutes < 1
-        ? "Just now"
-        : `${differenceInMinutes} minutes ago`;
-    }
-    return `${differenceInHours} hours ago`;
-  }
-  if (differenceInDays == 1) {
-    return `${differenceInDays} day ago`;
-  }
-  return `${differenceInDays} days ago`;
-}

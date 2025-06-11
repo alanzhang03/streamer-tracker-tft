@@ -14,7 +14,7 @@ const synergy_dict = {'TFT14_Immortal1': '2 Golden Ox', 'TFT14_Immortal2': '4 Go
 'TFT14_Thirsty3': '4 Dynamo', 'TFT14_Mob1': '3 Syndicate', 'TFT14_Mob2': '5 Syndicate', 'TFT14_Mob3': '7 Syndicate', 'TFT14_Netgod1': 'God of the Net', 'TFT14_Swift1': '2 Rapidfire', 
 'TFT14_Swift2': '4 Rapidfire', 'TFT14_Swift3': '6 Rapidfire', 'TFT14_StreetDemon1': '3 Street Demon', 'TFT14_StreetDemon2': '5 Street Demon', 'TFT14_StreetDemon3': '7 Street Demon', 
 'TFT14_StreetDemon4': '10 Street Demon', 'TFT14_AnimaSquad1': '3 Anima Squad', 'TFT14_AnimaSquad2': '5 Anima Squad', 'TFT14_AnimaSquad3': '7 Anima Squad', 'TFT14_AnimaSquad4': '10 Anima Squad', 
-'TFT14_Suits1': '3 Cypher', 'TFT14_Suits2': '4 Cypher', 'TFT14_Suits3': '5 Cypher', 'TFT14_BallisTek1': '2 BoomBot', 'TFT14_BallisTek2': '4 BoomBot', 'TFT14_BallisTek2': '6 BoomBot', 
+'TFT14_Suits1': '3 Cypher', 'TFT14_Suits2': '4 Cypher', 'TFT14_Suits3': '5 Cypher', 'TFT14_BallisTek1': '2 BoomBot', 'TFT14_BallisTek2': '4 BoomBot', 'TFT14_BallisTek3': '6 BoomBot', 
 'TFT14_Vanguard1': '2 Vanguard', 'TFT14_Vanguard2': '4 Vanguard', 'TFT14_Vanguard3': '6 Vanguard', 'TFT14_ViegoUniqueTrait1': 'Soul Killer', 'TFT14_Overlord1': 'Overlord', 'TFT14_Virus1': 'Virus'};
 
 const Augments = ({ playerTraits }) => {
@@ -23,6 +23,7 @@ const Augments = ({ playerTraits }) => {
       <div className="augments-grid">
         {playerTraits && playerTraits.length > 0 ? (
           playerTraits
+            .sort((a, b) => b.tier_current - a.tier_current)
             .filter((trait) => trait.tier_current >= 1)
             .map((trait, index) => {
               const displayText =

@@ -1,16 +1,22 @@
 .comp-element {
-  display:flex;
+  display: inline-flex;          /* make the whole box inline and flex */
+  flex-direction: row;           /* make children flow left-to-right */
+  flex-wrap: wrap;               /* allow wrapping if too long */
+  gap: 6px;                      /* spacing between items */
   border: 1px solid #ccc;
-  padding: 10px;
+  padding: 8px;
   margin: 5px;
   border-radius: 8px;
-  display: inline-block;
-  background-color: #272222;
+  background-color: #353b46;
   cursor: pointer;
-
+  width: auto;
+  height: 40px;
+  max-width: 250px;              /* optional: control wrapping */
   transition: background-color 0.2s ease;
+
   &:hover {
     background-color: #787878;
+    transition: 0.4s;
   }
 }
 

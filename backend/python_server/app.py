@@ -5,7 +5,9 @@ from psycopg2 import pool
 from dotenv import load_dotenv
 from psycopg2.extras import Json, DictCursor
 import requests
-from tasks import update_data_task
+import re
+import time
+# from tasks import update_data_task
 
 from flask_cors import CORS
 app = Flask(__name__)
@@ -15,7 +17,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 # define constants
 api_key = os.getenv('API_KEY')
-# api_key = "RGAPI-3d095c61-4699-4f7d-9e7a-f1484b96e05f"
+# api_key = "RGAPI-f0e0f91a-35de-4446-9ccb-75f1ac3a2087"
 
 level_carries = set(["TFT14_Brand", "TFT14_MissFortune", "TFT14_Vex", "TFT14_Zed", "TFT14_Zeri", "TFT14_Xayah", "TFT14_Ziggs", "TFT14_Aphelios", "TFT14_Renekton", "TFT14_Samira", "TFT14_Urgot",
                      "TFT14_Aurora", "TFT14_Viego", "TFT14_Annie", "TFT14_Garen"])
@@ -37,7 +39,7 @@ synergy_dict = {'TFT14_Immortal1': '2 Golden Ox', 'TFT14_Immortal2': '4 Golden O
                 'TFT14_Thirsty3': '4 Dynamo', 'TFT14_Mob1': '3 Syndicate', 'TFT14_Mob2': '5 Syndicate', 'TFT14_Mob3': '7 Syndicate', 'TFT14_Netgod': 'God of the Net', 'TFT14_Swift1': '2 Rapidfire', 
                 'TFT14_Swift2': '4 Rapidfire', 'TFT14_Swift3': '6 Rapidfire', 'TFT14_StreetDemon1': '3 Street Demon', 'TFT14_StreetDemon2': '5 Street Demon', 'TFT14_StreetDemon3': '7 Street Demon', 
                 'TFT14_StreetDemon4': '10 Street Demon', 'TFT14_AnimaSquad1': '3 Anima Squad', 'TFT14_AnimaSquad2': '5 Anima Squad', 'TFT14_AnimaSquad3': '7 Anima Squad', 'TFT14_AnimaSquad4': '10 Anima Squad', 
-                'TFT14_Suits1': '3 Cypher', 'TFT14_Suits2': '4 Cypher', 'TFT14_Suits3': '5 Cypher', 'TFT14_BallisTek1': '2 BoomBot', 'TFT14_BallisTek2': '4 BoomBot', 'TFT14_BallisTek2': '6 BoomBot', 
+                'TFT14_Suits1': '3 Cypher', 'TFT14_Suits2': '4 Cypher', 'TFT14_Suits3': '5 Cypher', 'TFT14_BallisTek1': '2 BoomBot', 'TFT14_BallisTek2': '4 BoomBot', 'TFT14_BallisTek3': '6 BoomBot', 
                 'TFT14_Vanguard1': '2 Vanguard', 'TFT14_Vanguard2': '4 Vanguard', 'TFT14_Vanguard3': '6 Vanguard', 'TFT14_ViegoUniqueTrait': 'Soul Killer', 'TFT14_Overlord': 'Overlord', 'TFT14_Virus': 'Virus'}
 
 unit_dict = {'TFT14_Brand': 'Brand', 'TFT14_Darius': 'Darius', 'TFT14_DrMundo': 'Dr. Mundo', 'TFT14_Elise': 'Elise', 'TFT14_Fiddlesticks': 'Fiddlesticks',
@@ -136,47 +138,40 @@ def findComp(units, synergies, level_carries, reroll_carries, synergy_dict, unit
 
 # takes in a username and returns the most recent matches from page x, pages starting at 0
 
-def getStreamerData(username, page):
-    page = int(page)
-    page_size = 5
+def getStreamerData(username):
     load_dotenv()
 
-    # Get the connection string from the environment variable
     connection_string = os.getenv('DATABASE_URL')
+    connection_pool = pool.SimpleConnectionPool(1, 10, connection_string)
 
-    # Create a connection pool
-    connection_pool = pool.SimpleConnectionPool(
-        1,  # Minimum number of connections in the pool
-        10,  # Maximum number of connections in the pool
-        connection_string
-    )
-
-    # Check if the pool was created successfully
     if connection_pool:
         print("Connection pool created successfully")
 
-    # Get a connection from the pool
     conn = connection_pool.getconn()
     conn.autocommit = True
-
-    # Create a cursor object
     cur = conn.cursor(cursor_factory=DictCursor)
 
-    cur.execute("SELECT match_data FROM matches WHERE '%s' = ANY(players) ORDER BY game_datetime DESC" % (username))
-    res = cur.fetchall()
+    # Select both match_data and patch
+    cur.execute("""
+        SELECT match_data, patch 
+        FROM matches 
+        WHERE %s = ANY(players) 
+        ORDER BY game_datetime DESC
+    """, (username,))
+    
+    rows = cur.fetchall()
     cur.close()
     connection_pool.putconn(conn)
-
-    # Close all connections in the pool
     connection_pool.closeall()
 
-    # start = page*10
-    # end = (page+1)*10
-    # if page > len(res) // page_size:
-    #     return "error: invalid page number"
-    # return reduce(lambda x, y: x+y, res[start:end])
+    # Add 'patch' to each match_data object
+    result = []
+    for row in rows:
+        match = row['match_data']
+        match['patch'] = row['patch']
+        result.append(match)
 
-    return reduce(lambda x, y: x+y, res)
+    return result
 
 # update the database for a given user (username #tagline)
 
@@ -226,20 +221,17 @@ def updateData(username):
     split_username = username.rpartition(" ")
     split_username = list(filter(lambda a: a != " ", split_username))
 
-    # load in tactools dict
-    # nospaces = split_username[0].replace(" ", "").lower()
-    # tactools = requests.get(f"https://ap.tft.tools/player/stats2/na1/{nospaces}/{split_username[1][1:]}/140/50").json()
-    
-
-
     cur.execute("SELECT puuid FROM players WHERE usertag=%s", (username, ))
     print(username)
     current_puuid = ""
+
+    # also update last updated timestamp
     if cur.rowcount > 0:
         current_puuid = cur.fetchone()[0]
+        cur.execute("UPDATE players SET last_updated = EXTRACT(EPOCH FROM NOW()) WHERE usertag = %s", (username, ))
     else:
         current_puuid = requests.get('https://americas.api.riotgames.com/riot/account/v1/accounts/by-riot-id/%s/%s?api_key=%s' % (split_username[0], split_username[1][1:], api_key)).json()['puuid']
-        cur.execute("INSERT into players (puuid, usertag) values (%s, %s)", (current_puuid, username))
+        cur.execute("INSERT into players (puuid, usertag, last_updated) values (%s, %s, EXTRACT(EPOCH FROM NOW()))", (current_puuid, username))
 
     matches = requests.get('https://americas.api.riotgames.com/tft/match/v1/matches/by-puuid/' + current_puuid + '/ids?start=0&count=20&api_key=' + api_key).json()
     print(matches)
@@ -287,7 +279,8 @@ def updateData(username):
             curr_dict['level'] = board['level']
             curr_dict['placement'] = board['placement']
             curr_dict['traits'] = board['traits']
-            curr_dict['units'] = board['units']
+            curr_dict['units'] = [unit for unit in board['units'] if not unit['character_id'].startswith('TFT14_Summon')]
+            # curr_dict['units'] = board['units']
             curr_dict['puuid'] = board['puuid']
             curr_dict['gold_left'] = board['gold_left']
             curr_dict['game_datetime'] = game_datetime
@@ -313,7 +306,8 @@ def updateData(username):
                     r = requests.get('https://americas.api.riotgames.com/riot/account/v1/accounts/by-puuid/' +
                                  curr_dict['puuid'] + '?api_key=' + api_key).json()
                 username = r['gameName'] + ' #' + r["tagLine"]
-                cur.execute("INSERT into players (puuid, usertag) values (%s, %s) ON CONFLICT (puuid) DO NOTHING", (curr_dict['puuid'], username))
+                cur.execute("INSERT into players (puuid, usertag, last_updated) values (%s, %s, EXTRACT(EPOCH FROM NOW())) ON CONFLICT (puuid) DO NOTHING", (curr_dict['puuid'], username))
+
 
             curr_dict['username_tagline'] = username
 
@@ -357,12 +351,12 @@ def updateData(username):
             cur.execute("""
                 INSERT INTO comps (usertag, match_id, comp)
                 VALUES (%s, %s, %s)
-            """, (username, match, curr_dict["comp"]))
+            """, (username, match, [re.sub(r'^\s*\d+\s*', '', s) for s in curr_dict["comp"]]))
 
             
         # add it into the db
         print(match)
-        cur.execute('INSERT into matches (match_id, patch, game_datetime, match_data, players) values (%s, %s, %s, %s, %s);',
+        cur.execute('INSERT into matches (match_id, patch, game_datetime, match_data, players) values (%s, %s, %s, %s, %s) ON CONFLICT(match_id) DO NOTHING;',
                     (match, patch, game_datetime, Json(match_dict), players))
         print('inserted', match)
 
@@ -399,18 +393,59 @@ def getFavoriteComp(usertag):
     # Create a cursor object
     cur = conn.cursor(cursor_factory=DictCursor)
 
-    cur.execute("""SELECT unnest(comp) AS item, COUNT(*) AS count
-                        FROM comps
-                        WHERE usertag=%s
-                        GROUP BY item
-                        ORDER BY count DESC
-                        LIMIT 11""", (usertag, ))
+    cur.execute("""
+                    SELECT comp AS item, COUNT(*) AS count
+                    FROM comps
+                    WHERE usertag = %s
+                    GROUP BY comp
+                    ORDER BY count DESC
+                    LIMIT 5
+                    """, (usertag,))
     
     rows = cur.fetchall()
-    trait_counts = {item: count for item, count in rows}
+    
+    res = [x for x, _ in rows]
+    cur.close()
+    connection_pool.putconn(conn)
 
+    # Close all connections in the pool
+    connection_pool.closeall()
 
+    return res
 
+def getlastUpdated(usertag):
+    # first get their puuid from username
+    load_dotenv()
+
+    # Get the connection string from the environment variable
+    connection_string = os.environ.get('DATABASE_URL')
+
+    # Create a connection pool
+    connection_pool = pool.SimpleConnectionPool(
+        1,  # Minimum number of connections in the pool
+        10,  # Maximum number of connections in the pool
+        connection_string
+    )
+
+    # Check if the pool was created successfully
+    if connection_pool:
+        print("Connection pool created successfully")
+
+    # Get a connection from the pool
+    conn = connection_pool.getconn()
+    conn.autocommit = True
+
+    # Create a cursor object
+    cur = conn.cursor(cursor_factory=DictCursor)
+
+    cur.execute("""
+                    SELECT last_updated 
+                    FROM players
+                    WHERE usertag = %s
+                    """, (usertag,))
+    
+    res = cur.fetchone()
+    res = res[0] * 1000
 
     cur.close()
     connection_pool.putconn(conn)
@@ -418,7 +453,11 @@ def getFavoriteComp(usertag):
     # Close all connections in the pool
     connection_pool.closeall()
 
-    return trait_counts
+    return res
+
+
+
+
 
 
 
@@ -426,11 +465,15 @@ def getFavoriteComp(usertag):
 @app.route('/api/match-history', methods=['GET'])
 def get_match_history():
     user = request.headers['username-tagline']
-    pagenum = request.headers['page-number']
-    print('updating user data')
-    # updateData(user)
-    update_data_task.delay(user)
-    res = getStreamerData(user, pagenum)
+    # pagenum = request.headers['page-number']
+    res = getStreamerData(user)
+    return jsonify(res)
+
+@app.route('/api/last-updated', methods=['GET'])
+def get_last_updated():
+    user = request.headers['username-tagline']
+    # pagenum = request.headers['page-number']
+    res = getlastUpdated(user)
     return jsonify(res)
 
 # get the stats and return it in json format
@@ -444,9 +487,17 @@ def get_stats():
 def get_favorite_comp():
     user = request.headers['username-tagline']
     res = getFavoriteComp(user)
-    if "Reroll" in res.keys():
-        del res["Reroll"]
-    return jsonify(list(res.keys()))
+    return jsonify(res)
+
+
+@app.route('/api/update-data', methods=['POST'])
+def update_user_data():
+    print("updating data")
+    user = request.headers['username-tagline']
+    updateData(user)
+    print("done updating")
+    return jsonify({'status': 'update finished'})
+
 
 @app.route('/')
 def home():

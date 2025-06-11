@@ -12,7 +12,9 @@ const FavoriteComps = ({ comps, onCompClick, selectedComps }) => {
           }`}
           onClick={() => onCompClick(comp)}
         >
-          {comp}
+          {comp.map((item, index) => (
+            <div key={index}>{item}</div>
+          ))}
         </div>
       ))}
     </div>

@@ -37,3 +37,70 @@
     margin-bottom: 0;
   }
 }
+
+.update-button {
+  background-color: #1c1f25;
+  border-radius: 5px;
+  color: white;
+  border: 1px solid #ccc;
+  padding: 4px;
+  cursor: pointer;
+  &:hover {
+    background-color: #787878;
+    transition: 0.4s;
+  }
+}
+.summary-card {
+  background-color: #1c1f25;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  padding-left: 10px;
+  padding-top: 5px;
+  padding-bottom: 8px;
+  .last-20-text {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 4px;
+    margin-bottom: 6px;
+  }
+}
+
+.summary-section {
+  display: flex;
+  flex-direction: row;
+  background-color: #1c1f26;
+}
+.recent-match-element {
+  background-color: rgb(131, 82, 167);
+  width: 25px;
+  height: 25px;
+  border-radius: 5px;
+  margin: 2px;
+  flex: 0 0 9%;
+  font-weight: bold;
+  text-align: center;
+  line-height: 25px;
+}
+
+.recent-match-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex: 2;
+}
+
+.recent-stats {
+  display: flex;
+  flex-direction: row;
+  flex: 2;
+  p {
+    background-color: hsla(0, 0%, 100%, .15);
+    margin: 4px;
+    border-radius: 5px;
+    padding: 3px;
+    width: 100px;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+  }
+}

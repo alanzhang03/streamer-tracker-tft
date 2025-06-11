@@ -180,14 +180,14 @@ export default function Home() {
 
       {/* Trending TFT Data */}
       <section className={styles.trending}>
-        <h2>Trending TFT Comps</h2>
+        <h2>Streamer Favorites</h2>
         <div className={styles.trendingGrid}>
           <div className={styles.compCard}>
             <Image src="/k3soju.png" alt="K3Soju" width={100} height={100} />
             {loading && <p>loading</p>}
             {sojuComps &&
-              sojuComps.slice(0, 5).map((item, index) => {
-                return <p key={index}>{item}</p>;
+              sojuComps.map((comp, index) => {
+                return (<div className={styles.favCompElement} key={index}><p>{comp.join(" ")}</p></div>)
               })}
           </div>
           <div className={styles.compCard}>
@@ -199,16 +199,16 @@ export default function Home() {
             />
             {loading && <p>loading</p>}
             {dishsoapComps &&
-              dishsoapComps.slice(0, 5).map((item, index) => {
-                return <p key={index}>{item}</p>;
+              dishsoapComps.map((comp, index) => {
+                return (<div className={styles.favCompElement} key={index}><p>{comp.join(" ")}</p></div>)
               })}
           </div>
           <div className={styles.compCard}>
             <Image src="/setsuko.png" alt="Setsuko" width={100} height={100} />
             {loading && <p>loading</p>}
             {setsukoComps &&
-              setsukoComps.slice(0, 5).map((item, index) => {
-                return <p key={index}>{item}</p>;
+              setsukoComps.map((comp, index) => {
+                return (<div className={styles.favCompElement} key={index}><p>{comp.join(" ")}</p></div>)
               })}
           </div>
         </div>

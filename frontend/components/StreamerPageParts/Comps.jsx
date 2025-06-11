@@ -46,7 +46,7 @@ const Comps = ({ comps }) => {
     TFT14_Sejuani: "Sejuani",
     TFT14_Poppy: "Poppy",
     TFT14_Ziggs: "Ziggs",
-    TFT14_Chogath: "Cho'Gath",
+    TFT14_Chogath: "ChoGath",
     TFT14_Urgot: "Urgot",
     TFT14_Sylas: "Sylas",
     TFT14_Aurora: "Aurora",
