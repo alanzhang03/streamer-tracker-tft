@@ -374,7 +374,7 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
               <div className="recent-stats">
                 <p>games: {recentStatistics.games}</p>
                 <p>lp: {recentStatistics.lp_gain}</p>
-                <p>avg: {recentStatistics.average_placement}</p>
+                <p>avg: {recentStatistics.average_placement.toFixed(2)}</p>
                 <p>wins: {recentStatistics.wins}</p>
               </div>
             </div>

@@ -182,14 +182,7 @@ export default function Home() {
       <section className={styles.trending}>
         <h2>Streamer Favorites</h2>
         <div className={styles.trendingGrid}>
-          <div className={styles.compCard}>
-            <Image src="/k3soju.png" alt="K3Soju" width={100} height={100} />
-            {loading && <p>loading</p>}
-            {sojuComps &&
-              sojuComps.map((comp, index) => {
-                return (<div className={styles.favCompElement} key={index}><p>{comp.join(" ")}</p></div>)
-              })}
-          </div>
+          
           <div className={styles.compCard}>
             <Image
               src="/dishsoap.png"
@@ -208,6 +201,14 @@ export default function Home() {
             {loading && <p>loading</p>}
             {setsukoComps &&
               setsukoComps.map((comp, index) => {
+                return (<div className={styles.favCompElement} key={index}><p>{comp.join(" ")}</p></div>)
+              })}
+          </div>
+          <div className={styles.compCard}>
+            <Image src="/k3soju.png" alt="K3Soju" width={100} height={100} />
+            {loading && <p>loading</p>}
+            {sojuComps &&
+              sojuComps.map((comp, index) => {
                 return (<div className={styles.favCompElement} key={index}><p>{comp.join(" ")}</p></div>)
               })}
           </div>
