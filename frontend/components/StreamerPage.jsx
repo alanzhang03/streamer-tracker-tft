@@ -112,6 +112,13 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
     });
   };
 
+  const isRecentlyUpdated = () => {
+    if (!lastUpdated) return false;
+    const last = new Date(lastUpdated).getTime();
+    const now = Date.now();
+    return now - last < 2 * 60 * 1000;
+  };
+
   const fetchData = async () => {
     try {
       setLoading(true);
@@ -151,6 +158,7 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
 
   const updateData = async () => {
     try {
+      setLoading(true);
       const response = await fetch(UPDATE_API_ENDPOINT, {
         method: "POST",
         headers: update_headers,
@@ -361,8 +369,7 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
           onClick={updateData}
           className="update-button"
           disabled={
-            loading ||
-            (lastUpdated && new Date() - new Date(lastUpdated) < 2 * 60 * 1000)
+            loading || isRecentlyUpdated()
           }
         >
           Update Data
