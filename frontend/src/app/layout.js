@@ -1,7 +1,7 @@
-// app/layout.js or app/layout.tsx
 import "./globals.css";
 import NavbarMain from "./NavbarMain";
 import Script from "next/script";
+import Analytics from "./Analytics";
 
 const GA_ID = "G-WBR5ZFTMZF";
 
