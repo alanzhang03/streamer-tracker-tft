@@ -368,9 +368,7 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
         <button
           onClick={updateData}
           className="update-button"
-          disabled={
-            loading || isRecentlyUpdated()
-          }
+          disabled={loading || isRecentlyUpdated()}
         >
           Update Data
           <br />
@@ -463,7 +461,21 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
               </div>
               <div className="recent-stats">
                 <p>games: {recentStatistics.games}</p>
-                <p>lp: {recentStatistics.lp_gain}</p>
+                <p>
+                  lp:{" "}
+                  <span
+                    className={
+                      recentStatistics.lp_gain > 0
+                        ? "lp-green"
+                        : recentStatistics.lp_gain < 0
+                        ? "lp-red"
+                        : ""
+                    }
+                  >
+                    {recentStatistics.lp_gainç}
+                  </span>
+                </p>
+
                 <p>avg: {recentStatistics.average_placement.toFixed(2)}</p>
                 <p>wins: {recentStatistics.wins}</p>
               </div>

@@ -99,7 +99,7 @@
   flex-direction: row;
   flex: 2;
   p {
-    background-color: hsla(0, 0%, 100%, .15);
+    background-color: hsla(0, 0%, 100%, 0.15);
     margin: 4px;
     border-radius: 5px;
     padding: 3px;
@@ -150,4 +150,11 @@
   grid-template-columns: repeat(15, 1fr); /* 5 items per row */
   gap: 12px;
   justify-items: center; /* Center items horizontally */
+}
+.lp-green {
+  color: green;
+}
+
+.lp-red {
+  color: red;
 }
