@@ -472,7 +472,7 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
                         : ""
                     }
                   >
-                    {recentStatistics.lp_gainç}
+                    {recentStatistics.lp_gain}
                   </span>
                 </p>
 
