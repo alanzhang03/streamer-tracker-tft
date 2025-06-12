@@ -490,7 +490,7 @@ def get_favorite_comp():
     return jsonify(res)
 
 
-@app.route('/api/update-data', methods=['POST'])
+@app.route('/api/update-data', methods=['PUT'])
 def update_user_data():
     print("updating data")
     user = request.headers['username-tagline']

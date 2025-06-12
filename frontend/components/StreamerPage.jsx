@@ -160,7 +160,7 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
     try {
       setLoading(true);
       const response = await fetch(UPDATE_API_ENDPOINT, {
-        method: "POST",
+        method: "PUT",
         headers: update_headers,
       });
       const res = await response.json();
@@ -301,7 +301,7 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
 
     const counts = {};
     const compCounts = {};
-    const keyToArray = {}; // maps string keys back to arrays
+    const keyToArray = {}; // maps string keys back to arrays (for comp matching)
 
     filteredData.forEach((match) => {
       const player = Object.values(match).find(
@@ -320,7 +320,7 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
 
       // Clean comp
       const cleaned = player.comp.map((c) => c.replace(/^[\s\d]+/, ""));
-      const key = cleaned.join(","); // string key
+      const key = cleaned.join(",");
 
       compCounts[key] = (compCounts[key] || 0) + 1;
       keyToArray[key] = cleaned; // preserve original array
