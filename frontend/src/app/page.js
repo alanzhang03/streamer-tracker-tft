@@ -140,7 +140,7 @@ export default function Home() {
         <p id="hero-text">
           Track your favorite TFT streamers' latest matches and comps!
         </p>
-        <p>(Still in Production)</p>
+        {/* <p>(Still in Production)</p> */}
         <Link
           id="hero-explore-streamers-button"
           href="#streamers"
