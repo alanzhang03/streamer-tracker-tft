@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import "./NavbarMain.scss";
 import Link from "next/link";
+import Image from "next/image";
 
 const NavbarMain = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -20,6 +21,7 @@ const NavbarMain = () => {
       <div className="navbar-container">
         <ul>
           <Link className="nav-label-left" href="/">
+            {/* <Image src="/favicon.ico" width={30} height={30} alt="Logo"></Image> */}
             Streamer Tracker TFT
           </Link>
         </ul>

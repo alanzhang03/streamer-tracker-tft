@@ -1,20 +1,44 @@
 .comps-section {
-	.comps-grid {
-		display: flex;
-		flex-direction: row;
-		justify-content: center;
-		gap: 1vw;
-		overflow: hidden;
-		.star-tier {
-			display: flex;
-			justify-content: center;
-		}
-		.champion-items {
-			display: flex;
-			flex-direction: row;
-			margin-top: 0px;
-			opacity: 1;
-			border-color: black;
-		}
-	}
+  .comps-grid {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1vw;
+    overflow: hidden;
+    .champion-icon {
+      border: 2px solid transparent;
+      border-radius: 10px;
+
+      &.cost1 {
+        border-color: grey;
+      }
+
+      &.cost2 {
+        border-color: rgb(11, 192, 14);
+      }
+
+      &.cost3 {
+        border-color: rgb(55, 170, 247);
+      }
+
+      &.cost4 {
+        border-color: rgb(203, 15, 203);
+      }
+
+      &.cost5 {
+        border-color: rgb(254, 231, 25);
+      }
+    }
+    .star-tier {
+      display: flex;
+      justify-content: center;
+    }
+    .champion-items {
+      display: flex;
+      flex-direction: row;
+      margin-top: 0px;
+      opacity: 1;
+      border-color: black;
+    }
+  }
 }
