@@ -189,6 +189,7 @@ const Comps = ({ comps }) => {
                         alt={`item-${i}`}
                         width={20}
                         height={20}
+                        className="champion-item"
                       />
                     );
                   })}
