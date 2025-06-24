@@ -210,10 +210,8 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
         return "#6ECCFF";
       case 4:
         return "#37D488";
-      // case 8:
-      //   return "#cc0c26"
       default:
-        return "#8f000e";
+        return "#dd0e22";
     }
   }
 

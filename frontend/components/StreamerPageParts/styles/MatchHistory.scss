@@ -13,6 +13,7 @@
     flex-direction: column;
     justify-content: center;
     height: auto;
+    width: 80vw;
 
     .comp-title {
       h2 {
@@ -27,16 +28,19 @@
       justify-content: space-between;
       .header-info {
         align-items: center;
-        .header-info-row-1,
-        .header-info-row-2 {
+
+        .header-info-combined {
           display: flex;
           flex-direction: row;
           align-items: center;
           gap: 1vw;
-          h2 {
+
+          h2,
+          h3 {
             margin: 0;
             font-size: 1.4rem;
           }
+
           .lp-number-remove-gap {
             display: flex;
             flex-direction: row;
@@ -48,11 +52,10 @@
             font-size: 0.9rem;
             color: #ccc;
           }
-        }
 
-        .get-time-stamp {
-          font-size: 0.8rem;
-          padding-bottom: none;
+          .get-time-stamp {
+            font-size: 0.8rem;
+          }
         }
       }
     }

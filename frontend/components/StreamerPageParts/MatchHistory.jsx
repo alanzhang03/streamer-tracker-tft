@@ -27,7 +27,7 @@ const MatchHistory = ({
             </div>
             <div className="match-header">
               <div className="header-info">
-                <div className="header-info-row-1">
+                <div className="header-info-combined">
                   <div className="lp-number-remove-gap">
                     <h3>Placement:</h3>
                     <h3
@@ -48,8 +48,6 @@ const MatchHistory = ({
                   <p>Gold Left: {player.gold_left}</p>
                   <p>Level: {player.level}</p>
                   <p>Patch: {match.patch}</p>
-                </div>
-                <div className="header-info-row-2">
                   <p className="get-time-stamp">{getTimeAgo(timestamp)}</p>
                 </div>
               </div>
