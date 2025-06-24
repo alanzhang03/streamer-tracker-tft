@@ -47,6 +47,9 @@ const NavbarMain = () => {
                 <li>
                   <Link href="/streamers/Dishsoap">Dishsoap</Link>
                 </li>
+                <li>
+                  <Link href="/streamers/Mortdog">Mortdog</Link>
+                </li>
               </ul>
             )}
           </li>

@@ -75,7 +75,7 @@ const Comps = ({ comps }) => {
 
   const cost1 = [
     "Alistar",
-    "Dr.Mundo",
+    "Dr. Mundo",
     "Jax",
     "Kindred",
     "Kog'Maw",

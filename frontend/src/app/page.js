@@ -30,12 +30,12 @@ export default function Home() {
       rank: "Challenger",
       image: "/k3soju.png",
     },
-    // {
-    // 	id: "anotherstreamer",
-    // 	name: "AnotherStreamer",
-    // 	rank: "Diamond",
-    // 	image: "",
-    // },
+    {
+      id: "Riot Mortdog",
+      name: "Riot Mortdog",
+      rank: "Grandmaster",
+      image: "/mortdog.png",
+    },
   ];
 
   const FAV_COMPS_API_ENDPOINT =
@@ -53,10 +53,15 @@ export default function Home() {
     "Content-Type": "application/json",
     "username-tagline": "100T Dishsoap #NA2",
   };
+  const mortdog_fav_comps_headers = {
+    "Content-Type": "application/json",
+    "username-tagline": "Riot Mortdog #Mort",
+  };
 
   const [sojuComps, setSojuComps] = useState(null);
   const [setsukoComps, setSetsukoComps] = useState(null);
   const [dishsoapComps, setDishsoapComps] = useState(null);
+  const [mortdogComps, setMortdogComps] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -94,6 +99,8 @@ export default function Home() {
     const fetchData = async () => {
       try {
         setLoading(true);
+
+        // Fetch K3soju data
         const response = await fetch(FAV_COMPS_API_ENDPOINT, {
           method: "GET",
           headers: k3soju_fav_comps_headers,
@@ -104,6 +111,7 @@ export default function Home() {
         const result = await response.json();
         setSojuComps(result);
 
+        // Fetch Setsuko data
         const stats_response = await fetch(FAV_COMPS_API_ENDPOINT, {
           method: "GET",
           headers: setsuko_fav_comps_headers,
@@ -114,6 +122,7 @@ export default function Home() {
         const stas_res = await stats_response.json();
         setSetsukoComps(stas_res);
 
+        // Fetch Dishsoap data
         const fav_comps_response = await fetch(FAV_COMPS_API_ENDPOINT, {
           method: "GET",
           headers: dishsoap_fav_comps_headers,
@@ -123,6 +132,17 @@ export default function Home() {
         }
         const fav_comps_res = await fav_comps_response.json();
         setDishsoapComps(fav_comps_res);
+
+        // Fetch Mortdog data
+        const mortdog_response = await fetch(FAV_COMPS_API_ENDPOINT, {
+          method: "GET",
+          headers: mortdog_fav_comps_headers,
+        });
+        if (!mortdog_response.ok) {
+          throw new Error(`Error: ${mortdog_response.status}`);
+        }
+        const mortdog_res = await mortdog_response.json();
+        setMortdogComps(mortdog_res);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -132,6 +152,7 @@ export default function Home() {
 
     fetchData();
   }, []);
+
   return (
     <div>
       {/* Hero section */}
@@ -182,7 +203,6 @@ export default function Home() {
       <section className={styles.trending}>
         <h2>Streamer Favorites</h2>
         <div className={styles.trendingGrid}>
-          
           <div className={styles.compCard}>
             <Image
               src="/dishsoap.png"
@@ -193,7 +213,11 @@ export default function Home() {
             {loading && <p>loading</p>}
             {dishsoapComps &&
               dishsoapComps.map((comp, index) => {
-                return (<div className={styles.favCompElement} key={index}><p>{comp.join(" ")}</p></div>)
+                return (
+                  <div className={styles.favCompElement} key={index}>
+                    <p>{comp.join(" ")}</p>
+                  </div>
+                );
               })}
           </div>
           <div className={styles.compCard}>
@@ -201,7 +225,11 @@ export default function Home() {
             {loading && <p>loading</p>}
             {setsukoComps &&
               setsukoComps.map((comp, index) => {
-                return (<div className={styles.favCompElement} key={index}><p>{comp.join(" ")}</p></div>)
+                return (
+                  <div className={styles.favCompElement} key={index}>
+                    <p>{comp.join(" ")}</p>
+                  </div>
+                );
               })}
           </div>
           <div className={styles.compCard}>
@@ -209,7 +237,28 @@ export default function Home() {
             {loading && <p>loading</p>}
             {sojuComps &&
               sojuComps.map((comp, index) => {
-                return (<div className={styles.favCompElement} key={index}><p>{comp.join(" ")}</p></div>)
+                return (
+                  <div className={styles.favCompElement} key={index}>
+                    <p>{comp.join(" ")}</p>
+                  </div>
+                );
+              })}
+          </div>
+          <div className={styles.compCard}>
+            <Image
+              src="/mortdog.png"
+              alt="Riot Mortdog"
+              width={100}
+              height={100}
+            />
+            {loading && <p>loading</p>}
+            {mortdogComps &&
+              mortdogComps.map((comp, index) => {
+                return (
+                  <div className={styles.favCompElement} key={index}>
+                    <p>{comp.join(" ")}</p>
+                  </div>
+                );
               })}
           </div>
         </div>
