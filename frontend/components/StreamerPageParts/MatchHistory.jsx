@@ -56,7 +56,11 @@ const MatchHistory = ({
 
               <Augments playerTraits={player.traits} images={augmentImages} />
             </div>
-            <hr width="100%" size="2" className="testing" />
+            <hr
+              width="100%"
+              size="2"
+              style={{ borderColor: determineColor(player.placement) }}
+            />
             <Comps
               comps={player.units.map((champion) => {
                 const itemNames = champion["itemNames"] || [];
