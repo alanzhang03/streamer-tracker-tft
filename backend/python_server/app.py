@@ -86,6 +86,7 @@ def getStats(username):
     
     response = requests.get(f"https://na1.api.riotgames.com/tft/league/v1/by-puuid/{puuid}?api_key={api_key}").json()
     res = {}
+    response = [entry for entry in response if entry.get("queueType") == "RANKED_TFT"]
     res["lp"] = response[0]["leaguePoints"]
     res["tier"] = response[0]["tier"]
     res["rank"] = response[0]["rank"]
