@@ -235,7 +235,20 @@ def updateData(username):
 
     matches = requests.get('https://americas.api.riotgames.com/tft/match/v1/matches/by-puuid/' + current_puuid + '/ids?start=0&count=20&api_key=' + api_key).json()
     print(matches)
-
+    
+    # Add this code to get stored match IDs
+    cur.execute("SELECT match_id FROM matches WHERE %s = ANY(players) ORDER BY game_datetime DESC LIMIT 20", (username,))
+    stored_matches = cur.fetchall()
+    stored_match_ids = [row[0] for row in stored_matches]
+    
+    # Check if we have new matches to process
+    if stored_match_ids and matches and stored_match_ids[0] == matches[0]:
+        print("No new matches to process")
+        cur.close()
+        connection_pool.putconn(conn)
+        connection_pool.closeall()
+        return
+    
     # add each match to the db
     for match in matches:
         # first check not in the db
@@ -502,6 +515,7 @@ def update_user_data():
 @app.route('/')
 def home():
     return "hello"
+
 
 
 if __name__ == '__main__':

@@ -6,28 +6,34 @@ const Stats = ({ stats }) => {
     <div>
       <div className="grid-container">
         <div className="grid-item">
-          LP: <br />
-          {stats.lp}
+          <span className="stats-numbers">{stats.lp}</span>
+          LP
         </div>
         <div className="grid-item">
-          Avg Place: <br />
-          {(stats.sum_placements / stats.num_games).toFixed(2)}
+          <span className="stats-numbers">
+            {(stats.sum_placements / stats.num_games).toFixed(2)}
+          </span>
+          <span>Avg Place</span>
         </div>
         <div className="grid-item">
-          Games: <br />
-          {stats.num_games}
+          <span className="stats-numbers">{stats.num_games}</span>
+          <span>Games</span>
         </div>
         <div className="grid-item">
-          Top Four: <br />
-          {((stats.top_four / stats.num_games) * 100).toFixed(2) + "%"}
+          <span className="stats-numbers">
+            {((stats.top_four / stats.num_games) * 100).toFixed(2) + "%"}
+          </span>
+          <span>Top Four</span>
         </div>
         <div className="grid-item">
-          Wins: <br />
-          {stats.wins}
+          <span className="stats-numbers">{stats.wins}</span>
+          <span>Wins</span>
         </div>
         <div className="grid-item">
-          Win rate: <br />
-          {((stats.wins / stats.num_games) * 100).toFixed(2) + "%"}
+          <span className="stats-numbers">
+            {((stats.wins / stats.num_games) * 100).toFixed(2) + "%"}
+          </span>
+          <span>Win rate</span>
         </div>
       </div>
     </div>

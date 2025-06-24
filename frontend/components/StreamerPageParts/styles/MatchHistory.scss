@@ -25,24 +25,35 @@
     .match-header {
       display: flex;
       justify-content: space-between;
-      .header-info-row-1 {
-        display: flex;
-        flex-direction: row;
-        gap: 1vw;
-        h2 {
-          margin: 0;
-          font-size: 1.4rem;
+      .header-info {
+        align-items: center;
+        .header-info-row-1,
+        .header-info-row-2 {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          gap: 1vw;
+          h2 {
+            margin: 0;
+            font-size: 1.4rem;
+          }
+          .lp-number-remove-gap {
+            display: flex;
+            flex-direction: row;
+            gap: 0.5vw;
+          }
+
+          p {
+            margin: 3px 0;
+            font-size: 0.9rem;
+            color: #ccc;
+          }
         }
 
-        p {
-          margin: 3px 0;
-          font-size: 0.9rem;
-          color: #ccc;
+        .get-time-stamp {
+          font-size: 0.8rem;
+          padding-bottom: none;
         }
-      }
-      .get-time-stamp {
-        font-size: 0.8rem;
-        padding-bottom: none;
       }
     }
 
@@ -73,4 +84,8 @@
       }
     }
   }
+}
+
+.testing {
+  border: 1px solid red;
 }

@@ -10,7 +10,7 @@ const MatchHistory = ({
   augmentImages,
   usernameTagline,
   getTimeAgo,
-  determineColor
+  determineColor,
 }) => {
   return (
     <div className="match-history">
@@ -27,11 +27,18 @@ const MatchHistory = ({
             </div>
             <div className="match-header">
               <div className="header-info">
-                
                 <div className="header-info-row-1">
-                  <h2 style={{ color: determineColor(player.placement) }}>
-                    Placement: {player.placement}
-                  </h2>
+                  <div className="lp-number-remove-gap">
+                    <h3>Placement:</h3>
+                    <h3
+                      style={{
+                        color: determineColor(player.placement),
+                        paddingLeft: "none",
+                      }}
+                    >
+                      {player.placement}
+                    </h3>
+                  </div>
                   <p style={{ color: player.lp_gain >= 0 ? "green" : "red" }}>
                     {player.lp_gain >= 0
                       ? `+${player.lp_gain}`
@@ -49,7 +56,7 @@ const MatchHistory = ({
 
               <Augments playerTraits={player.traits} images={augmentImages} />
             </div>
-            <hr width="100%" size="2" />
+            <hr width="100%" size="2" className="testing" />
             <Comps
               comps={player.units.map((champion) => {
                 const itemNames = champion["itemNames"] || [];
