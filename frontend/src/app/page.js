@@ -31,8 +31,8 @@ export default function Home() {
       image: "/k3soju.png",
     },
     {
-      id: "Riot Mortdog",
-      name: "Riot Mortdog",
+      id: "Mortdog",
+      name: "Mortdog",
       rank: "Grandmaster",
       image: "/mortdog.png",
     },
@@ -132,6 +132,7 @@ export default function Home() {
         }
         const fav_comps_res = await fav_comps_response.json();
         setDishsoapComps(fav_comps_res);
+        
 
         // Fetch Mortdog data
         const mortdog_response = await fetch(FAV_COMPS_API_ENDPOINT, {

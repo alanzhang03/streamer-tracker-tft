@@ -7,7 +7,7 @@ const page = () => {
     <>
       <StreamerPage
         usernameTagline="Riot Mortdog #Mort"
-        username="Riot Mortdog"
+        username="mortdog"
         displayName="Riot Mortdog"
       />
     </>
