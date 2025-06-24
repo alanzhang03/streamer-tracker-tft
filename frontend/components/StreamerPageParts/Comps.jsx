@@ -183,13 +183,15 @@ const Comps = ({ comps }) => {
                 <div className="champion-items">
                   {comp.items.map((src, i) => {
                     return (
-                      <Image
-                        key={i}
-                        src={src}
-                        alt={`item-${i}`}
-                        width={20}
-                        height={20}
-                      />
+                      <div className="champion-item">
+                        <Image
+                          key={i}
+                          src={src}
+                          alt={`item-${i}`}
+                          width={20}
+                          height={20}
+                        />
+                      </div>
                     );
                   })}
                 </div>

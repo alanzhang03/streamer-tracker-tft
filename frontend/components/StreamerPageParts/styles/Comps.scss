@@ -36,9 +36,12 @@
     .champion-items {
       display: flex;
       flex-direction: row;
+      justify-content: center;
       margin-top: 0px;
       opacity: 1;
-      border-color: black;
+      .champion-item {
+        border: 0.1px white solid;
+      }
     }
   }
 }
