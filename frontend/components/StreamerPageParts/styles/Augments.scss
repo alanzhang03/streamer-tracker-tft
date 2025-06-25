@@ -1,22 +1,105 @@
 .augments-section {
   h3 {
-    color: #f8f8f8;
+    color: #4a9eff;
     font-size: 1.2rem;
-    margin-bottom: 10px;
+    font-weight: 600;
+    text-shadow: 0 0 6px rgba(74, 158, 255, 0.4),
+      0 0 12px rgba(74, 158, 255, 0.2);
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
   }
 
   .augments-grid {
     display: flex;
-    gap: 10px;
-    overflow-x: auto;
+    flex-wrap: wrap;
+    gap: 4px;
+    width: 100%;
+    max-width: 30vw;
+    padding: 6px;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(74, 158, 255, 0.1);
+    border-radius: 8px;
+    backdrop-filter: blur(5px);
+    align-content: flex-start;
 
     .augment-item {
-      background-color: #282c34;
-      padding: 5px 10px;
-      border-radius: 5px;
-      color: #ffcc00;
-      font-size: 0.8rem;
+      background: linear-gradient(
+        135deg,
+        rgba(74, 158, 255, 0.1) 0%,
+        rgba(74, 158, 255, 0.05) 100%
+      );
+      border: 1px solid rgba(74, 158, 255, 0.15);
+      padding: 4px 8px;
+      border-radius: 6px;
+      color: #f1c555;
+      font-size: 0.7rem;
+      font-weight: 600;
       text-align: center;
+      min-height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(5px);
+      transition: all 0.3s ease;
+      text-shadow: 0 0 4px rgba(241, 197, 85, 0.3);
+      box-shadow: 0 2px 8px rgba(74, 158, 255, 0.1);
+      line-height: 1.1;
+      white-space: nowrap;
+      flex-shrink: 0;
+
+      &:hover {
+        border-color: rgba(74, 158, 255, 0.3);
+        background: linear-gradient(
+          135deg,
+          rgba(74, 158, 255, 0.15) 0%,
+          rgba(74, 158, 255, 0.08) 100%
+        );
+        transform: translateY(-1px);
+        box-shadow: 0 3px 10px rgba(74, 158, 255, 0.15);
+        text-shadow: 0 0 6px rgba(241, 197, 85, 0.4);
+      }
+    }
+
+    // Empty state styling
+    p {
+      grid-column: 1 / -1;
+      color: #8892b0;
+      font-style: italic;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+      opacity: 0.7;
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .augments-section {
+    .augments-grid {
+      max-width: 100%;
+
+      .augment-item {
+        font-size: 0.65rem;
+        padding: 3px 6px;
+        min-height: 26px;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .augments-section {
+    .augments-grid {
+      max-width: 100%;
+      gap: 3px;
+
+      .augment-item {
+        font-size: 0.6rem;
+        padding: 2px 4px;
+        min-height: 24px;
+      }
     }
   }
 }

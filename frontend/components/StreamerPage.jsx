@@ -391,7 +391,7 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
           </h1>
 
           {itemCounts && favComps && (
-            <div className="top-items-container">
+            <div className="container">
               <div className="fav-comps-table">
                 <p>Comps</p>
                 <FavoriteComps

@@ -1,22 +1,47 @@
+.comps-table {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
 .comp-element {
-  display: inline-flex;          /* make the whole box inline and flex */
-  flex-direction: row;           /* make children flow left-to-right */
-  flex-wrap: wrap;               /* allow wrapping if too long */
-  gap: 6px;                      /* spacing between items */
-  border: 1px solid #ccc;
-  padding: 8px;
-  margin: 5px;
-  border-radius: 8px;
-  background-color: #353b46;
+  min-height: 40px;
+  min-width: 120px;
+  max-width: 300px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  align-items: center;
+  font-size: 1em;
+  background: linear-gradient(
+    135deg,
+    rgba(26, 26, 46, 0.9) 0%,
+    rgba(15, 15, 35, 0.9) 100%
+  );
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(74, 158, 255, 0.3);
+  border-radius: 12px;
+  color: #4a9eff;
+  padding: 12px 20px;
   cursor: pointer;
-  width: auto;
-  height: 40px;
-  max-width: 250px;              /* optional: control wrapping */
-  transition: background-color 0.2s ease;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(74, 158, 255, 0.1);
 
   &:hover {
-    background-color: #787878;
-    transition: 0.4s;
+    background: linear-gradient(
+      135deg,
+      rgba(74, 158, 255, 0.15) 0%,
+      rgba(74, 158, 255, 0.05) 100%
+    );
+    border-color: rgba(74, 158, 255, 0.5);
+    color: #4a9eff;
+    text-shadow: 0 0 6px rgba(74, 158, 255, 0.3);
+    box-shadow: 0 6px 20px rgba(74, 158, 255, 0.2);
+    transform: translateY(-2px);
   }
 }
 

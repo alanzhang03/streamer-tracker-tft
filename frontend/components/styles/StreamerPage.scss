@@ -224,8 +224,8 @@
   }
 }
 
-.top-items-container {
-  max-width: 77vw;
+.container {
+  min-width: 77vw;
   display: flex;
   flex-direction: column;
   background: linear-gradient(
@@ -239,6 +239,7 @@
   padding: 20px;
   margin-bottom: 20px;
   box-shadow: 0 8px 25px rgba(74, 158, 255, 0.1);
+  overflow: hidden; // Prevent items from going outside
 
   p {
     color: #4a9eff;
@@ -253,6 +254,23 @@
   }
 }
 
+.fav-comps-table {
+  flex: 2;
+  margin-bottom: 20px;
+  overflow: hidden; // Contain comps
+}
+
+.items-table {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 12px;
+  justify-items: center;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden; // Ensure items don't overflow
+  box-sizing: border-box;
+}
+
 .top-item {
   display: flex;
   flex-direction: column;
@@ -263,6 +281,8 @@
   padding: 8px;
   border-radius: 12px;
   cursor: pointer;
+  max-width: 100%;
+  box-sizing: border-box;
 
   &:hover {
     background: rgba(74, 158, 255, 0.1);
@@ -274,6 +294,8 @@
     border-radius: 8px;
     transition: all 0.3s ease;
     border: 2px solid transparent;
+    max-width: 100%;
+    height: auto;
 
     &:hover {
       border-color: rgba(74, 158, 255, 0.3);
@@ -284,6 +306,8 @@
   .item-label {
     margin-top: 4px;
     font-weight: 600;
+    text-align: center;
+    word-wrap: break-word;
   }
 
   &.selected {
@@ -304,10 +328,9 @@
 .items-table {
   flex: 1;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  grid-template-columns: repeat(15, 1fr);
   gap: 12px;
   justify-items: center;
-  max-width: 100%;
 }
 
 .lp-green {

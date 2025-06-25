@@ -1,32 +1,48 @@
 .items-section {
-	padding: 2rem;
-	background-color: rgba(255, 255, 255, 0.05);
-	border-radius: 10px;
-	margin-bottom: 2rem;
+  padding: 2rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  margin-bottom: 2rem;
+  overflow: hidden;
 
-	h3 {
-		font-size: 1.5rem;
-		color: #fff;
-		margin-bottom: 1rem;
-	}
+  h3 {
+    font-size: 1.5rem;
+    color: #fff;
+    margin-bottom: 1rem;
+  }
 
-	.items-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-		gap: 1rem;
+  .items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 1rem;
+    max-width: 100%;
+    overflow: hidden;
 
-		.item {
-			background-color: rgba(255, 255, 255, 0.1);
-			padding: 1rem;
-			text-align: center;
-			border-radius: 5px;
-			color: #fff;
-			font-size: 1.1rem;
-			transition: background-color 0.3s;
+    .item {
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 1rem;
+      text-align: center;
+      border-radius: 5px;
+      color: #fff;
+      font-size: 1.1rem;
+      transition: background-color 0.3s;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      max-width: 100%;
 
-			&:hover {
-				background-color: rgba(255, 255, 255, 0.2);
-			}
-		}
-	}
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+    }
+
+    // Empty state styling
+    p {
+      grid-column: 1 / -1;
+      color: rgba(255, 255, 255, 0.7);
+      font-style: italic;
+      text-align: center;
+      margin: 0;
+      padding: 1rem;
+    }
+  }
 }
