@@ -1,9 +1,14 @@
 //dummy scss
 .streamer-section-header {
   text-align: center;
-  color: #a5d8ff;
-  font-size: 3em;
-  font-weight: bolder;
+  color: #4a9eff;
+  font-size: 2em;
+  font-weight: 900;
+  text-shadow: 0 0 10px rgba(74, 158, 255, 0.5),
+    0 0 20px rgba(74, 158, 255, 0.3), 0 0 30px rgba(74, 158, 255, 0.1);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 30px 0 20px 0;
 }
 
 .streamer-page {

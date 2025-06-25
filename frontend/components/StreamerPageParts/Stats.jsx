@@ -7,7 +7,7 @@ const Stats = ({ stats }) => {
       <div className="grid-container">
         <div className="grid-item">
           <span className="stats-numbers">{stats.lp}</span>
-          LP
+          <span>LP</span>
         </div>
         <div className="grid-item">
           <span className="stats-numbers">
