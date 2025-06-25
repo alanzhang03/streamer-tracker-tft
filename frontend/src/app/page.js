@@ -30,12 +30,12 @@ export default function Home() {
       rank: "Challenger",
       image: "/k3soju.png",
     },
-    {
-      id: "Mortdog",
-      name: "Mortdog",
-      rank: "Grandmaster",
-      image: "/mortdog.png",
-    },
+    // {
+    //   id: "Mortdog",
+    //   name: "Mortdog",
+    //   rank: "Grandmaster",
+    //   image: "/mortdog.png",
+    // },
   ];
 
   const FAV_COMPS_API_ENDPOINT =
@@ -245,7 +245,7 @@ export default function Home() {
                 );
               })}
           </div>
-          <div className={styles.compCard}>
+          {/* <div className={styles.compCard}>
             <Image
               src="/mortdog.png"
               alt="Riot Mortdog"
@@ -261,7 +261,7 @@ export default function Home() {
                   </div>
                 );
               })}
-          </div>
+          </div> */}
         </div>
       </section>
 
