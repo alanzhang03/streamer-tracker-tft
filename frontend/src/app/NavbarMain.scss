@@ -52,6 +52,7 @@
   letter-spacing: 1px;
   text-transform: uppercase;
   transition: all 0.3s ease;
+  cursor: pointer !important;
 }
 
 .nav-label-left:hover {
@@ -84,11 +85,12 @@
   text-decoration: none;
   color: #8892b0;
   position: relative;
-  padding: 12px 20px; 
+  padding: 12px 20px;
   border-radius: 6px;
   transition: all 0.3s ease;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  cursor: pointer !important;
 }
 
 .navbar-menu a:hover {
@@ -116,6 +118,11 @@
 
 .dropdown {
   position: relative;
+  cursor: pointer !important;
+
+  > a {
+    cursor: pointer !important;
+  }
 
   &::before {
     content: "";
@@ -139,7 +146,7 @@
   );
   backdrop-filter: blur(15px);
   min-width: 12rem;
-  top: calc(100% + 2px); 
+  top: calc(100% + 2px);
   left: 50%;
   transform: translateX(-50%);
   box-shadow: 0 12px 40px rgba(74, 158, 255, 0.15),
@@ -189,12 +196,13 @@
   text-decoration: none;
   display: block;
   width: 100%;
-  padding: 14px 18px; 
+  padding: 14px 18px;
   border-radius: 8px;
   transition: all 0.3s ease;
   position: relative;
   text-transform: none;
   letter-spacing: 0.3px;
+  cursor: pointer !important;
 }
 
 .dropdown-content li a:hover {
@@ -257,7 +265,7 @@
   }
 
   .navbar-menu a {
-    padding: 14px 24px; 
+    padding: 14px 24px;
   }
 }
 
