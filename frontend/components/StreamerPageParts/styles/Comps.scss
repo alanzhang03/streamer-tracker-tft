@@ -39,8 +39,22 @@
       justify-content: center;
       margin-top: 0px;
       opacity: 1;
+      gap: 2px;
+      flex-wrap: nowrap;
+
       .champion-item {
-        border: 1px white solid;
+        border: 1px solid rgba(74, 158, 255, 0.3);
+        border-radius: 4px;
+        transition: all 0.2s ease;
+        background: rgba(0, 0, 0, 0.3);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        flex-shrink: 0;
+
+        &:hover {
+          border-color: rgba(74, 158, 255, 0.6);
+          transform: scale(1.1);
+          box-shadow: 0 0 8px rgba(74, 158, 255, 0.4);
+        }
       }
     }
   }
