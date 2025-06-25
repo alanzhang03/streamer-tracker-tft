@@ -78,9 +78,9 @@ export default function Home() {
       opacity: 0,
       duration: 1,
     });
-    gsap.from("#hero-explore-streamers-button", {
-      delay: 1.75,
-      opacity: 0,
+    gsap.to("#hero-explore-streamers-button", {
+      delay: 1.25,
+      opacity: 1,
       duration: 0.75,
     });
     gsap.to(".streamerCard", {
@@ -132,7 +132,6 @@ export default function Home() {
         }
         const fav_comps_res = await fav_comps_response.json();
         setDishsoapComps(fav_comps_res);
-        
 
         // Fetch Mortdog data
         const mortdog_response = await fetch(FAV_COMPS_API_ENDPOINT, {
