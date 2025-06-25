@@ -30,12 +30,12 @@ export default function Home() {
       rank: "Challenger",
       image: "/k3soju.png",
     },
-    // {
-    //   id: "Mortdog",
-    //   name: "Mortdog",
-    //   rank: "Grandmaster",
-    //   image: "/mortdog.png",
-    // },
+    {
+      id: "Mortdog",
+      name: "Mortdog",
+      rank: "Grandmaster",
+      image: "/mortdog.png",
+    },
   ];
 
   const FAV_COMPS_API_ENDPOINT =
