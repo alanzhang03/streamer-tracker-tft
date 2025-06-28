@@ -354,6 +354,7 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
             stats.tier.charAt(0).toUpperCase() +
               stats.tier.slice(1).toLowerCase()}
         </h2>
+        <br />
 
         {stats && (
           <Image
@@ -363,6 +364,7 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
             height={200}
           />
         )}
+        <br />
         <button
           onClick={updateData}
           className="update-button"
