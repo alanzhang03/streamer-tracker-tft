@@ -147,7 +147,6 @@ We welcome contributions from the TFT community! Here's how you can help:
 ### **Areas for Contribution**
 - **New Streamer Integrations**: Add support for additional content creators
 - **Enhanced Analytics**: Develop new statistical insights and visualizations
-- **UI/UX Improvements**: Refine the glassmorphism design system
 - **Performance Optimization**: Improve loading times and data efficiency
 - **Mobile Experience**: Enhance responsive design and touch interactions
 
