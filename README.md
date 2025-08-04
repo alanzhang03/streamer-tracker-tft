@@ -73,7 +73,7 @@ StreamerTracker TFT is a specialized tracking application designed for Teamfight
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/streamertracker-tft.git
+   git clone https://github.com/alanzhang03/streamer-tracker-tft.git
    cd streamertracker-tft
    ```
 
@@ -102,13 +102,6 @@ StreamerTracker TFT is a specialized tracking application designed for Teamfight
 3. **Configure environment variables**
    ```bash
    cp .env.example .env
-   ```
-   
-   Add your configuration:
-   ```env
-   RIOT_API_KEY=your_riot_api_key
-   DATABASE_URL=your_neon_postgresql_url
-   FLASK_ENV=development
    ```
 
 4. **Run Flask application**
@@ -179,7 +172,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support & Community
 
-- **GitHub Issues**: [Report bugs or request features](https://github.com/yourusername/streamertracker-tft/issues)
+- **GitHub Issues**: [Report bugs or request features](https://github.com/alanzhang03/streamertracker-tft/issues)
 - **Discord Community**: Join our community for real-time support
 - **Documentation**: Comprehensive guides available in the `/docs` folder
 - **Email Support**: Contact us for partnership inquiries
