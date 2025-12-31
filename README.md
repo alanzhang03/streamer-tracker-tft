@@ -2,41 +2,41 @@
 
 **Track your favorite TFT streamers' latest matches and comps!**
 
-A comprehensive tracking application for Teamfight Tactics streamers, featuring real-time statistics, match history analysis, and team composition insights with a stunning glassmorphism UI design.
+A comprehensive tracking application for Teamfight Tactics streamers, featuring real-time statistics, match history analysis, and team composition insights.
 
-🌐 **Live Demo**: [streamer-tracker-tft.vercel.app](https://streamer-tracker-tft.vercel.app/)
+**Live Demo**: [streamer-tracker-tft.vercel.app](https://streamer-tracker-tft.vercel.app/)
 
-## 🚀 Overview
+##  Overview
 
 StreamerTracker TFT is a specialized tracking application designed for Teamfight Tactics content creators and viewers. Monitor your favorite streamers' performance, analyze their strategies, and discover winning team compositions through an intuitive, modern interface.
 
-## ✨ Key Features
+##  Key Features
 
-### 📊 **Comprehensive Streamer Analytics**
+### **Comprehensive Streamer Analytics**
 - **Real-time Rank Tracking**: Monitor current LP, rank, and tier progression
 - **Performance Metrics**: Win rates, average placement, and recent game statistics
 - **Interactive Match History**: Detailed breakdowns of recent 50+ matches
 - **Placement Visualization**: Color-coded placement history for quick analysis
 
-### 🎯 **Strategic Insights**
+###  **Strategic Insights**
 - **Favorite Compositions**: Top 5 most played team comps with frequency data
 - **Item Analysis**: Most frequently used items with usage statistics
 - **Synergy Tracking**: Augment and trait combinations per match
 - **Advanced Filtering**: Filter matches by compositions and items for deep analysis
 
-### 🎨 **Modern User Experience**
+###  **Modern User Experience**
 - **Glassmorphism Design**: Beautiful backdrop blur effects and translucent components
 - **Dynamic Color System**: Cost-based champion borders and placement-based styling
 - **Responsive Layout**: Optimized for desktop, tablet, and mobile viewing
 - **Smooth Animations**: Micro-interactions and hover effects throughout the interface
 
-### 🔄 **Real-time Data Management**
+###  **Real-time Data Management**
 - **Live Updates**: Manual refresh functionality with timestamps
 - **Efficient Caching**: Optimized data retrieval and storage
 - **Error Handling**: Robust error states and loading indicators
 - **API Integration**: Seamless Riot Games API integration
 
-## 🛠️ Technology Stack
+##  Technology Stack
 
 ### **Frontend**
 - **Next.js 14**: React-based framework with server-side rendering
@@ -61,7 +61,7 @@ StreamerTracker TFT is a specialized tracking application designed for Teamfight
 - **Cloud Hosting**: Scalable backend infrastructure
 - **CDN Integration**: Fast asset delivery worldwide
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### Prerequisites
 - Node.js 18+
@@ -109,7 +109,7 @@ StreamerTracker TFT is a specialized tracking application designed for Teamfight
    flask run
    ```
 
-## 🎮 Usage Guide
+##  Usage Guide
 
 ### Exploring Streamers
 1. **Browse Streamers**: Use the "Explore Streamers" feature to discover tracked content creators
@@ -127,7 +127,7 @@ StreamerTracker TFT is a specialized tracking application designed for Teamfight
 - **Automatic Sync**: Backend processes update streamer data periodically
 - **Real-time Feedback**: Loading states and timestamps show data freshness
 
-## 🤝 Contributing
+##  Contributing
 
 We welcome contributions from the TFT community! Here's how you can help:
 
@@ -150,7 +150,7 @@ We welcome contributions from the TFT community! Here's how you can help:
 - Ensure accessibility compliance
 - Write meaningful commit messages
 
-## 📈 Future Roadmap
+##  Future Roadmap
 
 - **Multi-Region Support**: Expand beyond NA to include all TFT regions
 - **Live Streaming Integration**: Real-time match tracking during streams
@@ -159,18 +159,18 @@ We welcome contributions from the TFT community! Here's how you can help:
 - **Mobile App**: Native iOS and Android applications
 - **Tournament Tracking**: Support for competitive events and tournaments
 
-## 📄 License
+##  License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+##  Acknowledgments
 
 - **Riot Games** for providing the TFT API and game assets
 - **TFT Community** for feedback, testing, and feature requests
 - **Content Creators** who make TFT streaming entertaining and educational
 - **Open Source Contributors** who help improve the platform
 
-## 📞 Support & Community
+##  Support & Community
 
 - **GitHub Issues**: [Report bugs or request features](https://github.com/alanzhang03/streamertracker-tft/issues)
 - **Discord Community**: Join our community for real-time support
@@ -179,6 +179,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Built with ❤️ for the TFT streaming community**
 
 *StreamerTracker TFT isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.*
