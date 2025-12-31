@@ -1,4 +1,4 @@
-# 🎮 StreamerTracker TFT
+#  StreamerTracker TFT
 
 **Track your favorite TFT streamers' latest matches and comps!**
 
