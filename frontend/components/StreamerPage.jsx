@@ -1,43 +1,43 @@
-import React, { useEffect, useState } from "react";
-import "./styles/StreamerPage.scss";
-import MatchHistory from "./StreamerPageParts/MatchHistory";
-import Stats from "./StreamerPageParts/Stats";
-import Image from "next/image";
-import { useDeprecatedAnimatedState } from "framer-motion";
-import FavoriteComps from "./StreamerPageParts/FavoriteComps";
+import React, { useEffect, useState } from 'react';
+import './styles/StreamerPage.scss';
+import MatchHistory from './StreamerPageParts/MatchHistory';
+import Stats from './StreamerPageParts/Stats';
+import Image from 'next/image';
+import { useDeprecatedAnimatedState } from 'framer-motion';
+import FavoriteComps from './StreamerPageParts/FavoriteComps';
 
 const importAllImages = (requireContext) => {
   const images = {};
   requireContext.keys().forEach((key) => {
-    const filename = key.replace("./", "");
+    const filename = key.replace('./', '');
     images[filename] = requireContext(key);
   });
   return images;
 };
 
 const champ_images = importAllImages(
-  require.context("./assets/champions", false, /\.(png|jpe?g|svg)$/)
+  require.context('./assets/champions', false, /\.(png|jpe?g|svg)$/),
 );
 
 const item_images = importAllImages(
-  require.context("./assets/items", false, /\.(png|jpe?g|svg)$/)
+  require.context('./assets/items', false, /\.(png|jpe?g|svg)$/),
 );
 
 const rank_images = importAllImages(
-  require.context("./assets/ranks", false, /\.(png|jpe?g|svg)$/)
+  require.context('./assets/ranks', false, /\.(png|jpe?g|svg)$/),
 );
 
 const importAllAugmentImages = (requireContext) => {
   const images = {};
   requireContext.keys().forEach((key) => {
-    const filename = key.replace("./", "").replace(/\.(png|jpe?g|svg)$/, "");
+    const filename = key.replace('./', '').replace(/\.(png|jpe?g|svg)$/, '');
     images[filename] = requireContext(key).default;
   });
   return images;
 };
 
 const augmentImages = importAllAugmentImages(
-  require.context("./assets/traits", false, /\.(png|jpe?g|svg)$/)
+  require.context('./assets/traits', false, /\.(png|jpe?g|svg)$/),
 );
 
 const StreamerPage = ({ usernameTagline, username, displayName }) => {
@@ -52,6 +52,8 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
   const [recentStatistics, setRecentStatistics] = useState(null);
   const [itemCounts, setItemCounts] = useState({});
   const [selectedItems, setSelectedItems] = useState(new Set());
+  const [synergyDict, setSynergyDict] = useState({});
+  const [championIcons, setChampionIcons] = useState({});
 
   const updateRecentStatistics = () => {
     let recentMatches;
@@ -67,7 +69,7 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
     let lp = 0;
     recentMatches.forEach((match) => {
       const player = Object.values(match).find(
-        (p) => p.username_tagline === usernameTagline
+        (p) => p.username_tagline === usernameTagline,
       );
       // console.log(player)
       games += 1;
@@ -75,7 +77,7 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
       if (player.placement == 1) {
         wins += 1;
       }
-      lp += player.lp_gain;
+      lp += player.lp_gain ?? 0;
     });
     const recentStatsObject = {
       average_placement: placement_sum / games,
@@ -88,7 +90,7 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
 
   const handleCompClick = (comp) => {
     // Convert comp (an array) to a string
-    const compKey = comp.join(",");
+    const compKey = comp.join(',');
     setSelectedComps((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(compKey)) {
@@ -131,7 +133,7 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
       setFilteredData(result);
 
       const stats_response = await fetch(STATS_API_ENDPOINT, {
-        method: "GET",
+        method: 'GET',
         headers: stats_headers,
       });
       if (!stats_response.ok) {
@@ -141,7 +143,7 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
       setStats(stas_res);
 
       const last_updated_response = await fetch(LAST_UPDATE_API_ENDPOINT, {
-        method: "GET",
+        method: 'GET',
         headers: last_update_headers,
       });
       if (!last_updated_response.ok) {
@@ -149,6 +151,14 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
       }
       const last_updated_res = await last_updated_response.json();
       setLastUpdated(last_updated_res);
+
+      const synergy_response = await fetch(SYNERGY_DICT_ENDPOINT);
+      const synergy_res = await synergy_response.json();
+      setSynergyDict(synergy_res);
+
+      const icons_response = await fetch(CHAMPION_ICONS_ENDPOINT);
+      const icons_res = await icons_response.json();
+      setChampionIcons(icons_res);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -160,7 +170,7 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
     try {
       setLoading(true);
       const response = await fetch(UPDATE_API_ENDPOINT, {
-        method: "PUT",
+        method: 'PUT',
         headers: update_headers,
       });
       const res = await response.json();
@@ -183,7 +193,7 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
       if (differenceInHours < 1) {
         const differenceInMinutes = Math.floor(differenceInTime / (1000 * 60));
         return differenceInMinutes <= 1
-          ? "Just now"
+          ? 'Just now'
           : `${differenceInMinutes} minutes ago`;
       }
       return `${differenceInHours} hours ago`;
@@ -203,48 +213,52 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
   function determineColor(placement) {
     switch (placement) {
       case 1:
-        return "#F1C555";
+        return '#F1C555';
       case 2:
-        return "#DC38C3";
+        return '#DC38C3';
       case 3:
-        return "#6ECCFF";
+        return '#6ECCFF';
       case 4:
-        return "#37D488";
+        return '#37D488';
       default:
-        return "#dd0e22";
+        return '#dd0e22';
     }
   }
 
   const API_ENDPOINT =
-    "https://streamertracker-tft-262334a34d5b.herokuapp.com/api/match-history";
-  // "http://127.0.0.1:5000/api/match-history";
+    // "https://streamertracker-tft-262334a34d5b.herokuapp.com/api/match-history";
+    'http://127.0.0.1:5000/api/match-history';
+  const SYNERGY_DICT_ENDPOINT =
+    // "https://streamertracker-tft-262334a34d5b.herokuapp.com/api/synergy-dict";
+    'http://127.0.0.1:5000/api/synergy-dict';
+  const CHAMPION_ICONS_ENDPOINT = 'http://127.0.0.1:5000/api/champion-icons';
   const headers = {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
     // "page-number": "0",
-    "username-tagline": usernameTagline,
+    'username-tagline': usernameTagline,
   };
 
   const STATS_API_ENDPOINT =
-    "https://streamertracker-tft-262334a34d5b.herokuapp.com/api/stats";
-  // "http://127.0.0.1:5000/api/stats";
+    // "https://streamertracker-tft-262334a34d5b.herokuapp.com/api/stats";
+    'http://127.0.0.1:5000/api/stats';
   const stats_headers = {
-    "Content-Type": "application/json",
-    "username-tagline": usernameTagline,
+    'Content-Type': 'application/json',
+    'username-tagline': usernameTagline,
   };
 
   const UPDATE_API_ENDPOINT =
-    "https://streamertracker-tft-262334a34d5b.herokuapp.com/api/update-data";
-  // "http://127.0.0.1:5000/api/update-data";
+    // "https://streamertracker-tft-262334a34d5b.herokuapp.com/api/update-data";
+    'http://127.0.0.1:5000/api/update-data';
   const update_headers = {
-    "Content-Type": "application/json",
-    "username-tagline": usernameTagline,
+    'Content-Type': 'application/json',
+    'username-tagline': usernameTagline,
   };
   const LAST_UPDATE_API_ENDPOINT =
-    "https://streamertracker-tft-262334a34d5b.herokuapp.com/api/last-updated";
-  // "http://127.0.0.1:5000/api/last-updated";
+    // "https://streamertracker-tft-262334a34d5b.herokuapp.com/api/last-updated";
+    'http://127.0.0.1:5000/api/last-updated';
   const last_update_headers = {
-    "Content-Type": "application/json",
-    "username-tagline": usernameTagline,
+    'Content-Type': 'application/json',
+    'username-tagline': usernameTagline,
   };
 
   useEffect(() => {
@@ -256,7 +270,7 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
 
     const filtered = data.filter((match) => {
       const player = Object.values(match).find(
-        (p) => p.username_tagline === usernameTagline
+        (p) => p.username_tagline === usernameTagline,
       );
       if (!player) return false;
 
@@ -264,9 +278,9 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
       const compMatch =
         selectedComps.size === 0 ||
         [...selectedComps].every((compStr) => {
-          const compTraits = compStr.split(",");
+          const compTraits = compStr.split(',');
           return compTraits.every((trait) =>
-            player.comp?.some((c) => c.includes(trait))
+            player.comp?.some((c) => c.includes(trait)),
           );
         });
 
@@ -275,10 +289,10 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
         selectedItems.size === 0 ||
         (() => {
           const allItemsInMatch = player.units?.flatMap(
-            (unit) => unit.itemNames || []
+            (unit) => unit.itemNames || [],
           );
           return [...selectedItems].every((item) =>
-            allItemsInMatch.includes(item)
+            allItemsInMatch.includes(item),
           );
         })();
 
@@ -303,7 +317,7 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
 
     filteredData.forEach((match) => {
       const player = Object.values(match).find(
-        (p) => p.username_tagline === usernameTagline
+        (p) => p.username_tagline === usernameTagline,
       );
 
       if (!player || !Array.isArray(player.units)) return;
@@ -317,8 +331,8 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
       });
 
       // Clean comp
-      const cleaned = player.comp.map((c) => c.replace(/^[\s\d]+/, ""));
-      const key = cleaned.join(",");
+      const cleaned = player.comp.map((c) => c.replace(/^[\s\d]+/, ''));
+      const key = cleaned.join(',');
 
       compCounts[key] = (compCounts[key] || 0) + 1;
       keyToArray[key] = cleaned; // preserve original array
@@ -331,11 +345,11 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
   }, [filteredData, usernameTagline]);
 
   return (
-    <div className="streamer-page">
-      <div className="streamer-stats">
-        <div className="streamer-header-intro-image-container">
-          {" "}
-          <h2 style={{ marginBottom: "-40px" }}>{displayName}</h2>
+    <div className='streamer-page'>
+      <div className='streamer-stats'>
+        <div className='streamer-header-intro-image-container'>
+          {' '}
+          <h2 style={{ marginBottom: '-40px' }}>{displayName}</h2>
           {username && (
             <Image
               src={`/${username}.png`}
@@ -343,22 +357,22 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
               width={200}
               height={200}
               style={{
-                borderRadius: "25px",
-                border: "1px solid #ccc",
+                borderRadius: '25px',
+                border: '1px solid #ccc',
               }}
             />
           )}
         </div>
         <h2>
-          {stats &&
+          {stats && stats.tier &&
             stats.tier.charAt(0).toUpperCase() +
               stats.tier.slice(1).toLowerCase()}
         </h2>
         <br />
 
-        {stats && (
+        {stats && stats.tier && (
           <Image
-            src={rank_images[stats.tier + ".png"]}
+            src={rank_images[stats.tier + '.png']}
             alt={stats.tier}
             width={200}
             height={200}
@@ -367,34 +381,34 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
         <br />
         <button
           onClick={updateData}
-          className="update-button"
+          className='update-button'
           disabled={loading || isRecentlyUpdated()}
         >
           Update Data
           <br />
-          <span className="last-updated-timestamp">
-            Last updated: {loading ? "loading..." : getTimeAgo(lastUpdated)}
+          <span className='last-updated-timestamp'>
+            Last updated: {loading ? 'loading...' : getTimeAgo(lastUpdated)}
           </span>
         </button>
         {stats && <Stats stats={stats} />}
       </div>
-      <div className="streamer-main-section">
-        <section className="streamer-intro-section">
+      <div className='streamer-main-section'>
+        <section className='streamer-intro-section'>
           {/* <h1 className="streamer-section-header">
             Intro Section for Streamer
           </h1> */}
         </section>
-        <section className="streamer-statistics">
+        <section className='streamer-statistics'>
           {/* <h1 className="streamer-section-header">
             Recent 20 Games Ranked Statistics
           </h1> */}
-          <h1 className="streamer-section-header">
+          <h1 className='streamer-section-header'>
             {displayName}'s Favorite Comps and Items
           </h1>
 
           {itemCounts && favComps && (
-            <div className="container">
-              <div className="fav-comps-table">
+            <div className='container'>
+              <div className='fav-comps-table'>
                 <p>Comps</p>
                 <FavoriteComps
                   comps={favComps}
@@ -403,27 +417,27 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
                 />
               </div>
               <p>Items</p>
-              <div className="items-table">
+              <div className='items-table'>
                 {getTopItems(itemCounts).map(([itemName, count], index) => (
                   <div
                     key={index}
                     className={`top-item ${
-                      selectedItems.has(itemName) ? "selected" : ""
+                      selectedItems.has(itemName) ? 'selected' : ''
                     }`}
                   >
                     <Image
                       src={
                         item_images[`${itemName}.png`]?.default ||
                         item_images[`${itemName}.png`] ||
-                        "/placeholder.png"
+                        '/placeholder.png'
                       }
                       alt={itemName}
                       width={60}
                       height={60}
                       onClick={() => handleItemClick(itemName)}
-                      style={{ cursor: "pointer" }}
+                      style={{ cursor: 'pointer' }}
                     />
-                    <span className="item-label">Freq: {count}</span>
+                    <span className='item-label'>Freq: {count}</span>
                   </div>
                 ))}
               </div>
@@ -431,24 +445,24 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
           )}
         </section>
 
-        <h1 className="streamer-section-header">
+        <h1 className='streamer-section-header'>
           {displayName}'s Match History
         </h1>
 
         {loading && <p>Loading...</p>}
-        {error && <p style={{ color: "red" }}>Error: {error}</p>}
+        {error && <p style={{ color: 'red' }}>Error: {error}</p>}
         {recentStatistics && filteredData && (
-          <div className="summary-card">
-            <p className="last-20-text">Last 20 Games</p>
-            <div className="summary-section">
-              <div className="recent-match-container">
+          <div className='summary-card'>
+            <p className='last-20-text'>Last 20 Games</p>
+            <div className='summary-section'>
+              <div className='recent-match-container'>
                 {filteredData.slice(0, 20).map((match, index) => {
                   const player = Object.values(match).find(
-                    (p) => p.username_tagline === usernameTagline
+                    (p) => p.username_tagline === usernameTagline,
                   );
                   return (
                     <div
-                      className="recent-match-element"
+                      className='recent-match-element'
                       key={index}
                       style={{
                         backgroundColor: determineColor(player.placement),
@@ -459,17 +473,17 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
                   );
                 })}
               </div>
-              <div className="recent-stats">
+              <div className='recent-stats'>
                 <p>games: {recentStatistics.games}</p>
                 <p>
-                  lp:{" "}
+                  lp:{' '}
                   <span
                     className={
                       recentStatistics.lp_gain > 0
-                        ? "lp-green"
+                        ? 'lp-green'
                         : recentStatistics.lp_gain < 0
-                        ? "lp-red"
-                        : ""
+                          ? 'lp-red'
+                          : ''
                     }
                   >
                     {recentStatistics.lp_gain}
@@ -484,7 +498,7 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
         )}
         {filteredData && (
           <MatchHistory
-            className="match-history"
+            className='match-history'
             data={filteredData.slice(0, 50)}
             champ_images={champ_images}
             item_images={item_images}
@@ -492,6 +506,8 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
             usernameTagline={usernameTagline}
             getTimeAgo={getTimeAgo}
             determineColor={determineColor}
+            synergyDict={synergyDict}
+            championIcons={championIcons}
           />
         )}
       </div>

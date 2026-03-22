@@ -1,7 +1,27 @@
-/* hero section */
+/* ── Shared section helpers ─────────────────────────────────────────────────── */
+
+.sectionLabel {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #4a9eff;
+  margin: 0 0 10px;
+}
+
+.sectionTitle {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 700;
+  color: #e4e6ed;
+  margin: 0 0 40px;
+  letter-spacing: -0.3px;
+}
+
+/* ── Hero ────────────────────────────────────────────────────────────────────── */
+
 .hero {
-  height: 90vh;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+  min-height: 88vh;
+  background-image: linear-gradient(rgba(13, 15, 20, 0.6), rgba(13, 15, 20, 0.88)),
     url("/background.jpg");
   background-size: cover;
   background-position: center;
@@ -10,356 +30,364 @@
   justify-content: center;
   align-items: center;
   text-align: center;
+  padding: 0 24px;
+}
+
+.heroEyebrow {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: #4a9eff;
+  margin: 0 0 16px;
+  border: 1px solid rgba(74, 158, 255, 0.3);
+  padding: 5px 14px;
+  border-radius: 20px;
+  background: rgba(74, 158, 255, 0.07);
 }
 
 .hero h1 {
-  font-size: 5rem;
+  font-size: clamp(2.8rem, 6vw, 5rem);
   margin: 0;
+  color: #e4e6ed;
+  font-weight: 800;
+  letter-spacing: -1px;
+  line-height: 1.1;
+}
+
+.hero h1 span {
   color: #4a9eff;
-  font-weight: 900;
-  text-shadow: 0 0 15px rgba(74, 158, 255, 0.6),
-    0 0 30px rgba(74, 158, 255, 0.4), 0 0 45px rgba(74, 158, 255, 0.2),
-    2px 2px 5px rgba(0, 0, 0, 0.7);
-  text-transform: uppercase;
-  letter-spacing: 2px;
 }
 
 .hero p {
-  font-size: 1.5rem;
-  margin: 20px 0;
+  font-size: 1.05rem;
+  margin: 18px 0 0;
   color: #8892b0;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-  font-weight: 300;
-  letter-spacing: 0.5px;
+  font-weight: 400;
+  max-width: 500px;
+  line-height: 1.6;
 }
 
 .ctaButton {
-  margin-top: 30px;
-  padding: 18px 35px;
-  background: linear-gradient(135deg, #4a9eff 0%, #0066cc 100%);
-  color: white;
+  margin-top: 36px;
+  padding: 14px 32px;
+  background: #4a9eff;
+  color: #0d0f14;
   text-decoration: none;
-  border-radius: 12px;
-  font-size: 1.25rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 20px rgba(74, 158, 255, 0.3), 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: background 0.2s ease, transform 0.2s ease;
   display: inline-block;
   opacity: 0;
-  z-index: 10;
-  position: relative;
 }
 
 .ctaButton:hover {
-  background: linear-gradient(135deg, #5aa7ff 0%, #0073e6 100%);
+  background: #6ab2ff;
   transform: translateY(-2px);
-  box-shadow: 0 0 30px rgba(74, 158, 255, 0.5), 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
-/* featured streamers section */
+/* ── Featured streamers ──────────────────────────────────────────────────────── */
+
 .featuredStreamers {
-  padding: 4rem 2rem;
+  padding: 80px 24px;
+  background: #0d0f14;
   text-align: center;
-  background: linear-gradient(180deg, #0a0e13 0%, #1a1a2e 100%);
-}
-
-.featuredStreamers h2 {
-  padding-top: 2vh;
-  font-size: 3.5rem;
-  margin-bottom: 3vh;
-  color: #4a9eff;
-  font-weight: 900;
-  text-shadow: 0 0 10px rgba(74, 158, 255, 0.5),
-    0 0 20px rgba(74, 158, 255, 0.3), 0 0 30px rgba(74, 158, 255, 0.1);
-  text-transform: uppercase;
-  letter-spacing: 2px;
 }
 
 .streamerGrid {
   display: flex;
   justify-content: center;
-  gap: 3rem;
+  gap: 20px;
   flex-wrap: wrap;
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
 .streamerCard {
   opacity: 0;
-  background: radial-gradient(circle at center, #1a1a2e 0%, #0f0f23 100%);
-  padding: 2rem !important;
+  background: #141720;
+  padding: 28px 20px 22px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  gap: 1vh;
-  border-radius: 15px;
-  text-align: center;
-  width: 15vw;
-  min-width: 280px;
-  height: auto;
-  border: 2px solid #4a9eff;
-  padding-top: none;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 20px rgba(74, 158, 255, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  gap: 10px;
+  border-radius: 14px;
+  width: 200px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  transition: border-color 0.2s ease, transform 0.2s ease;
+  text-decoration: none;
 }
 
 .streamerCard:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 0 40px rgba(74, 158, 255, 0.3), 0 15px 30px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  border-color: #5aa7ff;
+  border-color: rgba(74, 158, 255, 0.35);
+  transform: translateY(-4px);
 }
 
-.streamerCard img {
-  border-radius: 12px;
-  transition: all 0.3s ease;
-}
-
-.streamerCard:hover img {
-  transform: scale(1.05);
-  box-shadow: 0 0 25px rgba(74, 158, 255, 0.4);
+.streamerAvatar {
+  border-radius: 10px;
 }
 
 .streamerName {
-  font-size: 2rem;
-  margin: 1rem 0 0.5rem;
-  color: #4a9eff;
-  font-weight: 800;
-  text-shadow: 0 0 8px rgba(74, 158, 255, 0.4), 0 0 15px rgba(74, 158, 255, 0.2);
-  letter-spacing: 1px;
-}
-
-.streamerRank {
-  font-size: 1.25rem;
-  margin: 0.5rem 0;
-  color: #8892b0;
-  font-weight: 500;
-}
-
-.viewProfile {
-  padding: 12px 24px;
-  background: linear-gradient(135deg, #4a9eff 0%, #0066cc 100%);
-  color: white;
-  text-decoration: none;
-  border-radius: 8px;
   font-size: 1rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  transition: all 0.3s ease;
-  margin-top: 10px;
-  box-shadow: 0 4px 12px rgba(74, 158, 255, 0.2);
-}
-
-.viewProfile:hover {
-  background: linear-gradient(135deg, #5aa7ff 0%, #0073e6 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(74, 158, 255, 0.4);
-}
-
-/* trending comps and augments */
-.trending {
-  padding: 4rem 2rem;
-  text-align: center;
-  background: linear-gradient(180deg, #1a1a2e 0%, #0a0e13 100%);
-}
-
-.trending h2 {
-  font-size: 3rem;
-  margin-bottom: 3rem;
-  color: #4a9eff;
-  font-weight: 900;
-  text-shadow: 0 0 10px rgba(74, 158, 255, 0.5),
-    0 0 20px rgba(74, 158, 255, 0.3), 0 0 30px rgba(74, 158, 255, 0.1);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
-
-.trendingGrid {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  flex-wrap: wrap;
-}
-
-.compCard {
-  background: radial-gradient(circle at center, #1a1a2e 0%, #0f0f23 100%);
-  padding: 2rem;
-  border-radius: 15px;
-  width: 320px;
-  border: 1px solid #4a9eff;
-  box-shadow: 0 0 20px rgba(74, 158, 255, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  transition: all 0.3s ease;
-}
-
-.compCard:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 0 30px rgba(74, 158, 255, 0.2), 0 10px 25px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-}
-
-.compCard img {
-  border-radius: 50%;
-  margin-bottom: 1rem;
-  border: 2px solid #4a9eff;
-  box-shadow: 0 0 15px rgba(74, 158, 255, 0.3);
-}
-
-.favCompElement {
-  border: 1px solid #4a9eff;
-  background: linear-gradient(135deg, #1e2328 0%, #2a2d31 100%);
-  border-radius: 10px;
-  margin: 10px;
-  padding: 12px;
-  height: auto;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-}
-
-.favCompElement:hover {
-  border-color: #5aa7ff;
-  transform: translateY(-2px);
-  box-shadow: 0 0 15px rgba(74, 158, 255, 0.2), 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.favCompElement p {
   margin: 0;
-  color: #8892b0;
-  font-weight: 500;
-  font-size: 0.9rem;
-  letter-spacing: 0.5px;
-}
-
-.compCard h4 {
-  font-size: 1.4rem;
-  margin-bottom: 0.5rem;
-  color: #4a9eff;
+  color: #e4e6ed;
   font-weight: 700;
 }
 
-.compCard p {
-  font-size: 1rem;
-  margin-bottom: 1rem;
-  color: #8892b0;
+.streamerRankBadge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #f1c555;
+  background: rgba(241, 197, 85, 0.1);
+  border: 1px solid rgba(241, 197, 85, 0.25);
+  border-radius: 20px;
+  padding: 3px 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-/* recent matches */
-.recentMatches {
-  padding: 4rem 2rem;
-  background: #0a0e13;
-}
-
-.recentMatches h2 {
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
-  color: #4a9eff;
-  font-weight: 800;
-  text-shadow: 0 0 8px rgba(74, 158, 255, 0.4), 0 0 15px rgba(74, 158, 255, 0.2);
-}
-
-.recentMatches ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.recentMatches li {
-  margin: 0.5rem 0;
-  font-size: 1.25rem;
-}
-
-.recentMatches a {
+.viewProfile {
+  margin-top: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
   color: #4a9eff;
   text-decoration: none;
-  transition: all 0.3s ease;
+  letter-spacing: 0.2px;
+}
+
+/* ── How It Works ────────────────────────────────────────────────────────────── */
+
+.howItWorks {
+  padding: 80px 24px;
+  background: #111318;
+  text-align: center;
+}
+
+.stepsGrid {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.stepCard {
+  background: #141720;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 14px;
+  padding: 32px 28px;
+  flex: 1;
+  min-width: 240px;
+  max-width: 300px;
+  text-align: left;
+  transition: border-color 0.2s ease;
+}
+
+.stepCard:hover {
+  border-color: rgba(74, 158, 255, 0.2);
+}
+
+.stepNumber {
+  font-size: 2rem;
+  font-weight: 800;
+  color: rgba(74, 158, 255, 0.18);
+  line-height: 1;
+  display: block;
+  margin-bottom: 16px;
+  font-variant-numeric: tabular-nums;
+}
+
+.stepTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #e4e6ed;
+  margin: 0 0 10px;
+}
+
+.stepDesc {
+  font-size: 0.85rem;
+  color: #8892b0;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── Streamer Favorites ──────────────────────────────────────────────────────── */
+
+.trending {
+  padding: 80px 24px;
+  background: #0d0f14;
+  text-align: center;
+}
+
+.trendingGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+.compCard {
+  background: #141720;
+  padding: 20px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  transition: border-color 0.2s ease;
+  text-align: left;
+}
+
+.compCard:hover {
+  border-color: rgba(74, 158, 255, 0.2);
+}
+
+.compCardHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.compCardAvatar {
+  border-radius: 50%;
+  border: 2px solid rgba(74, 158, 255, 0.2);
+  flex-shrink: 0;
+}
+
+.compCardMeta {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.compCardName {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #e4e6ed;
+}
+
+.compCardRank {
+  font-size: 0.72rem;
+  color: #f1c555;
   font-weight: 500;
 }
 
-.recentMatches a:hover {
-  color: #5aa7ff;
-  text-shadow: 0 0 8px rgba(74, 158, 255, 0.3);
-}
-
-/* about section */
-.aboutSection {
-  padding: 4rem 2rem;
-  text-align: center;
-  background: #1a1a2e;
-}
-
-.aboutSection h2 {
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
+.compCardLink {
+  font-size: 0.75rem;
+  font-weight: 600;
   color: #4a9eff;
-  font-weight: 800;
-  text-shadow: 0 0 8px rgba(74, 158, 255, 0.4), 0 0 15px rgba(74, 158, 255, 0.2);
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 5px 10px;
+  border: 1px solid rgba(74, 158, 255, 0.25);
+  border-radius: 6px;
+  transition: background 0.15s ease;
 }
 
-.aboutSection p {
-  font-size: 1.25rem;
-  max-width: 700px;
-  margin: 0 auto;
-  line-height: 1.6;
+.compCardLink:hover {
+  background: rgba(74, 158, 255, 0.08);
+}
+
+.compList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.favCompElement {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 10px;
+  background: #1c2030;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  transition: border-color 0.15s ease;
+}
+
+.favCompElement:hover {
+  border-color: rgba(74, 158, 255, 0.2);
+}
+
+.compRank {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #4d5a6e;
+  min-width: 14px;
+  padding-top: 2px;
+}
+
+.compChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.chip {
+  font-size: 0.72rem;
+  font-weight: 500;
   color: #8892b0;
-  font-weight: 400;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  padding: 2px 7px;
 }
 
-/* responsive stuff */
-@media (max-width: 1200px) {
-  .streamerCard {
-    width: 18vw;
-    min-width: 250px;
-  }
-
-  .hero h1 {
-    font-size: 4rem;
-  }
-
-  .featuredStreamers h2,
-  .trending h2 {
-    font-size: 3rem;
-  }
+.emptyComps {
+  font-size: 0.8rem;
+  color: #4d5a6e;
+  margin: 0;
+  padding: 8px 0;
 }
+
+/* ── Skeleton loading ────────────────────────────────────────────────────────── */
+
+.skeletonComp {
+  height: 36px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #1c2030 25%, #252a3a 50%, #1c2030 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────────── */
 
 @media (max-width: 768px) {
   .hero h1 {
-    font-size: 2.5rem;
-  }
-
-  .hero p {
-    font-size: 1.2rem;
-  }
-
-  .ctaButton {
-    font-size: 1rem;
-    padding: 15px 25px;
-  }
-
-  .featuredStreamers h2,
-  .trending h2 {
     font-size: 2.2rem;
   }
 
-  .streamerGrid,
-  .trendingGrid {
+  .streamerGrid {
     flex-direction: column;
     align-items: center;
   }
 
   .streamerCard {
     width: 90%;
-    max-width: 350px;
-    min-width: unset;
+    max-width: 300px;
   }
 
-  .compCard {
-    width: 90%;
-    max-width: 300px;
+  .stepsGrid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .stepCard {
+    max-width: 100%;
+  }
+
+  .trendingGrid {
+    grid-template-columns: 1fr;
   }
 }
