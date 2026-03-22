@@ -226,12 +226,11 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
   }
 
   const API_ENDPOINT =
-    // "https://streamertracker-tft-262334a34d5b.herokuapp.com/api/match-history";
-    'http://127.0.0.1:5000/api/match-history';
+    'https://streamertracker-tft-262334a34d5b.herokuapp.com/api/match-history';
   const SYNERGY_DICT_ENDPOINT =
-    // "https://streamertracker-tft-262334a34d5b.herokuapp.com/api/synergy-dict";
-    'http://127.0.0.1:5000/api/synergy-dict';
-  const CHAMPION_ICONS_ENDPOINT = 'http://127.0.0.1:5000/api/champion-icons';
+    'https://streamertracker-tft-262334a34d5b.herokuapp.com/api/synergy-dict';
+  const CHAMPION_ICONS_ENDPOINT =
+    'https://streamertracker-tft-262334a34d5b.herokuapp.com/api/champion-icons';
   const headers = {
     'Content-Type': 'application/json',
     // "page-number": "0",
@@ -239,23 +238,20 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
   };
 
   const STATS_API_ENDPOINT =
-    // "https://streamertracker-tft-262334a34d5b.herokuapp.com/api/stats";
-    'http://127.0.0.1:5000/api/stats';
+    'https://streamertracker-tft-262334a34d5b.herokuapp.com/api/stats';
   const stats_headers = {
     'Content-Type': 'application/json',
     'username-tagline': usernameTagline,
   };
 
   const UPDATE_API_ENDPOINT =
-    // "https://streamertracker-tft-262334a34d5b.herokuapp.com/api/update-data";
-    'http://127.0.0.1:5000/api/update-data';
+    'https://streamertracker-tft-262334a34d5b.herokuapp.com/api/update-data';
   const update_headers = {
     'Content-Type': 'application/json',
     'username-tagline': usernameTagline,
   };
   const LAST_UPDATE_API_ENDPOINT =
-    // "https://streamertracker-tft-262334a34d5b.herokuapp.com/api/last-updated";
-    'http://127.0.0.1:5000/api/last-updated';
+    'https://streamertracker-tft-262334a34d5b.herokuapp.com/api/last-updated';
   const last_update_headers = {
     'Content-Type': 'application/json',
     'username-tagline': usernameTagline,

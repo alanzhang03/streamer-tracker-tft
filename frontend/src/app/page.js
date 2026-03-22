@@ -11,7 +11,7 @@ import gsap from 'gsap';
 gsap.registerPlugin(ScrollTrigger);
 
 const FAV_COMPS_API_ENDPOINT =
-  'https://streamertracker-tft-262334a34d5b.herokuapp.com//api/favorite-comps';
+  'https://streamertracker-tft-262334a34d5b.herokuapp.com/api/favorite-comps';
 
 const streamers = [
   {
