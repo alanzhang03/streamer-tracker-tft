@@ -190,7 +190,7 @@ def getStreamerData(username):
 
 def updateData(username):
     # load in the three streamers for to track lp
-    streamers = ["VIT k3soju #000", "VIT setsuko #NA2", "ACAD Dishsoap #NA3", "Riot Mortdog #Mort"]
+    streamers = ["VIT k3soju #000", "VIT setsuko #NA2", "ACAD Dishsoap #NA3", "ACAD Frodan #FRO", "CTG robinsongz #888"]
     lps = {}
     for streamer in streamers:
         split_username = streamer.rpartition(" ")

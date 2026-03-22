@@ -89,7 +89,6 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
   };
 
   const handleCompClick = (comp) => {
-    // Convert comp (an array) to a string
     const compKey = comp.join(',');
     setSelectedComps((prev) => {
       const newSet = new Set(prev);
@@ -233,7 +232,6 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
     'https://streamertracker-tft-262334a34d5b.herokuapp.com/api/champion-icons';
   const headers = {
     'Content-Type': 'application/json',
-    // "page-number": "0",
     'username-tagline': usernameTagline,
   };
 
@@ -270,7 +268,7 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
       );
       if (!player) return false;
 
-      // Comp match
+
       const compMatch =
         selectedComps.size === 0 ||
         [...selectedComps].every((compStr) => {
@@ -280,7 +278,6 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
           );
         });
 
-      // Item match (ALL selected items must be found in unit itemNames) ---
       const itemMatch =
         selectedItems.size === 0 ||
         (() => {
@@ -309,7 +306,7 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
 
     const counts = {};
     const compCounts = {};
-    const keyToArray = {}; // maps string keys back to arrays (for comp matching)
+    const keyToArray = {}; 
 
     filteredData.forEach((match) => {
       const player = Object.values(match).find(
@@ -318,7 +315,6 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
 
       if (!player || !Array.isArray(player.units)) return;
 
-      // Count items
       player.units.forEach((unit) => {
         if (!unit.itemNames) return;
         unit.itemNames.forEach((item) => {
@@ -326,17 +322,15 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
         });
       });
 
-      // Clean comp
       const cleaned = player.comp.map((c) => c.replace(/^[\s\d]+/, ''));
       const key = cleaned.join(',');
 
       compCounts[key] = (compCounts[key] || 0) + 1;
-      keyToArray[key] = cleaned; // preserve original array
+      keyToArray[key] = cleaned; 
     });
 
     setItemCounts(counts);
 
-    // Set top 5 comps as arrays
     setFavComps(getTopItems(compCounts, 5).map(([key]) => keyToArray[key]));
   }, [filteredData, usernameTagline]);
 
@@ -360,7 +354,8 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
           )}
         </div>
         <h2>
-          {stats && stats.tier &&
+          {stats &&
+            stats.tier &&
             stats.tier.charAt(0).toUpperCase() +
               stats.tier.slice(1).toLowerCase()}
         </h2>

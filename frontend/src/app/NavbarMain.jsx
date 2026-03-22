@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import "./NavbarMain.scss";
-import Link from "next/link";
-import Image from "next/image";
+import React, { useState } from 'react';
+import './NavbarMain.scss';
+import Link from 'next/link';
+import Image from 'next/image';
 
 const NavbarMain = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -17,44 +17,48 @@ const NavbarMain = () => {
   };
 
   return (
-    <nav className="navbar">
-      <div className="navbar-container">
+    <nav className='navbar'>
+      <div className='navbar-container'>
         <ul>
-          <Link className="nav-label-left" href="/">
+          <Link className='nav-label-left' href='/'>
             {/* <Image src="/favicon.ico" width={30} height={30} alt="Logo"></Image> */}
             Streamer Tracker TFT
           </Link>
         </ul>
-        <ul className="navbar-menu">
+        <ul className='navbar-menu'>
           <li>
-            <Link href="/">Home</Link>
+            <Link href='/'>Home</Link>
           </li>
 
           <li
-            className="dropdown"
+            className='dropdown'
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
-            <Link href="#streamers">Streamers</Link>
+            <Link href='#streamers'>Streamers</Link>
             {isDropdownOpen && (
-              <ul className="dropdown-content">
+              <ul className='dropdown-content'>
                 <li>
-                  <Link href="/streamers/K3soju">K3soju</Link>
+                  <Link href='/streamers/K3soju'>K3soju</Link>
                 </li>
                 <li>
-                  <Link href="/streamers/Setsuko">Setsuko</Link>
+                  <Link href='/streamers/Setsuko'>Setsuko</Link>
                 </li>
                 <li>
-                  <Link href="/streamers/Dishsoap">Dishsoap</Link>
+                  <Link href='/streamers/Robinsongz'>Robinsongz</Link>
                 </li>
                 <li>
-                  <Link href="/streamers/Mortdog">Mortdog</Link>
+                  <Link href='/streamers/Frodan'>Frodan</Link>
+                </li>
+
+                <li>
+                  <Link href='/streamers/Dishsoap'>Dishsoap</Link>
                 </li>
               </ul>
             )}
           </li>
           <li>
-            <Link href="/about">About Us</Link>
+            <Link href='/about'>About Us</Link>
           </li>
         </ul>
       </div>

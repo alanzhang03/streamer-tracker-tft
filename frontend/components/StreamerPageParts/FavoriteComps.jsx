@@ -4,7 +4,7 @@ import "./styles/FavoriteComps.scss";
 const FavoriteComps = ({ comps, onCompClick, selectedComps }) => {
   return (
     <div className="comps-table">
-      {comps.map((comp, index) => {
+      {comps.filter((comp) => comp.length > 0).map((comp, index) => {
         const compKey = comp.join(",");
         return (
           <div

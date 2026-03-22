@@ -45,13 +45,23 @@ const streamers = [
     },
   },
   {
-    id: 'Mortdog',
-    name: 'Mortdog',
-    rank: 'Grandmaster',
-    image: '/mortdog.png',
+    id: 'Frodan',
+    name: 'Frodan',
+    rank: 'Challenger',
+    image: '/frodan.png',
     headers: {
       'Content-Type': 'application/json',
-      'username-tagline': 'Riot Mortdog #Mort',
+      'username-tagline': 'ACAD Frodan #FRO',
+    },
+  },
+  {
+    id: 'Robinsongz',
+    name: 'Robinsongz',
+    rank: 'Challenger',
+    image: '/robinsongz.png',
+    headers: {
+      'Content-Type': 'application/json',
+      'username-tagline': 'CTG robinsongz #888',
     },
   },
 ];
@@ -222,7 +232,7 @@ export default function Home() {
                     <p className={styles.emptyComps}>No data yet</p>
                   )}
                 {!loading &&
-                  compsMap[streamer.id]?.map((comp, index) => (
+                  compsMap[streamer.id]?.filter((comp) => comp.length > 0).map((comp, index) => (
                     <div key={index} className={styles.favCompElement}>
                       <span className={styles.compRank}>{index + 1}</span>
                       <div className={styles.compChips}>

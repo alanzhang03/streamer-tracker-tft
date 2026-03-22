@@ -48,7 +48,8 @@ export default function RootLayout({ children }) {
               <a href="/streamers/Dishsoap">Dishsoap</a>
               <a href="/streamers/Setsuko">Setsuko</a>
               <a href="/streamers/K3soju">K3soju</a>
-              <a href="/streamers/Mortdog">Mortdog</a>
+              <a href="/streamers/Frodan">Frodan</a>
+              <a href="/streamers/Robinsongz">Robinsongz</a>
             </div>
             <div className="footer-links">
               <span className="footer-col-label">Resources</span>
