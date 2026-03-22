@@ -2,6 +2,7 @@ import "./globals.css";
 import NavbarMain from "./NavbarMain";
 import Script from "next/script";
 import Analytics from "./Analytics";
+import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
 
 const GA_ID = "G-WBR5ZFTMZF";
 
@@ -33,6 +34,7 @@ export default function RootLayout({ children }) {
       <body>
         <NavbarMain />
         <Analytics />
+        <VercelAnalytics />
         <main>{children}</main>
         <footer className="global-footer">
           <div className="footer-inner">
