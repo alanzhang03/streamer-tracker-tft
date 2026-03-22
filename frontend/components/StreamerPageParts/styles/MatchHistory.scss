@@ -1,287 +1,127 @@
 .match-history {
   display: flex;
   flex-direction: column;
-  gap: 2vh;
+  gap: 10px;
+}
+
+.match-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+
+  &:hover {
+    border-color: var(--border-accent);
+  }
+}
+
+// ── Comp title (small label above header row) ────────────────────────────────
+
+.comp-title {
+  padding-bottom: 10px;
+
+  h2 {
+    margin: 0;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-3);
+  }
+}
+
+// ── Match header ─────────────────────────────────────────────────────────────
+
+.match-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.header-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.header-info-combined {
+  display: flex;
+  flex-direction: row;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
 
-  .match-card {
-    background: linear-gradient(
-      135deg,
-      rgba(26, 26, 46, 0.9) 0%,
-      rgba(15, 15, 35, 0.9) 100%
-    );
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(74, 158, 255, 0.2);
-    border-radius: 15px;
-    padding: 20px;
-    color: #f8f8f8;
-    box-shadow: 0 8px 25px rgba(74, 158, 255, 0.1);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: auto;
-    width: 100%;
-    max-width: 77vw;
-    min-width: 300px;
-    transition: all 0.3s ease;
+.lp-number-remove-gap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
 
-    &:hover {
-      border-color: rgba(74, 158, 255, 0.4);
-      box-shadow: 0 12px 30px rgba(74, 158, 255, 0.15);
-      transform: translateY(-2px);
-    }
+  h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-1);
+  }
 
-    .comp-title {
-      h2 {
-        margin: 0;
-        font-size: 1.6rem;
-        color: #4a9eff;
-        font-weight: 700;
-        text-shadow: 0 0 8px rgba(74, 158, 255, 0.4),
-          0 0 16px rgba(74, 158, 255, 0.2);
-        text-transform: uppercase;
-        letter-spacing: 0.8px;
-      }
-      padding-bottom: 15px;
-    }
+  // The colored placement h3
+  h3 + h3 {
+    font-size: 1.5rem;
+    font-weight: 800;
+  }
 
-    .match-header {
-      display: flex;
-      justify-content: space-between;
-
-      .header-info {
-        align-items: center;
-
-        .header-info-combined {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          gap: 1.5vw;
-
-          h2,
-          h3 {
-            margin: 0;
-            font-size: 1.4rem;
-            color: #4a9eff;
-            font-weight: 600;
-            text-shadow: 0 0 6px rgba(74, 158, 255, 0.4),
-              0 0 12px rgba(74, 158, 255, 0.2);
-          }
-
-          .lp-number-remove-gap {
-            display: flex;
-            flex-direction: row;
-            gap: 0.5vw;
-            background: linear-gradient(
-              135deg,
-              rgba(74, 158, 255, 0.15) 0%,
-              rgba(74, 158, 255, 0.05) 100%
-            );
-            border: 1px solid rgba(74, 158, 255, 0.2);
-            border-radius: 8px;
-            padding: 8px 12px;
-            backdrop-filter: blur(5px);
-            transition: all 0.3s ease;
-
-            &:hover {
-              border-color: rgba(74, 158, 255, 0.4);
-              background: linear-gradient(
-                135deg,
-                rgba(74, 158, 255, 0.2) 0%,
-                rgba(74, 158, 255, 0.1) 100%
-              );
-            }
-          }
-
-          p {
-            margin: 3px 0;
-            font-size: 0.9rem;
-            color: #8892b0;
-            font-weight: 600;
-            background: linear-gradient(
-              135deg,
-              rgba(74, 158, 255, 0.1) 0%,
-              rgba(74, 158, 255, 0.05) 100%
-            );
-            border: 1px solid rgba(74, 158, 255, 0.15);
-            border-radius: 6px;
-            padding: 4px 8px;
-            backdrop-filter: blur(5px);
-            transition: all 0.3s ease;
-
-            &:hover {
-              border-color: rgba(74, 158, 255, 0.3);
-              color: #4a9eff;
-              text-shadow: 0 0 4px rgba(74, 158, 255, 0.3);
-            }
-
-            // LP gain colors
-            &[style*="green"] {
-              color: #37d488 !important;
-              text-shadow: 0 0 4px rgba(55, 212, 136, 0.3);
-            }
-
-            &[style*="red"] {
-              color: #dd0e22 !important;
-              text-shadow: 0 0 4px rgba(221, 14, 34, 0.3);
-            }
-          }
-
-          .get-time-stamp {
-            font-size: 0.8rem;
-            opacity: 0.8;
-            color: #8892b0;
-            font-style: italic;
-          }
-        }
-      }
-    }
-
-    hr {
-      border: 1px solid;
-      height: 2px;
-      margin: 15px 0;
-      background: linear-gradient(
-        90deg,
-        transparent 0%,
-        currentColor 50%,
-        transparent 100%
-      );
-      opacity: 0.6;
-      box-shadow: 0 0 8px currentColor;
-      transition: all 0.3s ease;
-
-      &:hover {
-        opacity: 0.8;
-        box-shadow: 0 0 12px currentColor;
-      }
-    }
-
-    .champions-row {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      overflow-x: auto;
-      padding: 15px 0;
-      background: rgba(0, 0, 0, 0.2);
-      border-radius: 12px;
-      padding: 15px;
-      border: 1px solid rgba(74, 158, 255, 0.1);
-
-      .champion {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        transition: all 0.3s ease;
-        cursor: pointer;
-        padding: 8px;
-        border-radius: 10px;
-
-        &:hover {
-          background: rgba(74, 158, 255, 0.1);
-          transform: translateY(-3px) scale(1.05);
-        }
-
-        .champion-icon {
-          width: 55px;
-          height: 55px;
-          border-radius: 10px;
-          border: 2px solid rgba(74, 158, 255, 0.3);
-          box-shadow: 0 0 15px rgba(74, 158, 255, 0.2);
-          transition: all 0.3s ease;
-
-          &:hover {
-            border-color: rgba(74, 158, 255, 0.5);
-            box-shadow: 0 0 20px rgba(74, 158, 255, 0.3);
-          }
-        }
-
-        .star-tier {
-          margin-top: 8px;
-          font-size: 0.9rem;
-          color: #f1c555;
-          font-weight: bold;
-          text-shadow: 0 0 6px rgba(241, 197, 85, 0.5);
-          background: rgba(241, 197, 85, 0.1);
-          border: 1px solid rgba(241, 197, 85, 0.2);
-          border-radius: 4px;
-          padding: 2px 6px;
-        }
-      }
-    }
+  // "Placement:" label h3
+  h3:first-child {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--text-3);
   }
 }
 
-@media (max-width: 1200px) {
-  .match-history {
-    padding: 0 2vw;
-
-    .match-card {
-      max-width: 95vw;
-
-      .match-header {
-        .header-info {
-          .header-info-combined {
-            gap: 1vw;
-            flex-wrap: wrap;
-          }
-        }
-      }
-    }
-  }
+.header-info-combined p {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-2);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 3px 8px;
+  white-space: nowrap;
 }
+
+.get-time-stamp {
+  font-size: 0.75rem;
+  color: var(--text-3);
+  font-style: italic;
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+// ── Divider ──────────────────────────────────────────────────────────────────
+
+.match-card > hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 14px 0;
+  height: 0;
+}
+
+// ── Responsive ───────────────────────────────────────────────────────────────
 
 @media (max-width: 768px) {
-  .match-history {
-    padding: 0 1vw;
+  .match-header {
+    flex-direction: column;
+  }
 
-    .match-card {
-      max-width: 98vw;
-      padding: 15px;
-
-      .comp-title {
-        h2 {
-          font-size: 1.3rem;
-        }
-      }
-
-      .match-header {
-        flex-direction: column;
-        gap: 15px;
-
-        .header-info {
-          .header-info-combined {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 10px;
-
-            .lp-number-remove-gap {
-              align-self: stretch;
-              justify-content: center;
-            }
-
-            p {
-              align-self: stretch;
-              text-align: center;
-            }
-          }
-        }
-      }
-
-      .champions-row {
-        gap: 10px;
-
-        .champion {
-          .champion-icon {
-            width: 45px;
-            height: 45px;
-          }
-
-          .star-tier {
-            font-size: 0.8rem;
-          }
-        }
-      }
-    }
+  .header-info-combined {
+    gap: 6px;
   }
 }

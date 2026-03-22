@@ -1,61 +1,50 @@
 .comps-section {
-  .comps-grid {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 1vw;
-    overflow: hidden;
-    .champion-icon {
-      border: 2px solid transparent;
-      border-radius: 10px;
+  width: 100%;
+}
 
-      &.cost1 {
-        border-color: grey;
-      }
+.comps-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8px;
+}
 
-      &.cost2 {
-        border-color: rgb(11, 192, 14);
-      }
+.champion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
 
-      &.cost3 {
-        border-color: rgb(55, 170, 247);
-      }
+.star-tier {
+  font-size: 0.65rem;
+  color: var(--gold);
+  letter-spacing: -1px;
+  text-align: center;
+  min-height: 12px;
+}
 
-      &.cost4 {
-        border-color: rgb(203, 15, 203);
-      }
+.champion-icon {
+  border: 3px solid transparent;
+  border-radius: 8px;
+  display: block;
 
-      &.cost5 {
-        border-color: rgb(254, 231, 25);
-      }
-    }
-    .star-tier {
-      display: flex;
-      justify-content: center;
-    }
-    .champion-items {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      margin-top: 0px;
-      opacity: 1;
-      gap: 2px;
-      flex-wrap: nowrap;
+  &.cost1 { border-color: #9e9e9e; }
+  &.cost2 { border-color: #4ade80; }
+  &.cost3 { border-color: #60b4ff; }
+  &.cost4 { border-color: #c084fc; }
+  &.cost5 { border-color: #fbbf24; }
+  &.unknown { border-color: var(--border); }
+}
 
-      .champion-item {
-        border: 1px solid rgba(74, 158, 255, 0.3);
-        border-radius: 4px;
-        transition: all 0.2s ease;
-        background: rgba(0, 0, 0, 0.3);
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        flex-shrink: 0;
+.champion-items {
+  display: flex;
+  flex-direction: row;
+  gap: 2px;
+  justify-content: center;
+}
 
-        &:hover {
-          border-color: rgba(74, 158, 255, 0.6);
-          transform: scale(1.1);
-          box-shadow: 0 0 8px rgba(74, 158, 255, 0.4);
-        }
-      }
-    }
-  }
+.champion-item {
+  border-radius: 3px;
+  border: 1px solid var(--border);
 }

@@ -35,7 +35,29 @@ export default function RootLayout({ children }) {
         <Analytics />
         <main>{children}</main>
         <footer className="global-footer">
-          <p>© 2024 Streamer Tracker TFT</p>
+          <div className="footer-inner">
+            <div className="footer-brand">
+              <span className="footer-logo">Streamer Tracker TFT</span>
+              <p className="footer-tagline">Track your favorite TFT streamers in real time.</p>
+            </div>
+            <div className="footer-links">
+              <span className="footer-col-label">Pages</span>
+              <a href="/">Home</a>
+              <a href="/streamers/Dishsoap">Dishsoap</a>
+              <a href="/streamers/Setsuko">Setsuko</a>
+              <a href="/streamers/K3soju">K3soju</a>
+              <a href="/streamers/Mortdog">Mortdog</a>
+            </div>
+            <div className="footer-links">
+              <span className="footer-col-label">Resources</span>
+              <a href="https://www.twitch.tv" target="_blank" rel="noopener noreferrer">Twitch</a>
+              <a href="https://tactics.tools" target="_blank" rel="noopener noreferrer">Tactics.tools</a>
+              <a href="https://lolchess.gg" target="_blank" rel="noopener noreferrer">lolchess.gg</a>
+            </div>
+          </div>
+          <div className="footer-bottom">
+            <p>© 2025 Streamer Tracker TFT — Not affiliated with Riot Games.</p>
+          </div>
         </footer>
       </body>
     </html>

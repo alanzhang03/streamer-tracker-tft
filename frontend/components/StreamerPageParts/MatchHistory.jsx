@@ -11,6 +11,8 @@ const MatchHistory = ({
   usernameTagline,
   getTimeAgo,
   determineColor,
+  synergyDict,
+  championIcons,
 }) => {
   return (
     <div className="match-history">
@@ -39,9 +41,9 @@ const MatchHistory = ({
                       {player.placement}
                     </h3>
                   </div>
-                  <p style={{ color: player.lp_gain >= 0 ? "green" : "red" }}>
-                    {player.lp_gain >= 0
-                      ? `+${player.lp_gain}`
+                  <p style={{ color: (player.lp_gain ?? 0) >= 0 ? "green" : "red" }}>
+                    {(player.lp_gain ?? 0) >= 0
+                      ? `+${player.lp_gain ?? 0}`
                       : `${player.lp_gain}`}{" "}
                     LP
                   </p>
@@ -52,7 +54,7 @@ const MatchHistory = ({
                 </div>
               </div>
 
-              <Augments playerTraits={player.traits} images={augmentImages} />
+              <Augments playerTraits={player.traits} images={augmentImages} synergyDict={synergyDict} />
             </div>
             <hr
               width="100%"
@@ -70,14 +72,18 @@ const MatchHistory = ({
                       item_images[filename]?.default || item_images[filename]
                   );
 
+                const champData = championIcons?.[champion["character_id"]];
                 return {
                   characterId: champion["character_id"],
                   characterImage:
+                    champData?.icon ||
                     champ_images[
                       Object.keys(champ_images).find((key) =>
                         key.startsWith(champion["character_id"])
                       )
-                    ]?.default || null,
+                    ]?.default ||
+                    null,
+                  cost: champData?.cost ?? 0,
                   tier: champion.tier,
                   items,
                 };
