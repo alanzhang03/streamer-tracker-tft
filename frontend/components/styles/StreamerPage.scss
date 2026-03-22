@@ -1,5 +1,3 @@
-// ── Layout ──────────────────────────────────────────────────────────────────
-
 .streamer-page {
   display: flex;
   flex-direction: row;
@@ -25,8 +23,6 @@
   flex: 1;
   min-width: 0;
 }
-
-// ── Sidebar: avatar + name ───────────────────────────────────────────────────
 
 .streamer-header-intro-image-container {
   display: flex;
@@ -54,8 +50,6 @@
   }
 }
 
-// ── Sidebar: rank label ──────────────────────────────────────────────────────
-
 .streamer-stats > h2 {
   margin: 0;
   font-size: 0.75rem;
@@ -65,13 +59,9 @@
   color: var(--text-3);
 }
 
-// ── Sidebar: rank image ──────────────────────────────────────────────────────
-
 .streamer-stats img {
   border-radius: var(--radius-md);
 }
-
-// ── Update button ────────────────────────────────────────────────────────────
 
 .update-button {
   width: 100%;
@@ -105,8 +95,6 @@
   }
 }
 
-// ── Section headers ──────────────────────────────────────────────────────────
-
 .streamer-section-header {
   font-size: 0.7rem;
   font-weight: 600;
@@ -117,8 +105,6 @@
   padding-bottom: 8px;
   border-bottom: 1px solid var(--border);
 }
-
-// ── Summary card (last 20 games) ─────────────────────────────────────────────
 
 .summary-card {
   background: var(--surface);
@@ -187,8 +173,6 @@
     white-space: nowrap;
   }
 }
-
-// ── Comps + Items filter panel ───────────────────────────────────────────────
 
 .container {
   width: 100%;
@@ -260,8 +244,6 @@
   }
 }
 
-// ── LP colors ────────────────────────────────────────────────────────────────
-
 .lp-green {
   color: var(--green);
 }
@@ -269,8 +251,6 @@
 .lp-red {
   color: var(--red);
 }
-
-// ── Responsive ───────────────────────────────────────────────────────────────
 
 @media (max-width: 900px) {
   .streamer-page {
@@ -282,9 +262,8 @@
   .streamer-stats {
     width: 100%;
     position: static;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
   }
 
   .items-table {

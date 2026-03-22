@@ -8,7 +8,7 @@ const FavoriteComps = ({ comps, onCompClick, selectedComps }) => {
         const compKey = comp.join(",");
         return (
           <div
-            key={compKey} // use compKey as key
+            key={compKey}
             className={`comp-element ${selectedComps.has(compKey) ? "selected" : ""}`}
             onClick={() => onCompClick(comp)}
           >

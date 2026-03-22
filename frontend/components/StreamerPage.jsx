@@ -71,7 +71,6 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
       const player = Object.values(match).find(
         (p) => p.username_tagline === usernameTagline,
       );
-      // console.log(player)
       games += 1;
       placement_sum += player.placement;
       if (player.placement == 1) {
@@ -306,7 +305,7 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
 
     const counts = {};
     const compCounts = {};
-    const keyToArray = {}; 
+    const keyToArray = {};
 
     filteredData.forEach((match) => {
       const player = Object.values(match).find(
@@ -326,7 +325,7 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
       const key = cleaned.join(',');
 
       compCounts[key] = (compCounts[key] || 0) + 1;
-      keyToArray[key] = cleaned; 
+      keyToArray[key] = cleaned;
     });
 
     setItemCounts(counts);
@@ -385,14 +384,8 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
       </div>
       <div className='streamer-main-section'>
         <section className='streamer-intro-section'>
-          {/* <h1 className="streamer-section-header">
-            Intro Section for Streamer
-          </h1> */}
         </section>
         <section className='streamer-statistics'>
-          {/* <h1 className="streamer-section-header">
-            Recent 20 Games Ranked Statistics
-          </h1> */}
           <h1 className='streamer-section-header'>
             {displayName}'s Favorite Comps and Items
           </h1>

@@ -1,5 +1,3 @@
-/* ── Shared section helpers ─────────────────────────────────────────────────── */
-
 .sectionLabel {
   font-size: 0.72rem;
   font-weight: 600;
@@ -16,8 +14,6 @@
   margin: 0 0 40px;
   letter-spacing: -0.3px;
 }
-
-/* ── Hero ────────────────────────────────────────────────────────────────────── */
 
 .hero {
   min-height: 88vh;
@@ -89,8 +85,6 @@
   transform: translateY(-2px);
 }
 
-/* ── Featured streamers ──────────────────────────────────────────────────────── */
-
 .featuredStreamers {
   padding: 80px 24px;
   background: #0d0f14;
@@ -101,8 +95,8 @@
   display: flex;
   justify-content: center;
   gap: 20px;
-  flex-wrap: wrap;
-  max-width: 1100px;
+  flex-wrap: nowrap;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
@@ -157,8 +151,6 @@
   text-decoration: none;
   letter-spacing: 0.2px;
 }
-
-/* ── How It Works ────────────────────────────────────────────────────────────── */
 
 .howItWorks {
   padding: 80px 24px;
@@ -215,8 +207,6 @@
   margin: 0;
 }
 
-/* ── Streamer Favorites ──────────────────────────────────────────────────────── */
-
 .trending {
   padding: 80px 24px;
   background: #0d0f14;
@@ -225,9 +215,9 @@
 
 .trendingGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(5, 1fr);
   gap: 20px;
-  max-width: 1160px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
@@ -346,8 +336,6 @@
   padding: 8px 0;
 }
 
-/* ── Skeleton loading ────────────────────────────────────────────────────────── */
-
 .skeletonComp {
   height: 36px;
   border-radius: 8px;
@@ -360,8 +348,6 @@
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
-
-/* ── Responsive ──────────────────────────────────────────────────────────────── */
 
 @media (max-width: 768px) {
   .hero h1 {
@@ -388,6 +374,7 @@
   }
 
   .trendingGrid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(5, minmax(200px, 1fr));
+    overflow-x: auto;
   }
 }
