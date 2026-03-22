@@ -1,26 +1,27 @@
-import "./globals.css";
-import NavbarMain from "./NavbarMain";
-import Script from "next/script";
-import Analytics from "./Analytics";
-import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
+import './globals.css';
+import NavbarMain from './NavbarMain';
+import Script from 'next/script';
+import Analytics from './Analytics';
+import { Analytics as VercelAnalytics } from '@vercel/analytics/next';
 
-const GA_ID = "G-WBR5ZFTMZF";
+const GA_ID = 'G-WBR5ZFTMZF';
+const currentYear = new Date().getFullYear();
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang='en'>
       <head>
         <link
-          href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
-          rel="stylesheet"
+          href='https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap'
+          rel='stylesheet'
         />
         <Script
-          strategy="afterInteractive"
+          strategy='afterInteractive'
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
         />
         <Script
-          id="gtag-init"
-          strategy="afterInteractive"
+          id='gtag-init'
+          strategy='afterInteractive'
           dangerouslySetInnerHTML={{
             __html: `
 							window.dataLayer = window.dataLayer || [];
@@ -36,30 +37,53 @@ export default function RootLayout({ children }) {
         <Analytics />
         <VercelAnalytics />
         <main>{children}</main>
-        <footer className="global-footer">
-          <div className="footer-inner">
-            <div className="footer-brand">
-              <span className="footer-logo">Streamer Tracker TFT</span>
-              <p className="footer-tagline">Track your favorite TFT streamers in real time.</p>
+        <footer className='global-footer'>
+          <div className='footer-inner'>
+            <div className='footer-brand'>
+              <span className='footer-logo'>Streamer Tracker TFT</span>
+              <p className='footer-tagline'>
+                Track your favorite TFT streamers in real time.
+              </p>
             </div>
-            <div className="footer-links">
-              <span className="footer-col-label">Pages</span>
-              <a href="/">Home</a>
-              <a href="/streamers/Dishsoap">Dishsoap</a>
-              <a href="/streamers/Setsuko">Setsuko</a>
-              <a href="/streamers/K3soju">K3soju</a>
-              <a href="/streamers/Frodan">Frodan</a>
-              <a href="/streamers/Robinsongz">Robinsongz</a>
+            <div className='footer-links'>
+              <span className='footer-col-label'>Pages</span>
+              <a href='/'>Home</a>
+              <a href='/streamers/Dishsoap'>Dishsoap</a>
+              <a href='/streamers/Setsuko'>Setsuko</a>
+              <a href='/streamers/K3soju'>K3soju</a>
+              <a href='/streamers/Frodan'>Frodan</a>
+              <a href='/streamers/Robinsongz'>Robinsongz</a>
             </div>
-            <div className="footer-links">
-              <span className="footer-col-label">Resources</span>
-              <a href="https://www.twitch.tv" target="_blank" rel="noopener noreferrer">Twitch</a>
-              <a href="https://tactics.tools" target="_blank" rel="noopener noreferrer">Tactics.tools</a>
-              <a href="https://lolchess.gg" target="_blank" rel="noopener noreferrer">lolchess.gg</a>
+            <div className='footer-links'>
+              <span className='footer-col-label'>Resources</span>
+              <a
+                href='https://www.twitch.tv'
+                target='_blank'
+                rel='noopener noreferrer'
+              >
+                Twitch
+              </a>
+              <a
+                href='https://tactics.tools'
+                target='_blank'
+                rel='noopener noreferrer'
+              >
+                Tactics.tools
+              </a>
+              <a
+                href='https://lolchess.gg'
+                target='_blank'
+                rel='noopener noreferrer'
+              >
+                lolchess.gg
+              </a>
             </div>
           </div>
-          <div className="footer-bottom">
-            <p>© 2025 Streamer Tracker TFT — Not affiliated with Riot Games.</p>
+          <div className='footer-bottom'>
+            <p>
+              © {currentYear} Streamer Tracker TFT, Not affiliated with Riot
+              Games.
+            </p>
           </div>
         </footer>
       </body>
