@@ -46,13 +46,19 @@ def build_dicts_from_cdragon():
                     "cost": champ.get("cost", 0)
                 }
 
+        trait_icons = {}
+        for trait in current_set["traits"]:
+            if "icon" in trait and trait["icon"]:
+                path = trait["icon"].lower().replace(".tex", ".png")
+                trait_icons[trait["apiName"]] = f"https://raw.communitydragon.org/latest/game/{path}"
+
         print(f"Loaded Set {current_set_num}: {len(unit_dict)} champions, {len(synergy_dict)} trait tiers")
-        return synergy_dict, unit_dict, current_set_num, champion_icons
+        return synergy_dict, unit_dict, current_set_num, champion_icons, trait_icons
     except Exception as e:
         print(f"Failed to load CDragon data: {e}")
-        return {}, {}, "14", {}
+        return {}, {}, "14", {}, {}
 
-synergy_dict, unit_dict, current_set_num, champion_icons = build_dicts_from_cdragon()
+synergy_dict, unit_dict, current_set_num, champion_icons, trait_icons = build_dicts_from_cdragon()
 
 # Update these each patch with the current set's carry units (TFT{N}_ChampName format)
 # level_carries: 4/5-cost units played at level 8-9
@@ -567,6 +573,10 @@ def get_synergy_dict():
 @app.route('/api/champion-icons', methods=['GET'])
 def get_champion_icons():
     return jsonify(champion_icons)
+
+@app.route('/api/trait-icons', methods=['GET'])
+def get_trait_icons():
+    return jsonify(trait_icons)
 
 @app.route('/')
 def home():
