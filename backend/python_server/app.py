@@ -50,7 +50,9 @@ def build_dicts_from_cdragon():
         for trait in current_set["traits"]:
             if "icon" in trait and trait["icon"]:
                 path = trait["icon"].lower().replace(".tex", ".png")
-                trait_icons[trait["apiName"]] = f"https://raw.communitydragon.org/latest/game/{path}"
+                url = f"https://raw.communitydragon.org/latest/game/{path}"
+                trait_icons[trait["apiName"]] = url
+                trait_icons[trait["name"]] = url
 
         print(f"Loaded Set {current_set_num}: {len(unit_dict)} champions, {len(synergy_dict)} trait tiers")
         return synergy_dict, unit_dict, current_set_num, champion_icons, trait_icons
