@@ -4,6 +4,19 @@
   gap: 6px;
 }
 
+.comp-trait {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.comp-trait-icon {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
 .comp-element {
   display: flex;
   flex-wrap: wrap;

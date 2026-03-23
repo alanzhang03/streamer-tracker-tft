@@ -12,18 +12,10 @@ gsap.registerPlugin(ScrollTrigger);
 
 const FAV_COMPS_API_ENDPOINT =
   'https://streamertracker-tft-262334a34d5b.herokuapp.com/api/favorite-comps';
+const TRAIT_ICONS_ENDPOINT =
+  'https://streamertracker-tft-262334a34d5b.herokuapp.com/api/trait-icons';
 
 const streamers = [
-  {
-    id: 'Dishsoap',
-    name: 'Dishsoap',
-    rank: 'Challenger',
-    image: '/dishsoap.png',
-    headers: {
-      'Content-Type': 'application/json',
-      'username-tagline': 'ACAD Dishsoap #NA3',
-    },
-  },
   {
     id: 'Setsuko',
     name: 'Setsuko',
@@ -64,6 +56,16 @@ const streamers = [
       'username-tagline': 'CTG robinsongz #888',
     },
   },
+  {
+    id: 'Dishsoap',
+    name: 'Dishsoap',
+    rank: 'Challenger',
+    image: '/dishsoap.png',
+    headers: {
+      'Content-Type': 'application/json',
+      'username-tagline': 'ACAD Dishsoap #NA3',
+    },
+  },
 ];
 
 const HOW_IT_WORKS = [
@@ -87,6 +89,7 @@ const HOW_IT_WORKS = [
 export default function Home() {
   const [compsMap, setCompsMap] = useState({});
   const [loading, setLoading] = useState(true);
+  const [traitIcons, setTraitIcons] = useState({});
 
   useGSAP(() => {
     gsap.from('#hero-title', { delay: 0.5, y: -150, opacity: 0, duration: 1 });
@@ -131,6 +134,10 @@ export default function Home() {
       setLoading(false);
     };
     fetchAll();
+    fetch(TRAIT_ICONS_ENDPOINT)
+      .then((r) => r.json())
+      .then(setTraitIcons)
+      .catch(() => {});
   }, []);
 
   return (
@@ -194,7 +201,7 @@ export default function Home() {
 
       <section className={styles.trending}>
         <p className={styles.sectionLabel}>Streamer Favorites</p>
-        <h2 className={styles.sectionTitle}>Most-played comps this patch</h2>
+        <h2 className={styles.sectionTitle}>Most played comps this patch</h2>
         <div className={styles.trendingGrid}>
           {streamers.map((streamer) => (
             <div key={streamer.id} className={styles.compCard}>
@@ -232,18 +239,27 @@ export default function Home() {
                     <p className={styles.emptyComps}>No data yet</p>
                   )}
                 {!loading &&
-                  compsMap[streamer.id]?.filter((comp) => comp.length > 0).map((comp, index) => (
-                    <div key={index} className={styles.favCompElement}>
-                      <span className={styles.compRank}>{index + 1}</span>
-                      <div className={styles.compChips}>
-                        {comp.map((trait, i) => (
-                          <span key={i} className={styles.chip}>
-                            {trait}
-                          </span>
-                        ))}
+                  compsMap[streamer.id]
+                    ?.filter((comp) => comp.length > 0)
+                    .map((comp, index) => (
+                      <div key={index} className={styles.favCompElement}>
+                        <span className={styles.compRank}>{index + 1}</span>
+                        <div className={styles.compChips}>
+                          {comp.map((trait, i) => (
+                            <span key={i} className={styles.chip}>
+                              {traitIcons[trait] && (
+                                <img
+                                  src={traitIcons[trait]}
+                                  alt={trait}
+                                  className={styles.chipIcon}
+                                />
+                              )}
+                              {trait}
+                            </span>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
               </div>
             </div>
           ))}

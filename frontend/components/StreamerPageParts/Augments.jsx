@@ -1,7 +1,7 @@
 import React from "react";
 import "./styles/Augments.scss";
 
-const Augments = ({ playerTraits, synergyDict = {} }) => {
+const Augments = ({ playerTraits, synergyDict = {}, traitIcons = {} }) => {
   return (
     <div className="augments-section">
       <div className="augments-grid">
@@ -13,8 +13,12 @@ const Augments = ({ playerTraits, synergyDict = {} }) => {
               const displayText =
                 synergyDict[`${trait.name}${trait.tier_current}`] ||
                 trait.name;
+              const iconUrl = traitIcons[trait.name];
               return (
                 <div key={index} className="augment-item">
+                  {iconUrl && (
+                    <img src={iconUrl} alt={displayText} className="augment-icon" />
+                  )}
                   {displayText}
                 </div>
               );

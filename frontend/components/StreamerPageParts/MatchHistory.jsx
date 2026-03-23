@@ -13,6 +13,7 @@ const MatchHistory = ({
   determineColor,
   synergyDict,
   championIcons,
+  traitIcons,
 }) => {
   return (
     <div className="match-history">
@@ -54,7 +55,7 @@ const MatchHistory = ({
                 </div>
               </div>
 
-              <Augments playerTraits={player.traits} images={augmentImages} synergyDict={synergyDict} />
+              <Augments playerTraits={player.traits} synergyDict={synergyDict} traitIcons={traitIcons} />
             </div>
             <hr
               width="100%"

@@ -42,6 +42,7 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
   const [selectedItems, setSelectedItems] = useState(new Set());
   const [synergyDict, setSynergyDict] = useState({});
   const [championIcons, setChampionIcons] = useState({});
+  const [traitIcons, setTraitIcons] = useState({});
 
   const updateRecentStatistics = () => {
     let recentMatches;
@@ -145,6 +146,10 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
       const icons_response = await fetch(CHAMPION_ICONS_ENDPOINT);
       const icons_res = await icons_response.json();
       setChampionIcons(icons_res);
+
+      const trait_icons_response = await fetch(TRAIT_ICONS_ENDPOINT);
+      const trait_icons_res = await trait_icons_response.json();
+      setTraitIcons(trait_icons_res);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -217,6 +222,8 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
     'https://streamertracker-tft-262334a34d5b.herokuapp.com/api/synergy-dict';
   const CHAMPION_ICONS_ENDPOINT =
     'https://streamertracker-tft-262334a34d5b.herokuapp.com/api/champion-icons';
+  const TRAIT_ICONS_ENDPOINT =
+    'https://streamertracker-tft-262334a34d5b.herokuapp.com/api/trait-icons';
   const headers = {
     'Content-Type': 'application/json',
     'username-tagline': usernameTagline,
@@ -386,6 +393,7 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
                   comps={favComps}
                   onCompClick={handleCompClick}
                   selectedComps={selectedComps}
+                  traitIcons={traitIcons}
                 />
               </div>
               <p>Items</p>
@@ -480,6 +488,7 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
             determineColor={determineColor}
             synergyDict={synergyDict}
             championIcons={championIcons}
+            traitIcons={traitIcons}
           />
         )}
       </div>
