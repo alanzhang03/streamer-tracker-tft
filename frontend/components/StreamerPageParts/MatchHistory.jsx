@@ -7,7 +7,7 @@ const MatchHistory = ({
   data,
   champ_images,
   item_images,
-  augmentImages,
+
   usernameTagline,
   getTimeAgo,
   determineColor,

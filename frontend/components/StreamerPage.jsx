@@ -27,18 +27,6 @@ const rank_images = importAllImages(
   require.context('./assets/ranks', false, /\.(png|jpe?g|svg)$/),
 );
 
-const importAllAugmentImages = (requireContext) => {
-  const images = {};
-  requireContext.keys().forEach((key) => {
-    const filename = key.replace('./', '').replace(/\.(png|jpe?g|svg)$/, '');
-    images[filename] = requireContext(key).default;
-  });
-  return images;
-};
-
-const augmentImages = importAllAugmentImages(
-  require.context('./assets/traits', false, /\.(png|jpe?g|svg)$/),
-);
 
 const StreamerPage = ({ usernameTagline, username, displayName }) => {
   const [data, setData] = useState(null);
@@ -486,7 +474,7 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
             data={filteredData.slice(0, 50)}
             champ_images={champ_images}
             item_images={item_images}
-            augmentImages={augmentImages}
+
             usernameTagline={usernameTagline}
             getTimeAgo={getTimeAgo}
             determineColor={determineColor}
