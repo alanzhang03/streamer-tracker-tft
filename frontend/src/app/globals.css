@@ -386,6 +386,9 @@ template {
 body {
   background-color: var(--bg);
   color: var(--text-1);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .global-footer {
