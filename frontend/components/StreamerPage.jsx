@@ -3,7 +3,6 @@ import './styles/StreamerPage.scss';
 import MatchHistory from './StreamerPageParts/MatchHistory';
 import Stats from './StreamerPageParts/Stats';
 import Image from 'next/image';
-import { useDeprecatedAnimatedState } from 'framer-motion';
 import FavoriteComps from './StreamerPageParts/FavoriteComps';
 
 const importAllImages = (requireContext) => {
