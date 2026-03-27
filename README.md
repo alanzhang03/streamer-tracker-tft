@@ -4,7 +4,7 @@
 
 A comprehensive tracking application for Teamfight Tactics streamers, featuring real-time statistics, match history analysis, and team composition insights.
 
-**Live Demo**: [streamer-tracker-tft.vercel.app](https://streamer-tracker-tft.vercel.app/)
+**Live Demo**: [streamertft](https://streamertft.com/)
 
 ##  Overview
 
