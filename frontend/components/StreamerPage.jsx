@@ -255,12 +255,15 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
   useEffect(() => {
     if (!data) return;
 
+    const currentPatch = data[0]?.patch;
+
     const filtered = data.filter((match) => {
+      if (match.patch !== currentPatch) return false;
+
       const player = Object.values(match).find(
         (p) => p.username_tagline === usernameTagline,
       );
       if (!player) return false;
-
 
       const compMatch =
         selectedComps.size === 0 ||
