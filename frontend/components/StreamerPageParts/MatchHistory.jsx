@@ -74,6 +74,7 @@ const MatchHistory = ({
               comps={player.units.map((champion) => {
                 const itemNames = champion['itemNames'] || [];
                 const items = itemNames
+                  .filter((name) => !name.toLowerCase().includes('empty'))
                   .map((name) => name + '.png')
                   .filter((filename) => item_images[filename])
                   .map(
