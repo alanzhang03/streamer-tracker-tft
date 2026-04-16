@@ -14,14 +14,6 @@ const importAllImages = (requireContext) => {
   return images;
 };
 
-const champ_images = importAllImages(
-  require.context('./assets/champions', false, /\.(png|jpe?g|svg)$/),
-);
-
-const item_images = importAllImages(
-  require.context('./assets/items', false, /\.(png|jpe?g|svg)$/),
-);
-
 const rank_images = importAllImages(
   require.context('./assets/ranks', false, /\.(png|jpe?g|svg)$/),
 );
@@ -42,6 +34,7 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
   const [synergyDict, setSynergyDict] = useState({});
   const [championIcons, setChampionIcons] = useState({});
   const [traitIcons, setTraitIcons] = useState({});
+  const [itemIcons, setItemIcons] = useState({});
 
   const updateRecentStatistics = () => {
     let recentMatches;
@@ -149,6 +142,10 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
       const trait_icons_response = await fetch(TRAIT_ICONS_ENDPOINT);
       const trait_icons_res = await trait_icons_response.json();
       setTraitIcons(trait_icons_res);
+
+      const item_icons_response = await fetch(ITEM_ICONS_ENDPOINT);
+      const item_icons_res = await item_icons_response.json();
+      setItemIcons(item_icons_res);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -223,6 +220,8 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
     'https://streamertracker-tft-262334a34d5b.herokuapp.com/api/champion-icons';
   const TRAIT_ICONS_ENDPOINT =
     'https://streamertracker-tft-262334a34d5b.herokuapp.com/api/trait-icons';
+  const ITEM_ICONS_ENDPOINT =
+    'https://streamertracker-tft-262334a34d5b.herokuapp.com/api/item-icons';
   const headers = {
     'Content-Type': 'application/json',
     'username-tagline': usernameTagline,
@@ -313,9 +312,11 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
 
       player.units.forEach((unit) => {
         if (!unit.itemNames) return;
-        unit.itemNames.forEach((item) => {
-          counts[item] = (counts[item] || 0) + 1;
-        });
+        unit.itemNames
+          .filter((item) => !item.toLowerCase().includes('empty'))
+          .forEach((item) => {
+            counts[item] = (counts[item] || 0) + 1;
+          });
       });
 
       const cleaned = player.comp.map((c) => c.replace(/^[\s\d]+/, ''));
@@ -400,28 +401,26 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
               </div>
               <p>Items</p>
               <div className='items-table'>
-                {getTopItems(itemCounts).map(([itemName, count], index) => (
-                  <div
-                    key={index}
-                    className={`top-item ${
-                      selectedItems.has(itemName) ? 'selected' : ''
-                    }`}
-                  >
-                    <Image
-                      src={
-                        item_images[`${itemName}.png`]?.default ||
-                        item_images[`${itemName}.png`] ||
-                        '/placeholder.png'
-                      }
-                      alt={itemName}
-                      width={60}
-                      height={60}
-                      onClick={() => handleItemClick(itemName)}
-                      style={{ cursor: 'pointer' }}
-                    />
-                    <span className='item-label'>Freq: {count}</span>
-                  </div>
-                ))}
+                {getTopItems(itemCounts)
+                  .filter(([itemName]) => itemIcons[itemName])
+                  .map(([itemName, count], index) => (
+                    <div
+                      key={index}
+                      className={`top-item ${
+                        selectedItems.has(itemName) ? 'selected' : ''
+                      }`}
+                    >
+                      <Image
+                        src={itemIcons[itemName]}
+                        alt={itemName}
+                        width={60}
+                        height={60}
+                        onClick={() => handleItemClick(itemName)}
+                        style={{ cursor: 'pointer' }}
+                      />
+                      <span className='item-label'>Freq: {count}</span>
+                    </div>
+                  ))}
               </div>
             </div>
           )}
@@ -482,15 +481,13 @@ const StreamerPage = ({ usernameTagline, username, displayName }) => {
           <MatchHistory
             className='match-history'
             data={filteredData.slice(0, 50)}
-            champ_images={champ_images}
-            item_images={item_images}
-
             usernameTagline={usernameTagline}
             getTimeAgo={getTimeAgo}
             determineColor={determineColor}
             synergyDict={synergyDict}
             championIcons={championIcons}
             traitIcons={traitIcons}
+            itemIcons={itemIcons}
           />
         )}
       </div>

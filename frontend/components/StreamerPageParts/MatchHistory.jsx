@@ -5,15 +5,13 @@ import Augments from './Augments';
 
 const MatchHistory = ({
   data,
-  champ_images,
-  item_images,
-
   usernameTagline,
   getTimeAgo,
   determineColor,
   synergyDict,
   championIcons,
   traitIcons,
+  itemIcons,
 }) => {
   return (
     <div className='match-history'>
@@ -74,25 +72,13 @@ const MatchHistory = ({
               comps={player.units.map((champion) => {
                 const itemNames = champion['itemNames'] || [];
                 const items = itemNames
-                  .filter((name) => !name.toLowerCase().includes('empty'))
-                  .map((name) => name + '.png')
-                  .filter((filename) => item_images[filename])
-                  .map(
-                    (filename) =>
-                      item_images[filename]?.default || item_images[filename],
-                  );
+                  .filter((name) => !name.toLowerCase().includes('empty') && itemIcons[name])
+                  .map((name) => itemIcons[name]);
 
                 const champData = championIcons?.[champion['character_id']];
                 return {
                   characterId: champion['character_id'],
-                  characterImage:
-                    champData?.icon ||
-                    champ_images[
-                      Object.keys(champ_images).find((key) =>
-                        key.startsWith(champion['character_id']),
-                      )
-                    ]?.default ||
-                    null,
+                  characterImage: champData?.icon || null,
                   cost: champData?.cost ?? 0,
                   tier: champion.tier,
                   items,
